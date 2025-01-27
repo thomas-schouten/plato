@@ -814,7 +814,7 @@ class Slabs:
                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
             ):
             # Skip if slab pull torque is not sampled
-            if self.settings.options[key]["Slab pull torque"]:                
+            if self.settings.options[key]["Slab pull torque"]:
                 # Loop through ages
                 for _age in _ages:
                     # Select points

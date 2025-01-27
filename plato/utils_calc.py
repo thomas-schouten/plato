@@ -561,7 +561,7 @@ def compute_torque_on_plates(
     )
 
     # Calculate the position vector of the centroid of the plate in Cartesian coordinates
-    centroid_position_xyz = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon, constants.mean_Earth_radius_m)
+    centroid_position_xyz = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon)#, constants.mean_Earth_radius_m)
 
     # Calculate the torque vector as the cross product of the Cartesian torque vector (x, y, z) with the position vector of the centroid
     summed_torques_xyz = _numpy.asarray([
@@ -570,7 +570,7 @@ def compute_torque_on_plates(
     centroid_force_xyz = _numpy.cross(summed_torques_xyz, centroid_position_xyz, axis=0)
 
     # Compute force magnitude at centroid
-    centroid_force_sph = geocentric_cartesian2spherical(centroid_force_xyz[0], centroid_force_xyz[1], centroid_force_xyz[2])
+    centroid_force_sph = tangent_cartesian2spherical(centroid_force_xyz.T, plate_data.centroid_lat, plate_data.centroid_lon)
 
     # Store values in the torques DataFrame
     plate_data[f"{torque_var}_force_lat"] = centroid_force_sph[0]

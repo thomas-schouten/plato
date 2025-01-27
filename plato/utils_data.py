@@ -144,6 +144,9 @@ def get_slab_data(
     # Convert trench segment length from degree to m
     slabs.trench_segment_length *= constants.equatorial_Earth_circumference / 360
 
+    # Ditch any trenches where the total trench segment length of a plate is below the tesselation threshold
+    slabs = slabs[slabs.groupby("lower_plateID")["trench_segment_length"].transform("sum") > options["Slab tesselation spacing"]*1e3]
+
     # Get slab sampling points
     slabs["slab_sampling_lat"], slabs["slab_sampling_lon"] = project_points(
         slabs.lat,
@@ -261,7 +264,7 @@ def get_point_data(
     points["lithospheric_mantle_thickness"] = 0.
     points["crustal_thickness"] = 0.
     points["water_depth"] = 0.
-    # points["LAB_depth"] = 0.
+    points["LAB_depth"] = 0.
     points["U"] = 0.
 
     # Add additional columns to store forces
