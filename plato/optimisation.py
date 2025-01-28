@@ -6,11 +6,15 @@ from typing import Dict, List, Optional, Union
 # Third-party libraries
 import numpy as _numpy
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 from tqdm import tqdm as _tqdm
 
 # Plato libraries
 from . import utils_data, utils_calc
 from .plate_torques import PlateTorques
+
+# For plotting
+cm2in = 0.3937008
 
 class Optimisation():
     """
@@ -678,32 +682,37 @@ class Optimisation():
 
                 # Plot
                 if plot == True:
-                    fig, ax = plt.subplots(1, 1, figsize=(15, 12))
-                    im = ax.imshow(residual_mag_normalised[:, :, opt_k], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
-                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
-                    ax.set_yticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                    ax.set_xlabel("Mantle viscosity [Pa s]")
-                    ax.set_ylabel("Slab pull constant")
-                    ax.scatter(opt_j, opt_i, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
-                    fig.colorbar(im, label = "Log(residual torque/driving torque)")
-                    plt.show()
+                    fig = plt.figure(figsize=(18*cm2in*2, 10*cm2in*2))
+                    gs = gridspec.GridSpec(1, 2)
 
-                    fig, ax = plt.subplots(1, 1, figsize=(15, 12))
-                    im = ax.imshow(residual_mag_normalised[opt_i, :, :].T, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
-                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
-                    ax.set_yticklabels(["{:.2f}".format(ss_const) for ss_const in _numpy.linspace(ss_consts.min(), ss_consts.max(), 5)])
-                    ax.set_xlabel("Mantle viscosity [Pa s]")
-                    ax.set_ylabel("Slab suction constant")
-                    ax.scatter(opt_j, opt_k, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
-                    fig.colorbar(im, label="Log(residual torque/driving torque)")
+                    ax1 = plt.subplot(gs[0, 0])
+                    im1 = ax1.imshow(residual_mag_normalised[:, :, opt_k].T, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
+                    ax1.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax1.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax1.set_yticklabels(["{:.1e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
+                    ax1.set_xticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
+                    ax1.set_ylabel("Mantle viscosity [Pa s]")
+                    ax1.set_xlabel("Slab pull constant")
+                    ax1.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
+                    # fig.colorbar(im1, label = "Log(residual torque/driving torque)")
+
+                    ax2 = plt.subplot(gs[0, 1])
+                    im2 = ax2.imshow(residual_mag_normalised[opt_i, :, :], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
+                    ax2.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax2.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax2.set_yticklabels([])
+                    ax2.set_xticklabels(["{:.2f}".format(ss_const) for ss_const in _numpy.linspace(ss_consts.min(), ss_consts.max(), 5)])
+                    ax2.set_ylabel("")
+                    ax2.set_xlabel("Slab suction constant")
+                    ax2.scatter(opt_k, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
+
+                    cax = fig.add_axes([0.412, 0.06, 0.2, 0.02])
+                    cbar = plt.colorbar(im2, cax=cax, orientation="horizontal")
+                    cbar.set_label("Log(residual torque/driving torque)")
                     plt.show()
 
                 # Print results
-                print(f"Optimal coefficients for ", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
+                print(f"Optimal coefficients for case {_case}", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
                 print("Minimum residual torque: {:.2%} of driving torque".format(10**(_numpy.amin(residual_mag_normalised))))
                 print("Optimum viscosity [Pa s]: {:.2e}".format(opt_visc))
                 print("Optimum Drag Coefficient [Pa s/m]: {:.2e}".format(opt_visc / self.settings.mech.La))

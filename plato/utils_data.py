@@ -146,6 +146,7 @@ def get_slab_data(
 
     # Ditch any trenches where the total trench segment length of a plate is below the tesselation threshold
     slabs = slabs[slabs.groupby("lower_plateID")["trench_segment_length"].transform("sum") > options["Slab tesselation spacing"]*1e3]
+    slabs.reset_index(inplace=True)
 
     # Get slab sampling points
     slabs["slab_sampling_lat"], slabs["slab_sampling_lon"] = project_points(
@@ -264,7 +265,7 @@ def get_point_data(
     points["lithospheric_mantle_thickness"] = 0.
     points["crustal_thickness"] = 0.
     points["water_depth"] = 0.
-    points["LAB_depth"] = 0.
+    # points["LAB_depth"] = 0.
     points["U"] = 0.
 
     # Add additional columns to store forces
@@ -594,9 +595,9 @@ def get_options(
         2e3,
         700e3,
         1e-12,
-        0.2225,
-        1/3,
-        1.44e20,
+        0.2104,
+        .0643,
+        1.25e20,
         250,
         1,
         0,

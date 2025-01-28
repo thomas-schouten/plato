@@ -621,7 +621,7 @@ def sum_torque(
     plate_data.loc[:, f"{torque_type}_torque_mag"] = _numpy.linalg.norm(summed_torques_cartesian, axis=0)
 
     # Calculate the position vector of the centroid of the plate in Cartesian coordinates
-    centroid_position = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon, constants.mean_Earth_radius_m)
+    centroid_position = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon)#, constants.mean_Earth_radius_m)
 
     # Calculate the torque vector as the cross product of the Cartesian torque vector (x, y, z) with the position vector of the centroid
     force_at_centroid_xyz = _numpy.cross(summed_torques_cartesian, centroid_position, axis=0)

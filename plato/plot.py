@@ -996,6 +996,7 @@ class PlotReconstruction():
             vmax: Union[int, float] = 250,
             alpha: Union[int, float] = 0.5,
             log_scale: bool = False,
+            normalise_vectors: bool = False,
             coastlines_facecolour: str = "lightgrey",
             coastlines_edgecolour: str = "lightgrey",
             coastlines_linewidth: Union[int, float] = 0,
@@ -1028,6 +1029,8 @@ class PlotReconstruction():
         :type alpha:                    int, float
         :param log_scale:               whether or not to use log scale
         :type log_scale:                bool
+        :param normalise_vectors:       whether or not to normalise magnitude of torque vector by the magnitude of the driving torque
+        :type normalise_vectors:        bool
         :param coastlines_facecolour:   facecolour for coastlines
         :type coastlines_facecolour:    str
         :param coastlines_edgecolour:   edgecolour for coastlines
@@ -1104,7 +1107,7 @@ class PlotReconstruction():
         qu = {}
 
         # Loop over the different torque components
-        for i, torque in enumerate(_numpy.flip(["slab_pull", "slab_suction", "GPE", "slab_bend", "mantle_drag"])):
+        for i, torque in enumerate(_numpy.flip(["residual", "slab_pull", "slab_suction", "GPE", "slab_bend", "mantle_drag"])):
             # Only plot vectors if the mean value is larger than 0 (i.e. the torque has been calculated)
             if plate_data[f"{torque}_force_mag"].mean() > 0:
                 qu[torque] = self.plot_vectors(
@@ -1113,8 +1116,8 @@ class PlotReconstruction():
                     plate_data.centroid_lon.values,
                     plate_data[f"{torque}_force_lat"].values,
                     plate_data[f"{torque}_force_lon"].values,
-                    plate_data[f"{torque}_force_mag"].values,
-                    normalise_vectors = False,
+                    plate_data[f"driving_force_mag"].values,
+                    normalise_vectors = normalise_vectors,
                     width = vector_width,
                     scale = vector_scale,
                     scale_units = vector_scale_units,
