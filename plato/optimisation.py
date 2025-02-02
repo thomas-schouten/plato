@@ -1243,7 +1243,7 @@ class Optimisation():
                     opt_index = _numpy.nanargmin(distances + _numpy.abs(pole_angle_opt_stack[_age][_case][_plateID]-_numpy.repeat(reconstructed_pole_angle[_plateID], len(constants))))
                     opt_constants[_age][_case][_plateID] = constants[opt_index]
 
-                    print("Optimal constant for plate", _plateID, f"for case {_case} at age {_age}", opt_constants[_age][_case][_plateID])
+                    # print("Optimal constant for plate", _plateID, f"for case {_case} at age {_age}", opt_constants[_age][_case][_plateID])
 
         for _age in _tqdm(_ages, desc="Optimising torques"):
             for _case in _cases:
@@ -1416,7 +1416,7 @@ class Optimisation():
                             if _slab_data[_age][_case].empty:
                                 continue
 
-                            print(_plate_data)
+                            # print(_plate_data)
 
                             # Get the slab pull force magnitude
                             max_slab_pull_force_mag = _slab_data[_age][_case]["slab_pull_force_mag"] / _slab_data[_age][_case]["slab_pull_constant"]
@@ -1459,7 +1459,7 @@ class Optimisation():
                             _iter_torques = utils_calc.sum_torque(_iter_torques, "driving", self.settings.constants)
                             _iter_torques = utils_calc.sum_torque(_iter_torques, "residual", self.settings.constants)
 
-                            print(_iter_torques)
+                            # print(_iter_torques)
                             # self.plate_torques.calculate_driving_torque(ages=_age, cases=_case, plateIDs=_plateID, PROGRESS_BAR=False)
                             # self.plate_torques.calculate_residual_torque(ages=_age, cases=_case, plateIDs=_plateID, PROGRESS_BAR=False, CALCULATE_AT_POINTS=False)
 
