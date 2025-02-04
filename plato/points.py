@@ -472,6 +472,12 @@ class Points:
         :type ages:             float, int, list, numpy.ndarray
         :param cases:           cases of interest (default: None)
         :type cases:            str, list
+        :param plateIDs:        plateIDs of interest (default: None)
+        :type plateIDs:         list, numpy.ndarray
+        :param grids:           grids to sample (default: None)
+        :type grids:            dict
+        :param PROGRESS_BAR:    flag to enable progress bar (default: True)
+        :type PROGRESS_BAR:     bool
         """
         # Define ages if not provided
         _ages = utils_data.select_ages(ages, self.settings.ages)
