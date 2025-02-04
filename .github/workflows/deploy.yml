@@ -15,8 +15,8 @@ jobs:
 
       - name: Install Dependencies 📦
         run: |
-          pip install sphinx  # Install Sphinx if it's not already installed
-          pip install gplately  # Install the missing module
+          # pip install sphinx  # Install Sphinx if it's not already installed
+          conda activate your_env_name # Activate environment
           # Add any other dependencies you need for your Sphinx documentation
 
       - name: Build Documentation 📖
