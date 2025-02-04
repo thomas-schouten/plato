@@ -2,31 +2,35 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master  # Trigger this workflow only for pushes to the master branch
+      - master
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
-      - name: Install Dependencies 📦
+      - name: Check environment.yml
+        run: find $GITHUB_WORKSPACE -name "environment.yml"
+
+      - name: Setup Conda Environment 🏗️
         run: |
-          # pip install sphinx  # Install Sphinx if it's not already installed
-          conda init
-          conda activate reveal_env # Activate environment
-          # Add any other dependencies you need for your Sphinx documentation
+          mamba env create -f $GITHUB_WORKSPACE/plato/environment.yml || mamba env update --file $GITHUB_WORKSPACE/plato/environment.yml --prune
 
       - name: Build Documentation 📖
         run: |
-          cd docs  # Change to the docs directory
-          make html  # Run make html to build the documentation
+          source ~/miniconda/etc/profile.d/conda.sh
+          mamba activate reveal_env
+          cd docs
+          make html
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs/build/html  # Update to match the output folder specified in Makefile
-          branch: gh-pages  # Specify the branch to deploy to
+          folder: docs/build/html
+          branch: gh-pages
