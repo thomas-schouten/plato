@@ -20,7 +20,7 @@ jobs:
       
       - name: Setup Conda Environment 🏗️
         run: |
-          conda env create -f environment.yml || conda env update --file environment.yml --prune
+          conda env create -f $GITHUB_WORKSPACE/environment.yml || conda env update --file $GITHUB_WORKSPACE/environment.yml --prune
           source ~/.bashrc
           conda activate reveal_env
 
