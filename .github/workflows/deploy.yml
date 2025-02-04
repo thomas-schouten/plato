@@ -15,23 +15,14 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
 
+      - name: Check environment.yml
+        run: ls -l $GITHUB_WORKSPACE
+      
       - name: Setup Conda Environment 🏗️
         run: |
           conda env create -f environment.yml || conda env update --file environment.yml --prune
           source ~/.bashrc
           conda activate reveal_env
-
-      - name: Install pygplates
-        run: |
-          source ~/.bashrc
-          conda activate reveal_env
-          pip install pygplates  # Install missing module
-
-      - name: Verify Installation
-        run: |
-          source ~/.bashrc
-          conda activate reveal_env
-          python -c "import pygplates; print('pygplates installed successfully')"
 
       - name: Build Documentation 📖
         run: |
