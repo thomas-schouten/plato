@@ -149,8 +149,6 @@ for age in [100]:#np.arange(0, 181):
     print(f"Reconstructed continental grids for {age} Ma")
 # %%
 reconstructed_ds
- #%%
-seafloor_grid
 
 # %%
 age = 5
