@@ -376,6 +376,10 @@ class Points:
         :type sampling_coords:  list
         :param cols:            columns to store sampled data (default: ["seafloor_age"])
         :type cols:             str, list
+        :param default_cases:   default cases to sample (default: None)
+        :type default_cases:    str
+        :param PROGRESS_BAR:    flag to enable progress bar (default: True)
+        :type PROGRESS_BAR:     bool
         """
         # Define ages if not provided
         _ages = utils_data.select_ages(ages, self.settings.ages)
