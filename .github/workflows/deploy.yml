@@ -16,17 +16,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check environment.yml
-        run: ls -l $GITHUB_WORKSPACE
-      
+        run: find $GITHUB_WORKSPACE -name "environment.yml"
+
       - name: Setup Conda Environment 🏗️
         run: |
-          conda env create -f $GITHUB_WORKSPACE/environment.yml || conda env update --file $GITHUB_WORKSPACE/environment.yml --prune
-          source ~/.bashrc
+          conda env create -f $GITHUB_WORKSPACE/plato/environment.yml || conda env update --file $GITHUB_WORKSPACE/plato/environment.yml --prune
+          source ~/miniconda/etc/profile.d/conda.sh
           conda activate reveal_env
 
       - name: Build Documentation 📖
         run: |
-          source ~/.bashrc
+          source ~/miniconda/etc/profile.d/conda.sh
           conda activate reveal_env
           cd docs
           make html
