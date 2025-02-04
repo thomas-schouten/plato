@@ -365,6 +365,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span> <span class="o">=</span> <span class="n">slabs</span>
 
+        <span class="c1"># Make shortcuts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span>
+
         <span class="c1"># Initialise dataframe to store global properties for each case</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">case</span><span class="p">:</span> <span class="n">_pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
             <span class="p">{</span><span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span>
@@ -373,7 +378,16 @@
             <span class="s2">&quot;world_uncertainty&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
             <span class="s2">&quot;net_rotation_pole_lat&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
             <span class="s2">&quot;net_rotation_pole_lon&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
-            <span class="s2">&quot;net_rotation_rate&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">}</span>
+            <span class="s2">&quot;net_rotation_rate&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_migration_pole_lat&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_migration_pole_lon&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_migration_rate&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_normal_migration_pole_lat&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_normal_migration_pole_lon&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_normal_migration_rate&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_parallel_migration_pole_lat&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_parallel_migration_pole_lon&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+            <span class="s2">&quot;trench_parallel_migration_rate&quot;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">},</span>
         <span class="p">)</span> <span class="k">for</span> <span class="n">case</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">}</span>
 
         <span class="c1"># Get the number of plates</span>
@@ -383,11 +397,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_subduction_length</span><span class="p">()</span>
 
         <span class="c1"># Get the world uncertainty</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_world_uncertainty</span><span class="p">()</span>
+        <span class="c1"># self.calculate_world_uncertainty()</span>
 
         <span class="c1"># Get the net rotation</span>
         <span class="k">if</span> <span class="n">CALCULATE_VELOCITIES</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">calculate_net_rotation</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_trench_migration</span><span class="p">()</span>
     
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Globe is a class that contains data and methods for to characterise the global geodynamic state of a reconstruction.&quot;</span>
@@ -395,7 +410,6 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
     
-
 <div class="viewcode-block" id="Globe.calculate_number_of_plates">
 <a class="viewcode-back" href="../../api/globe/index.html#plato.globe.Globe.calculate_number_of_plates">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_number_of_plates</span><span class="p">(</span>
@@ -432,7 +446,7 @@
 <a class="viewcode-back" href="../../api/globe/index.html#plato.globe.Globe.calculate_subduction_length">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_subduction_length</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">slabs</span><span class="p">:</span> <span class="s1">&#39;Slabs&#39;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">slabs</span><span class="p">:</span> <span class="n">Slabs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">,</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
@@ -484,8 +498,8 @@
 <a class="viewcode-back" href="../../api/globe/index.html#plato.globe.Globe.calculate_net_rotation">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_net_rotation</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">plates</span><span class="p">:</span> <span class="n">Plates</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">points</span><span class="p">:</span> <span class="n">Points</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Plates</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">points</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Points</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -511,7 +525,12 @@
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
         <span class="c1"># Define cases if not provided</span>
-        <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;reconstructed&quot;</span><span class="p">]:</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;synthetic&quot;</span><span class="p">]:</span>
+            <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
 
         <span class="c1"># Calculate the net rotation of the Earth&#39;s lithosphere</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_age</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_tqdm</span><span class="p">(</span>
@@ -584,16 +603,130 @@
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Net rotation for case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> has been calculated!&quot;</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Globe.calculate_trench_migration">
+<a class="viewcode-back" href="../../api/globe/index.html#plato.globe.Globe.calculate_trench_migration">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_trench_migration</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">slabs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Slabs</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate the net migration of the Earth&#39;s subduction zones.</span>
+
+<span class="sd">        :param slabs:       `Plates` object (default: None)</span>
+<span class="sd">        :type slabs:        plato.slabs.Slabs</span>
+<span class="sd">        :param points:      `Points` object (default: None)</span>
+<span class="sd">        :type points:       plato.points.Points</span>
+<span class="sd">        :param ages:        ages of interest (default: None)</span>
+<span class="sd">        :type ages:         float, int, list, numpy.ndarray</span>
+<span class="sd">        :param cases:       cases of interest (default: None)</span>
+<span class="sd">        :type cases:        str, list</span>
+<span class="sd">        :param plateIDs:    plateIDs of interest (default: None)</span>
+<span class="sd">        :type plateIDs:     int, float, list, numpy.ndarray</span>
+<span class="sd">        :param PROGRESS_BAR: flag to enable progress bar (default: True)</span>
+<span class="sd">        :type PROGRESS_BAR:  bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Define ages if not provided</span>
+        <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
+
+        <span class="c1"># Define cases if not provided</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;reconstructed&quot;</span><span class="p">]:</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;synthetic&quot;</span><span class="p">]:</span>
+            <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the net migration of the Earth&#39;s subduction zones</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_age</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">_tqdm</span><span class="p">(</span>
+            <span class="n">_ages</span><span class="p">,</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating trench migration&quot;</span><span class="p">,</span>
+            <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">),</span>
+        <span class="p">)):</span>
+            <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">:</span>
+                <span class="c1"># Check if plate data is provided</span>
+                <span class="k">if</span> <span class="n">utils_init</span><span class="o">.</span><span class="n">check_object_data</span><span class="p">(</span><span class="n">slabs</span><span class="p">,</span> <span class="n">Slabs</span><span class="p">,</span> <span class="n">_age</span><span class="p">,</span> <span class="n">_case</span><span class="p">):</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating net rotation for case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> using provided Plates data&quot;</span><span class="p">)</span>
+                    <span class="n">_slabs</span> <span class="o">=</span> <span class="n">slabs</span>
+                <span class="k">elif</span> <span class="n">utils_init</span><span class="o">.</span><span class="n">check_object_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="p">,</span> <span class="n">Slabs</span><span class="p">,</span> <span class="n">_age</span><span class="p">,</span> <span class="n">_case</span><span class="p">):</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calculating net rotation for case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> using stored Points data&quot;</span><span class="p">)</span>
+                    <span class="n">_slabs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instantiating Plates object for case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> to calculate net rotation&quot;</span><span class="p">)</span>
+                    <span class="c1"># Get a new plates object if not provided</span>
+                    <span class="n">_slabs</span> <span class="o">=</span> <span class="n">Slabs</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">reconstruction</span><span class="p">,</span>
+                        <span class="n">ages</span> <span class="o">=</span> <span class="n">_age</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># Define what column to use for plateIDs</span>
+                <span class="n">plateID_col</span> <span class="o">=</span> <span class="s2">&quot;trench_plateID&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Reconstructed motions&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;upper_plateID&quot;</span>
+
+                <span class="c1"># Check if plates and points are provided</span>
+                <span class="n">_plateIDs</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_plateIDs</span><span class="p">(</span><span class="n">plateIDs</span><span class="p">,</span> <span class="n">_slabs</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="n">plateID_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+                <span class="c1"># Select plates and points data</span>
+                <span class="n">selected_plates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span>
+                <span class="n">selected_slabs</span> <span class="o">=</span> <span class="n">_slabs</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span>
+
+                <span class="c1"># Filter by plateIDs, if necessary</span>
+                <span class="k">if</span> <span class="n">plateIDs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">selected_slabs</span> <span class="o">=</span> <span class="n">_slabs</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="n">_slabs</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][[</span><span class="n">plateID_col</span><span class="p">]]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">_plateIDs</span><span class="p">)]</span>
+
+                <span class="c1"># Filter by minimum plate area</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Minimum plate area&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.</span><span class="p">:</span>
+                    <span class="n">selected_plates</span> <span class="o">=</span> <span class="n">selected_plates</span><span class="p">[</span><span class="n">selected_plates</span><span class="o">.</span><span class="n">area</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Minimum plate area&quot;</span><span class="p">]]</span>
+                    <span class="n">selected_slabs</span> <span class="o">=</span> <span class="n">selected_slabs</span><span class="p">[</span><span class="n">selected_slabs</span><span class="o">.</span><span class="n">lower_plateID</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">selected_plates</span><span class="o">.</span><span class="n">plateID</span><span class="p">)]</span>
+
+                <span class="c1"># Calculate full trench migration vector as well as normal and parallel components</span>
+                <span class="n">trench_migration</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_trench_migration</span><span class="p">(</span>
+                    <span class="n">selected_slabs</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">],</span>
+                <span class="p">)</span>
+                <span class="n">trench_normal_migration</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_trench_migration</span><span class="p">(</span>
+                    <span class="n">selected_slabs</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">],</span>
+                    <span class="s2">&quot;normal&quot;</span>
+                <span class="p">)</span>
+                <span class="n">trench_parallel_migration</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_trench_migration</span><span class="p">(</span>
+                    <span class="n">selected_slabs</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">],</span>
+                    <span class="s2">&quot;parallel&quot;</span>
+                <span class="p">)</span>
+                <span class="c1"># print(trench_parallel_migration)</span>
+
+                <span class="c1"># Store full trench migration</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_migration_pole_lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_migration</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_migration_pole_lon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_migration</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_migration_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_migration</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+                <span class="c1"># Store trench normal migration</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_normal_migration_pole_lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_normal_migration</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_normal_migration_pole_lon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_normal_migration</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_normal_migration_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_normal_migration</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+                <span class="c1"># Store trench parallel migration</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_parallel_migration_pole_lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_parallel_migration</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_parallel_migration_pole_lon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_parallel_migration</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;trench_parallel_migration_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trench_parallel_migration</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+
+
 <div class="viewcode-block" id="Globe.calculate_world_uncertainty">
 <a class="viewcode-back" href="../../api/globe/index.html#plato.globe.Globe.calculate_world_uncertainty">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_world_uncertainty</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">ages</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">polygons</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">reconstructed_polygons</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the fraction of the Earth&#39;s surface that has been lost to subduction.</span>
+
+<span class="sd">        :param ages:                ages of interest (default: None)</span>
+<span class="sd">        :type ages:                 float, int, list, numpy.ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
@@ -649,6 +782,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to save &#39;Globe&#39; object.</span>
 <span class="sd">        Data of the &#39;Globe&#39; object is saved to .parquet files.</span>
+
+<span class="sd">        :param cases:       cases of interest (default: None)</span>
+<span class="sd">        :type cases:        str, list</span>
+<span class="sd">        :param file_dir:    directory to store files (default: None)</span>
+<span class="sd">        :type file_dir:     str</span>
+<span class="sd">        :param PROGRESS_BAR: flag to enable progress bar (default: True)</span>
+<span class="sd">        :type PROGRESS_BAR:  bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Define cases if not provided</span>
         <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
@@ -683,6 +823,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to export &#39;Globe&#39; object.</span>
 <span class="sd">        Data of the &#39;Globe&#39; object is exported to .csv files.</span>
+
+<span class="sd">        :param cases:       cases of interest (default: None)</span>
+<span class="sd">        :type cases:        str, list</span>
+<span class="sd">        :param file_dir:    directory to store files (default: None)</span>
+<span class="sd">        :type file_dir:     str</span>
+<span class="sd">        :param PROGRESS_BAR: flag to enable progress bar (default: True)</span>
+<span class="sd">        :type PROGRESS_BAR:  bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Define cases if not provided</span>
         <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
@@ -738,7 +885,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=27c35e89"></script>
+</div><script src="../../_static/documentation_options.js?v=33369b62"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

@@ -327,9 +327,32 @@ Providing the settings from a <cite>Globe</cite> object will allow the user to i
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="plato.globe.Globe.calculate_trench_migration">
+<span class="sig-name descname"><span class="pre">calculate_trench_migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROGRESS_BAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/globe.html#Globe.calculate_trench_migration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.globe.Globe.calculate_trench_migration" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the net migration of the Earth’s subduction zones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slabs</strong> (<a class="reference internal" href="../slabs/index.html#plato.slabs.Slabs" title="plato.slabs.Slabs"><em>plato.slabs.Slabs</em></a>) – <cite>Plates</cite> object (default: None)</p></li>
+<li><p><strong>points</strong> (<a class="reference internal" href="../points/index.html#plato.points.Points" title="plato.points.Points"><em>plato.points.Points</em></a>) – <cite>Points</cite> object (default: None)</p></li>
+<li><p><strong>ages</strong> (<em>float</em><em>, </em><em>int</em><em>, </em><em>list</em><em>, </em><em>numpy.ndarray</em>) – ages of interest (default: None)</p></li>
+<li><p><strong>cases</strong> (<em>str</em><em>, </em><em>list</em>) – cases of interest (default: None)</p></li>
+<li><p><strong>plateIDs</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>list</em><em>, </em><em>numpy.ndarray</em>) – plateIDs of interest (default: None)</p></li>
+<li><p><strong>PROGRESS_BAR</strong> (<em>bool</em>) – flag to enable progress bar (default: True)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="plato.globe.Globe.calculate_world_uncertainty">
-<span class="sig-name descname"><span class="pre">calculate_world_uncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polygons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstructed_polygons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/globe.html#Globe.calculate_world_uncertainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.globe.Globe.calculate_world_uncertainty" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">calculate_world_uncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstructed_polygons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/globe.html#Globe.calculate_world_uncertainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.globe.Globe.calculate_world_uncertainty" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the fraction of the Earth’s surface that has been lost to subduction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ages</strong> (<em>float</em><em>, </em><em>int</em><em>, </em><em>list</em><em>, </em><em>numpy.ndarray</em>) – ages of interest (default: None)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -337,6 +360,15 @@ Providing the settings from a <cite>Globe</cite> object will allow the user to i
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROGRESS_BAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/globe.html#Globe.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.globe.Globe.save" title="Link to this definition">¶</a></dt>
 <dd><p>Function to save ‘Globe’ object.
 Data of the ‘Globe’ object is saved to .parquet files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cases</strong> (<em>str</em><em>, </em><em>list</em>) – cases of interest (default: None)</p></li>
+<li><p><strong>file_dir</strong> (<em>str</em>) – directory to store files (default: None)</p></li>
+<li><p><strong>PROGRESS_BAR</strong> (<em>bool</em>) – flag to enable progress bar (default: True)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -344,6 +376,15 @@ Data of the ‘Globe’ object is saved to .parquet files.</p>
 <span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROGRESS_BAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/globe.html#Globe.export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.globe.Globe.export" title="Link to this definition">¶</a></dt>
 <dd><p>Function to export ‘Globe’ object.
 Data of the ‘Globe’ object is exported to .csv files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cases</strong> (<em>str</em><em>, </em><em>list</em>) – cases of interest (default: None)</p></li>
+<li><p><strong>file_dir</strong> (<em>str</em>) – directory to store files (default: None)</p></li>
+<li><p><strong>PROGRESS_BAR</strong> (<em>bool</em>) – flag to enable progress bar (default: True)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -410,6 +451,7 @@ Data of the ‘Globe’ object is exported to .csv files.</p>
 <li><a class="reference internal" href="#plato.globe.Globe.calculate_number_of_plates"><code class="docutils literal notranslate"><span class="pre">Globe.calculate_number_of_plates()</span></code></a></li>
 <li><a class="reference internal" href="#plato.globe.Globe.calculate_subduction_length"><code class="docutils literal notranslate"><span class="pre">Globe.calculate_subduction_length()</span></code></a></li>
 <li><a class="reference internal" href="#plato.globe.Globe.calculate_net_rotation"><code class="docutils literal notranslate"><span class="pre">Globe.calculate_net_rotation()</span></code></a></li>
+<li><a class="reference internal" href="#plato.globe.Globe.calculate_trench_migration"><code class="docutils literal notranslate"><span class="pre">Globe.calculate_trench_migration()</span></code></a></li>
 <li><a class="reference internal" href="#plato.globe.Globe.calculate_world_uncertainty"><code class="docutils literal notranslate"><span class="pre">Globe.calculate_world_uncertainty()</span></code></a></li>
 <li><a class="reference internal" href="#plato.globe.Globe.save"><code class="docutils literal notranslate"><span class="pre">Globe.save()</span></code></a></li>
 <li><a class="reference internal" href="#plato.globe.Globe.export"><code class="docutils literal notranslate"><span class="pre">Globe.export()</span></code></a></li>
@@ -426,7 +468,7 @@ Data of the ‘Globe’ object is exported to .csv files.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=27c35e89"></script>
+</div><script src="../../_static/documentation_options.js?v=33369b62"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

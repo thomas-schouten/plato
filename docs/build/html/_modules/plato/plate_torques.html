@@ -263,6 +263,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">_numpy</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">_pandas</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">_xarray</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span> <span class="k">as</span> <span class="n">_tqdm</span>
 
 <span class="c1"># Local libraries</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils_data</span><span class="p">,</span> <span class="n">utils_init</span>
@@ -386,6 +387,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">Points</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">reconstruction</span><span class="p">,</span>
+                <span class="n">plate_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
                 <span class="n">resolved_geometries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">resolved_geometries</span>
             <span class="p">)</span>
 
@@ -422,10 +424,20 @@
                 <span class="n">plates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="p">,</span>
                 <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">,</span>
                 <span class="n">slabs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="p">,</span>
+                <span class="n">CALCULATE_VELOCITIES</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="c1"># Calculate RMS plate velocities</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_rms_velocity</span><span class="p">()</span>
+        <span class="c1"># Calculate RMS plate velocities for newly initialised data</span>
+        <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">NEW_DATA</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+            <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating RMS velocities&quot;</span><span class="p">,</span>
+            <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_rms_velocity</span><span class="p">(</span>
+                <span class="n">ages</span> <span class="o">=</span> <span class="n">_age</span><span class="p">,</span>
+                <span class="n">cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">NEW_DATA</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span>
+                <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="c1"># Set shortcuts</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span>
@@ -443,12 +455,13 @@
 <a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.add_grid">[docs]</a>
     <span class="k">def</span> <span class="nf">add_grid</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">input_grids</span><span class="p">,</span>
-            <span class="n">variable_name</span> <span class="o">=</span> <span class="s2">&quot;new_grid&quot;</span><span class="p">,</span>
-            <span class="n">grid_type</span> <span class="o">=</span> <span class="s2">&quot;seafloor_age&quot;</span><span class="p">,</span>
-            <span class="n">target_variable</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
-            <span class="n">mask_continents</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">prefactor</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
+            <span class="n">input_grids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span>
+            <span class="n">variable_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;new_grid&quot;</span><span class="p">,</span>
+            <span class="n">grid_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seafloor_age&quot;</span><span class="p">,</span>
+            <span class="n">target_variable</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+            <span class="n">mask_continents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">interpolate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">prefactor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to add a grid to the grids object. This calls the add_grid method in the Grids class.</span>
@@ -481,10 +494,10 @@
 <a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.calculate_rms_velocity">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_rms_velocity</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">ages</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">cases</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">plateIDs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to calculate root mean square velocities for plates.</span>
@@ -577,6 +590,7 @@
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ITERATIONS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -591,10 +605,10 @@
 <span class="sd">        :type plateIDs:     int, float, list, numpy.ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Sample points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sample_point_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_point_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
     
         <span class="c1"># Sample slabs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sample_slab_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_slab_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateTorques.sample_point_seafloor_ages">
@@ -626,6 +640,7 @@
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ITERATIONS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -638,7 +653,7 @@
 <span class="sd">        :param plateIDs:    plateIDs of interest (default: None)</span>
 <span class="sd">        :type plateIDs:     int, float, list, numpy.ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">sample_slab_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grids</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">sample_slab_seafloor_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grids</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">,</span> <span class="n">ITERATIONS</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateTorques.sample_arc_seafloor_ages">
@@ -691,6 +706,33 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">sample_slab_sediment_thickness</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grids</span><span class="o">.</span><span class="n">sediment</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="PlateTorques.calculate_lab_depths">
+<a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.calculate_lab_depths">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_lab_depths</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to sample the depth of the lithosphere-asthenosphere boundary (LAB) at points.</span>
+<span class="sd">        This calls the sample_lab_depths method in the Points class.</span>
+
+<span class="sd">        :param ages:        ages of interest (default: None)</span>
+<span class="sd">        :type ages:         float, int, list, numpy.ndarray</span>
+<span class="sd">        :param cases:       cases of interest (default: None)</span>
+<span class="sd">        :type cases:        str, list</span>
+<span class="sd">        :param plateIDs:    plateIDs of interest (default: None)</span>
+<span class="sd">        :type plateIDs:     int, float, list, numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Calculate LAB depths at points</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">calculate_lab_depths</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grids</span><span class="o">.</span><span class="n">continent</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
+
+        <span class="c1"># Calculate mean LAB depths for each plate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">calculate_mean_lab_depth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="PlateTorques.calculate_all_torques">
 <a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.calculate_all_torques">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_all_torques</span><span class="p">(</span>
@@ -721,6 +763,9 @@
 
         <span class="c1"># Calculate slab bend torque</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_slab_bend_torque</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
+
+        <span class="c1"># Calculate slab suction torque</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_slab_suction_torque</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
 
         <span class="c1"># Calculate synthetic velocity</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_synthetic_velocity</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
@@ -855,6 +900,39 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculated mantle drag torque!&quot;</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="PlateTorques.calculate_slab_suction_torque">
+<a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.calculate_slab_suction_torque">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_slab_suction_torque</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to calculate the slab bend torque.</span>
+
+<span class="sd">        :param ages:        ages of interest (default: None)</span>
+<span class="sd">        :type ages:         float, int, list, numpy.ndarray</span>
+<span class="sd">        :param cases:       cases of interest (default: None)</span>
+<span class="sd">        :type cases:        str, list</span>
+<span class="sd">        :param plateIDs:    plateIDs of interest (default: None)</span>
+<span class="sd">        :type plateIDs:     int, float, list, numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Calculate the slab bend force along the trenches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">calculate_slab_suction_force</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">plateIDs</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the torque on </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">calculate_torque_on_plates</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">,</span>
+            <span class="n">torque_var</span> <span class="o">=</span> <span class="s2">&quot;slab_suction&quot;</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="PlateTorques.calculate_slab_bend_torque">
 <a class="viewcode-back" href="../../api/plate_torques/index.html#plato.plate_torques.PlateTorques.calculate_slab_bend_torque">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_slab_bend_torque</span><span class="p">(</span>
@@ -885,9 +963,7 @@
             <span class="n">plateIDs</span><span class="p">,</span>
             <span class="n">torque_var</span> <span class="o">=</span> <span class="s2">&quot;slab_bend&quot;</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculated slab bend torque!&quot;</span><span class="p">)</span></div>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateTorques.calculate_driving_torque">
@@ -925,6 +1001,8 @@
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">CALCULATE_AT_SLABS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">CALCULATE_AT_POINTS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -945,23 +1023,25 @@
             <span class="n">PROGRESS_BAR</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># Calculate residual torque at slabs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_residual_force</span><span class="p">(</span>
-            <span class="n">ages</span><span class="p">,</span>
-            <span class="n">cases</span><span class="p">,</span>            
-            <span class="n">plateIDs</span><span class="p">,</span>
-            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;slabs&quot;</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">CALCULATE_AT_SLABS</span><span class="p">:</span>
+            <span class="c1"># Calculate residual torque at slabs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_residual_force</span><span class="p">(</span>
+                <span class="n">ages</span><span class="p">,</span>
+                <span class="n">cases</span><span class="p">,</span>
+                <span class="n">plateIDs</span><span class="p">,</span>
+                <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;slabs&quot;</span><span class="p">,</span>
+                <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="c1"># Calculate residual torque at points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_residual_force</span><span class="p">(</span>
-            <span class="n">ages</span><span class="p">,</span>
-            <span class="n">cases</span><span class="p">,</span>
-            <span class="n">plateIDs</span><span class="p">,</span>
-            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;points&quot;</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">CALCULATE_AT_POINTS</span><span class="p">:</span>
+            <span class="c1"># Calculate residual torque at points</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">calculate_residual_force</span><span class="p">(</span>
+                <span class="n">ages</span><span class="p">,</span>
+                <span class="n">cases</span><span class="p">,</span>
+                <span class="n">plateIDs</span><span class="p">,</span>
+                <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;points&quot;</span><span class="p">,</span>
+                <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateTorques.calculate_residual_force">
@@ -1016,6 +1096,7 @@
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">RECONSTRUCTED_CASES</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to compute synthetic velocities.</span>
@@ -1039,6 +1120,7 @@
             <span class="n">_cases</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="n">RECONSTRUCTED_CASES</span><span class="p">,</span>
         <span class="p">)</span>
 
         <span class="c1"># Calculate net rotation</span>
@@ -1049,30 +1131,31 @@
             <span class="n">PROGRESS_BAR</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># Calculate velocities at points</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">calculate_velocities</span><span class="p">(</span>
-            <span class="n">_ages</span><span class="p">,</span>
-            <span class="n">_cases</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">RECONSTRUCTED_CASES</span><span class="p">:</span>
+            <span class="c1"># Calculate velocities at points</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">calculate_velocities</span><span class="p">(</span>
+                <span class="n">_ages</span><span class="p">,</span>
+                <span class="n">_cases</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="c1"># Calculate velocities at slabs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">calculate_velocities</span><span class="p">(</span>
-            <span class="n">_ages</span><span class="p">,</span>
-            <span class="n">_cases</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span>
+            <span class="c1"># Calculate velocities at slabs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slabs</span><span class="o">.</span><span class="n">calculate_velocities</span><span class="p">(</span>
+                <span class="n">_ages</span><span class="p">,</span>
+                <span class="n">_cases</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="c1"># Calculate RMS velocity of plates</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">calculate_rms_velocity</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">,</span>
-            <span class="n">_ages</span><span class="p">,</span>
-            <span class="n">_cases</span><span class="p">,</span>
-            <span class="n">plateIDs</span><span class="p">,</span>
-            <span class="n">PROGRESS_BAR</span><span class="p">,</span>
-        <span class="p">)</span></div>
+            <span class="c1"># Calculate RMS velocity of plates</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plates</span><span class="o">.</span><span class="n">calculate_rms_velocity</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">,</span>
+                <span class="n">_ages</span><span class="p">,</span>
+                <span class="n">_cases</span><span class="p">,</span>
+                <span class="n">plateIDs</span><span class="p">,</span>
+                <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PlateTorques.rotate_torque">
@@ -1527,7 +1610,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=27c35e89"></script>
+</div><script src="../../_static/documentation_options.js?v=33369b62"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

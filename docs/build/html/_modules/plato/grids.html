@@ -389,10 +389,10 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">continent</span> <span class="o">=</span> <span class="n">continental_grids</span> <span class="k">if</span> <span class="n">continental_grids</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">continental_grids</span> <span class="ow">is</span> <span class="n">Dict</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading sediment grids&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading continent grids&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">continental_grids</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">continental_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
                     <span class="c1"># If the sediment is present in the provided dictionary, copy</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading sediment grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading continent grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">continental_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span>
 
                     <span class="c1"># Make sure that the coordinates and variables are named correctly</span>
@@ -509,6 +509,70 @@
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">,</span> <span class="n">new_grids</span><span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> updated:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">))</span></div>
 
+
+    <span class="c1"># def reconstruct_grid(</span>
+    <span class="c1">#         self,</span>
+    <span class="c1">#         grid: Union[Dict[Union[int, float], _xarray.DataArray], _xarray.DataArray],</span>
+    <span class="c1">#         target_variables: str = &quot;z&quot;,</span>
+    <span class="c1">#         ages: Optional[Union[int, float]] = None,</span>
+    <span class="c1">#         PROGRESS_BAR: bool = True,</span>
+    <span class="c1">#     ):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     Function to reconstruct a grid to a given reconstruction age.</span>
+
+    <span class="c1">#     NOTE: This function needs to be tested still.</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     # Define ages if not provided</span>
+    <span class="c1">#     _ages = utils_data.select_ages(ages, self.settings.ages)</span>
+
+    <span class="c1">#     # Define target variables if not provided</span>
+    <span class="c1">#     _variables = [target_variables] if isinstance(target_variables, str) else target_variables</span>
+
+    <span class="c1">#     # Initialise dictionary to store reconstructed data arrays</span>
+    <span class="c1">#     reconstructed_grids = {}</span>
+
+    <span class="c1">#     # Loop through variables</span>
+    <span class="c1">#     for _variable in target_variables:</span>
+    <span class="c1">#         # If it is a single grid, convert to gplately.Raster object</span>
+    <span class="c1">#         if isinstance(grid, _xarray.DataArray):</span>
+    <span class="c1">#             raster = _gplately.Raster(</span>
+    <span class="c1">#                 plate_reconstruction = self.reconstruction,</span>
+    <span class="c1">#                 data = raster[_variables].values,</span>
+    <span class="c1">#                 extent=&quot;global&quot;,    # equivalent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                 origin=&quot;lower&quot;,     # or set extent to (-180, 180, -90, 90)</span>
+    <span class="c1">#             )</span>
+
+    <span class="c1">#         # Loop through ages</span>
+    <span class="c1">#         for _age in _tqdm(</span>
+    <span class="c1">#                 _ages,</span>
+    <span class="c1">#                 desc = &quot;Reconstructing grids&quot;,</span>
+    <span class="c1">#                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)</span>
+    <span class="c1">#             ):</span>
+    <span class="c1">#             # If a dictionary of grids is passed, convert each entry to gplately.Raster object</span>
+    <span class="c1">#             if isinstance(grid, dict) and _age in grid and isinstance(grid[_age], _xarray.Dataset):</span>
+    <span class="c1">#                     raster = _gplately.Raster(</span>
+    <span class="c1">#                     plate_reconstruction = self.reconstruction,</span>
+    <span class="c1">#                     data = raster[_variable].values,</span>
+    <span class="c1">#                     extent=&quot;global&quot;,    # equivalent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                     origin=&quot;lower&quot;,     # or set extent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                 )</span>
+                    
+    <span class="c1">#             # Reconstruct the raster back to the current reconstruction age</span>
+    <span class="c1">#             reconstructed_raster = raster.reconstruct(</span>
+    <span class="c1">#                 time = _age,</span>
+    <span class="c1">#                 partitioning_features = self.reconstruction.static_polygons,</span>
+    <span class="c1">#             )</span>
+
+    <span class="c1">#             # Convert reconstructed raster back to xarray.DataArray</span>
+    <span class="c1">#             reconstructed_grids[_age] = _xarray.Dataset(_variable: ([&quot;latitude&quot;, &quot;longitude&quot;], reconstructed_raster.data)</span>
+    <span class="c1">#                 data_vars = {target_variable: ([&quot;latitude&quot;, &quot;longitude&quot;], reconstructed_raster.data)},</span>
+    <span class="c1">#                 coords = {</span>
+    <span class="c1">#                         &quot;latitude&quot;: ([&quot;latitude&quot;], reconstructed_raster.lats),</span>
+    <span class="c1">#                         &quot;longitude&quot;: ([&quot;longitude&quot;], reconstructed_raster.lons)</span>
+    <span class="c1">#                     }</span>
+    <span class="c1">#                 )</span>
+
+    <span class="c1">#     return reconstructed_grids</span>
     
 <div class="viewcode-block" id="Grids.generate_velocity_grid">
 <a class="viewcode-back" href="../../api/grids/index.html#plato.grids.Grids.generate_velocity_grid">[docs]</a>
@@ -797,7 +861,7 @@
 <a class="viewcode-back" href="../../api/grids/index.html#plato.grids.Grids.save_grid">[docs]</a>
     <span class="k">def</span> <span class="nf">save_grid</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span>
             <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="n">ages</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -892,7 +956,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=27c35e89"></script>
+</div><script src="../../_static/documentation_options.js?v=33369b62"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
