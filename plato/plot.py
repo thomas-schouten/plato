@@ -173,7 +173,7 @@ class PlotReconstruction():
         gl.right_labels = False
 
         if self.grids.seafloor_age[age] is not None and "seafloor_age" in self.grids.seafloor_age[age].data_vars:
-            ax.imshow(self.grids.seafloor_age[age].seafloor_age,)
+            # ax.imshow(self.grids.seafloor_age[age].seafloor_age,)
             
             # Plot seafloor age grid
             im = self.plot_grid(
