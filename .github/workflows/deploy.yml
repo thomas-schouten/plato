@@ -20,14 +20,12 @@ jobs:
 
       - name: Setup Conda Environment 🏗️
         run: |
-          conda env create -f $GITHUB_WORKSPACE/plato/environment.yml || conda env update --file $GITHUB_WORKSPACE/plato/environment.yml --prune
-          source ~/miniconda/etc/profile.d/conda.sh
-          conda activate reveal_env
+          mamba env create -f $GITHUB_WORKSPACE/plato/environment.yml || mamba env update --file $GITHUB_WORKSPACE/plato/environment.yml --prune
 
       - name: Build Documentation 📖
         run: |
           source ~/miniconda/etc/profile.d/conda.sh
-          conda activate reveal_env
+          mamba activate reveal_env
           cd docs
           make html
 
