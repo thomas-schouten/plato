@@ -16,13 +16,15 @@ from plato.plot import PlotReconstruction
 
 from copy import deepcopy
 
+cm2in = 0.3937008
+
 # Set parameters
 # Plate reconstruction
 reconstruction_name = "Muller2016" 
 
 # Reconstruction ages of interest
 # ages = np.arange(0, 51, 5)
-ages = [0]
+ages = [80]
 
 # Set directory to save the results
 # results_dir = "01-Results"
@@ -41,10 +43,97 @@ for age in ages:
 # Set up PlateTorques object
 M2016 = PlateTorques(reconstruction_name = reconstruction_name, ages = ages, seafloor_age_grids = seafloor_age_grids, continental_grids = continental_grids)
 
-for age in M2016.ages:
-    for case in M2016.cases:
-        M2016.points.data[age][case]["LAB_depth"] = 0.
-        M2016.plates.data[age][case]["mean_LAB_depth"] = 0.
+# Set up PlotReconstruction object
+plot_M2016 = PlotReconstruction(M2016)
+
+# %%
+M2016.sample_all()
+M2016.calculate_all_torques()
+fig, ax = plt.subplots(figsize = (18*cm2in, 18*cm2in), subplot_kw={"projection": ccrs.Orthographic(central_longitude=-100, central_latitude=45)})
+# ax.set_extent([120, 300, 10, 90], crs=ccrs.PlateCarree())
+ax.set_global()
+im, qu = plot_M2016.plot_torques_map(ax, age=0, minimum_plate_area=7.5e12, vector_scale=5e26, vector_linewidth=.5, plateIDs=101)
+ax.gridlines(draw_labels=True)
+plt.show()
+# %%
+# Calculate all torques
+# M2016.settings.options["ref"]["Continental keels"] = True
+M2016.settings.options["ref"]["Slab suction torque"] = True
+M2016.sample_all()
+M2016.calculate_slab_suction_torque()
+M2016.calculate_residual_torque()
+# Plot torques map
+fig, ax = plt.subplots(figsize = (18*cm2in, 18*cm2in), subplot_kw={"projection": ccrs.Orthographic(central_longitude=-100, central_latitude=45)})
+# ax.set_extent([120, 300, 10, 90], crs=ccrs.PlateCarree())
+ax.set_global()
+im, qu = plot_M2016.plot_torques_map(ax, age=0, minimum_plate_area=7.5e12, vector_scale=5e26, vector_linewidth=.5, plateIDs=101)
+ax.gridlines(draw_labels=True)
+plt.show()
+# %%
+_data = M2016.plates.data[0]["ref"].copy()
+# print(_data.lower_plateID.unique())
+# _data = _data[_data["lower_plateID"] == 101]
+# fig, ax = plt.subplots(subplot_kw={"projection": ccrs.Robinson()})
+# ax.scatter(
+#     _data["lon"],
+#     _data["lat"],
+#     c=_data["slab_pull_force_mag"],
+#     transform = ccrs.PlateCarree(),
+# )
+# ax.set_global()
+# ax.coastlines()
+
+# %%
+fig, ax = plt.subplots(figsize = (18*cm2in, 12*cm2in), subplot_kw={"projection": ccrs.Robinson(central_longitude=160)}, dpi=300)
+im, qu = plot_M2016.plot_velocity_map(ax, age=80)
+fig.colorbar(im, orientation = "horizontal", label="Speed [cm/a]", shrink=.8)
+plt.show()
+# %%
+
+# %%
+_data.residual_force_mag
+# %%
+M2016.plates.data[0]["ref"]["plateID"]
+# %%
+M2016.plates.data[0]["ref"]["slab_pull_torque_mag"]
+# %%
+M2016.plates.data[0]["ref"]["slab_suction_torque_mag"]
+# %%
+M2016.settings.options["ref"]["Slab suction torque"] = True
+M2016.settings.options["ref"]["Slab suction constant"] = .5
+M2016.sample_all()
+M2016.calculate_all_torques()
+
+optimise_M2016 = Optimisation(M2016)
+optimise_M2016.minimise_residual_torque_v4(plateIDs=[901,911,201,101])
+# %%
+plot_age = 0
+plt.scatter(
+    M2016.slabs.data[plot_age]["ref"].slab_pull_force_mag,
+    M2016.slabs.data[plot_age]["ref"].slab_suction_force_mag,
+)
+print(np.mean(M2016.slabs.data[plot_age]["ref"].slab_pull_force_mag/M2016.slabs.data[plot_age]["ref"].slab_suction_force_mag))
+# %%
+plot_age = 0
+fig, ax = plt.subplots(subplot_kw={"projection": ccrs.Robinson()})
+p=ax.scatter(
+    M2016.slabs.data[plot_age]["ref"].lon,
+    M2016.slabs.data[plot_age]["ref"].lat,
+    c=M2016.slabs.data[plot_age]["ref"].slab_suction_force_mag,
+    # vmin=0, vmax=1,
+    transform = ccrs.PlateCarree()
+)
+fig.colorbar(p, orientation="horizontal")
+ax.quiver(
+    M2016.slabs.data[plot_age]["ref"].lon,
+    M2016.slabs.data[plot_age]["ref"].lat,
+    M2016.slabs.data[plot_age]["ref"].slab_suction_force_lon,
+    M2016.slabs.data[plot_age]["ref"].slab_suction_force_lat,
+    # vmin=0, vmax=1,
+    transform = ccrs.PlateCarree()
+)
+ax.set_global()
+plt.show()
 
 # %%
 M2016.calculate_slab_pull_torque()

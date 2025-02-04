@@ -6,11 +6,15 @@ from typing import Dict, List, Optional, Union
 # Third-party libraries
 import numpy as _numpy
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 from tqdm import tqdm as _tqdm
 
 # Plato libraries
 from . import utils_data, utils_calc
 from .plate_torques import PlateTorques
+
+# For plotting
+cm2in = 0.3937008
 
 class Optimisation():
     """
@@ -558,7 +562,7 @@ class Optimisation():
         _ages = utils_data.select_ages(ages, self.settings.ages)
         
         # Define cases if not provided
-        _cases = utils_data.select_cases(cases, self.settings.point_cases)
+        _cases = utils_data.select_cases(cases, self.settings.cases)
 
         # Set range of viscosities
         viscs = _numpy.linspace(viscosity_range[0], viscosity_range[1], grid_size)
@@ -568,7 +572,7 @@ class Optimisation():
 
         # Make dictionary to store results
         normalised_residual_torques = {_age: {_case: None for _case in _cases} for _age in _ages}
-        optimsal_sp_consts = {_age: {_case: None for _case in _cases} for _age in _ages}
+        optimal_sp_consts = {_age: {_case: None for _case in _cases} for _age in _ages}
         optimal_viscs = {_age: {_case: None for _case in _cases} for _age in _ages}
         optimal_ss_consts = {_age: {_case: None for _case in _cases} for _age in _ages}
         optimal_indices = {_age: {_case: None for _case in _cases} for _age in _ages}
@@ -576,11 +580,11 @@ class Optimisation():
         # Loop through ages
         for _age in _ages:
             for _case in _cases:
-
                 # Set range of slab pull coefficients
                 if self.settings.options[_case]["Sediment subduction"]:
                     # Range is smaller with sediment subduction
                     sp_consts = _numpy.linspace(1e-5, 0.25, grid_size)
+                    print("smaller range")
                 else:
                     sp_consts = _numpy.linspace(1e-5, 1., grid_size)
 
@@ -617,9 +621,9 @@ class Optimisation():
                             residual_z -= _data.slab_pull_torque_z.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"]
 
                         if self.settings.options[_case]["Slab suction torque"] and "slab_suction_torque_x" in _data.columns:
-                            residual_x -= _data.slab_pull_torque_x.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
-                            residual_y -= _data.slab_pull_torque_y.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
-                            residual_z -= _data.slab_pull_torque_z.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_x -= _data.slab_suction_torque_x.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_y -= _data.slab_suction_torque_y.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_z -= _data.slab_suction_torque_z.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
 
                         # Add GPE torque
                         if self.settings.options[_case]["GPE torque"] and "GPE_torque_x" in _data.columns:
@@ -655,10 +659,10 @@ class Optimisation():
                 residual_mag_normalised = _numpy.log10(residual_mag / driving_mag)
 
                 # Find the indices of the minimum value
-                # opt_i = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=1))
-                # opt_j = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=0))
+                # opt_i = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=0))
+                # opt_j = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=1))
                 # opt_k = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=2))
-                # Find the index of the global minimum value
+                # # Find the index of the global minimum value
                 opt_index = _numpy.unravel_index(_numpy.argmin(residual_mag_normalised), residual_mag_normalised.shape)
 
                 # Unpack the indices
@@ -668,34 +672,47 @@ class Optimisation():
                 opt_sp_const = sp_const_grid[opt_i, opt_j, opt_k]
                 opt_ss_const = ss_const_grid[opt_i, opt_j, opt_k]
 
+                # plt.imshow(visc_grid[:, opt_j, :])
+                # plt.show()
+                # plt.imshow(sp_const_grid[opt_i, :, :])
+                # plt.show()
+                # plt.imshow(ss_const_grid[:, :, opt_k])
+                # plt.show()
+                # return
+
                 # Plot
                 if plot == True:
-                    fig, ax = plt.subplots(1, 2, figsize=(15, 12))
-                    im = ax.imshow(residual_mag_normalised[:, :, opt_k], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
-                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
-                    ax.set_yticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                    ax.set_xlabel("Mantle viscosity [Pa s]")
-                    ax.set_ylabel("Slab pull reduction factor")
-                    ax.scatter(opt_j, opt_i, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
-                    fig.colorbar(im, label = "Log(residual torque/driving torque)")
-                    plt.show()
+                    fig = plt.figure(figsize=(18*cm2in*2, 10*cm2in*2))
+                    gs = gridspec.GridSpec(1, 2)
 
-                    fig, ax = plt.subplots(1, 2, figsize=(15, 12))
-                    im = ax.imshow(residual_mag_normalised[:, :, opt_k], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
-                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
-                    ax.set_yticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                    ax.set_xlabel("Mantle viscosity [Pa s]")
-                    ax.set_ylabel("Slab pull reduction factor")
-                    ax.scatter(opt_j, opt_i, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
-                    fig.colorbar(im, label = "Log(residual torque/driving torque)")
+                    ax1 = plt.subplot(gs[0, 0])
+                    im1 = ax1.imshow(residual_mag_normalised[:, :, opt_k].T, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
+                    ax1.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax1.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax1.set_yticklabels(["{:.1e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
+                    ax1.set_xticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
+                    ax1.set_ylabel("Mantle viscosity [Pa s]")
+                    ax1.set_xlabel("Slab pull constant")
+                    ax1.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
+                    # fig.colorbar(im1, label = "Log(residual torque/driving torque)")
+
+                    ax2 = plt.subplot(gs[0, 1])
+                    im2 = ax2.imshow(residual_mag_normalised[opt_i, :, :], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
+                    ax2.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax2.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax2.set_yticklabels([])
+                    ax2.set_xticklabels(["{:.2f}".format(ss_const) for ss_const in _numpy.linspace(ss_consts.min(), ss_consts.max(), 5)])
+                    ax2.set_ylabel("")
+                    ax2.set_xlabel("Slab suction constant")
+                    ax2.scatter(opt_k, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
+
+                    cax = fig.add_axes([0.412, 0.06, 0.2, 0.02])
+                    cbar = plt.colorbar(im2, cax=cax, orientation="horizontal")
+                    cbar.set_label("Log(residual torque/driving torque)")
                     plt.show()
 
                 # Print results
-                print(f"Optimal coefficients for ", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
+                print(f"Optimal coefficients for case {_case}", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
                 print("Minimum residual torque: {:.2%} of driving torque".format(10**(_numpy.amin(residual_mag_normalised))))
                 print("Optimum viscosity [Pa s]: {:.2e}".format(opt_visc))
                 print("Optimum Drag Coefficient [Pa s/m]: {:.2e}".format(opt_visc / self.settings.mech.La))
@@ -704,12 +721,12 @@ class Optimisation():
 
                 # Store results
                 normalised_residual_torques[_age][_case] = residual_mag_normalised
-                optimsal_sp_consts[_age][_case] = opt_sp_const
+                optimal_sp_consts[_age][_case] = opt_sp_const
                 optimal_viscs[_age][_case] = opt_visc
                 optimal_ss_consts[_age][_case] = opt_ss_const
                 optimal_indices[_age][_case] = opt_index
 
-        return normalised_residual_torques, optimsal_sp_consts, optimal_viscs, optimal_ss_consts, optimal_indices
+        return normalised_residual_torques, optimal_sp_consts, optimal_viscs, optimal_ss_consts, optimal_indices
     
     def optimise_slab_pull_coefficient(
             self,
@@ -1226,7 +1243,7 @@ class Optimisation():
                     opt_index = _numpy.nanargmin(distances + _numpy.abs(pole_angle_opt_stack[_age][_case][_plateID]-_numpy.repeat(reconstructed_pole_angle[_plateID], len(constants))))
                     opt_constants[_age][_case][_plateID] = constants[opt_index]
 
-                    print("Optimal constant for plate", _plateID, f"for case {_case} at age {_age}", opt_constants[_age][_case][_plateID])
+                    # print("Optimal constant for plate", _plateID, f"for case {_case} at age {_age}", opt_constants[_age][_case][_plateID])
 
         for _age in _tqdm(_ages, desc="Optimising torques"):
             for _case in _cases:
@@ -1399,7 +1416,7 @@ class Optimisation():
                             if _slab_data[_age][_case].empty:
                                 continue
 
-                            print(_plate_data)
+                            # print(_plate_data)
 
                             # Get the slab pull force magnitude
                             max_slab_pull_force_mag = _slab_data[_age][_case]["slab_pull_force_mag"] / _slab_data[_age][_case]["slab_pull_constant"]
@@ -1442,7 +1459,7 @@ class Optimisation():
                             _iter_torques = utils_calc.sum_torque(_iter_torques, "driving", self.settings.constants)
                             _iter_torques = utils_calc.sum_torque(_iter_torques, "residual", self.settings.constants)
 
-                            print(_iter_torques)
+                            # print(_iter_torques)
                             # self.plate_torques.calculate_driving_torque(ages=_age, cases=_case, plateIDs=_plateID, PROGRESS_BAR=False)
                             # self.plate_torques.calculate_residual_torque(ages=_age, cases=_case, plateIDs=_plateID, PROGRESS_BAR=False, CALCULATE_AT_POINTS=False)
 

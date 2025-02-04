@@ -46,8 +46,9 @@ class set_mech_params:
         self.lith_visc = 500e20                             # lithospheric viscosity [Pa s]
         self.lith_age_RP = 60                               # age of oldest sea-floor in approximate ridge push calculation  [Ma]
         self.yield_stress = 1050e6                          # Byerlee yield strength at 40km, i.e. 60e6 + 0.6*(3300*10.0*40e3) [Pa]
-        self.cont_lith_thick = 100e3                        # continental lithospheric thickness (where there is no age) [m]
-        self.cont_crust_thick = 33e3                        # continental crustal thickness (where there is no age) [m]
+        self.cont_lith_thick = 100e3                        # reference continental lithospheric thickness (where there is no age) [m]
+        self.cont_crust_thick = 33e3                        # reference continental crustal thickness (where there is no age) [m]
+        self.cont_LAB_depth = 60e3                          # reference depth of the lithosphere-asthenosphere boundary below continents [m]
         self.island_arc_lith_thick = 50e3                   # island arc lithospheric thickness (where there is an age) [m]
         self.ocean_crust_thick = 8e3                        # oceanic crustal thickness [m]
 
@@ -560,7 +561,7 @@ def compute_torque_on_plates(
     )
 
     # Calculate the position vector of the centroid of the plate in Cartesian coordinates
-    centroid_position_xyz = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon, constants.mean_Earth_radius_m)
+    centroid_position_xyz = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon)#, constants.mean_Earth_radius_m)
 
     # Calculate the torque vector as the cross product of the Cartesian torque vector (x, y, z) with the position vector of the centroid
     summed_torques_xyz = _numpy.asarray([
@@ -569,7 +570,7 @@ def compute_torque_on_plates(
     centroid_force_xyz = _numpy.cross(summed_torques_xyz, centroid_position_xyz, axis=0)
 
     # Compute force magnitude at centroid
-    centroid_force_sph = geocentric_cartesian2spherical(centroid_force_xyz[0], centroid_force_xyz[1], centroid_force_xyz[2])
+    centroid_force_sph = tangent_cartesian2spherical(centroid_force_xyz.T, plate_data.centroid_lat, plate_data.centroid_lon)
 
     # Store values in the torques DataFrame
     plate_data[f"{torque_var}_force_lat"] = centroid_force_sph[0]
@@ -620,7 +621,7 @@ def sum_torque(
     plate_data.loc[:, f"{torque_type}_torque_mag"] = _numpy.linalg.norm(summed_torques_cartesian, axis=0)
 
     # Calculate the position vector of the centroid of the plate in Cartesian coordinates
-    centroid_position = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon, constants.mean_Earth_radius_m)
+    centroid_position = geocentric_spherical2cartesian(plate_data.centroid_lat, plate_data.centroid_lon)#, constants.mean_Earth_radius_m)
 
     # Calculate the torque vector as the cross product of the Cartesian torque vector (x, y, z) with the position vector of the centroid
     force_at_centroid_xyz = _numpy.cross(summed_torques_cartesian, centroid_position, axis=0)
@@ -676,7 +677,7 @@ def sample_grid(
 
     # Interpolate age value at point
     sampled_values = _numpy.asarray(
-        grid.interp({coords[0]: points_lat_da, coords[1]: points_lon_da}, method="nearest").values.tolist()
+        grid.interp({coords[0]: points_lat_da, coords[1]: points_lon_da}, method="linear").values.tolist()
     )
 
     # Close the grid to free memory space
@@ -802,7 +803,7 @@ def compute_LAB_depth(
     nan_mask = point_data["LAB_depth"].isna()
 
     # Fill NaN values with 0
-    point_data.loc[nan_mask, "LAB_depth"] = mech.cont_crust_thick + mech.cont_lith_thick
+    point_data.loc[nan_mask, "LAB_depth"] = mech.cont_LAB_depth
 
     return point_data
 

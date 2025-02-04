@@ -1,12 +1,13 @@
 # Standard libraries
 import warnings
-from typing import Optional, Union
+from typing import List, Optional, Tuple, Union
 
 # Third-party libraries
 import gplately as _gplately
 from gplately import pygplates as _pygplates
 import cartopy.crs as ccrs
 import numpy as _numpy
+import matplotlib.pyplot as _plt
 import xarray as _xarray
 import cmcrameri
 
@@ -123,6 +124,7 @@ class PlotReconstruction():
             cmap: str = "cmc.lajolla_r",
             vmin: Union[int, float] = 0,
             vmax: Union[int, float] = 250,
+            alpha: Union[int, float] = 1,
             log_scale: bool = False,
             coastlines_facecolour: str = "lightgrey",
             coastlines_edgecolour: str = "lightgrey",
@@ -149,9 +151,14 @@ class PlotReconstruction():
         :param coastlines_edgecolour:   edgecolour for coastlines
         :type coastlines_edgecolour:    str
         :param coastlines_linewidth:    linewidth for coastlines
+        :type coastlines_linewidth:     int, float
+        :param plate_boundaries_linewidth: linewidth for plate boundaries
+        :type plate_boundaries_linewidth: int, float
 
         :return:                        image object
         :rtype:                         matplotlib.image.AxesImage
+
+        NOTE: This function does need a "case" argument because all cases use the same seafloor age grid.
         """
         # Set age to first in list if not provided
         if age is None or age not in self.settings.ages:
@@ -175,7 +182,8 @@ class PlotReconstruction():
                 cmap = cmap,
                 vmin = vmin,
                 vmax = vmax,
-                log_scale = log_scale
+                log_scale = log_scale,
+                alpha = alpha,
             )
 
         else:
@@ -701,6 +709,19 @@ class PlotReconstruction():
         :param coastlines_facecolour:   facecolour for coastlines
         :type coastlines_facecolour:    str
         :param coastlines_edgecolour:   edgecolour for coastlines
+        :type coastlines_edgecolour:    str
+        :param coastlines_linewidth:    linewidth for coastlines
+        :type coastlines_linewidth:     int, float
+        :param plate_boundaries_linewidth: linewidth for plate boundaries
+        :type plate_boundaries_linewidth: int, float
+        :param vector_width:            width of the vectors
+        :type vector_width:             int, float
+        :param vector_scale:            scale of the vectors
+        :type vector_scale:             int, float
+        :param vector_color:            color of the vectors
+        :type vector_color:             str
+        :param vector_alpha:            alpha of the vectors
+        :type vector_alpha:             int, float
 
         :return:                        image object and quiver object
         :rtype:                         matplotlib.image.AxesImage and matplotlib.quiver.Quiver
@@ -800,19 +821,19 @@ class PlotReconstruction():
             age,
             case1,
             case2,
-            velocity_component = "velocity_mag",
-            cmap = "cmc.cork",
-            vmin = 1e-1,
-            vmax = 1e1,
-            log_scale = True,
-            coastlines_facecolour = "none",
-            coastlines_edgecolour = "black",
-            coastlines_linewidth = 0.1,
-            plate_boundaries_linewidth = 1,
-            vector_width = 4e-3,
-            vector_scale = 3e2,
-            vector_color = "k",
-            vector_alpha = 0.5,
+            velocity_component: str = "velocity_mag",
+            cmap: str = "cmc.cork",
+            vmin: Union[int, float] = 1e-1,
+            vmax: Union[int, float] = 1e1,
+            log_scale: bool = True,
+            coastlines_facecolour: str = "none",
+            coastlines_edgecolour: str = "black",
+            coastlines_linewidth: Union[int, float] = 0.1,
+            plate_boundaries_linewidth: Union[int, float] = 1,
+            vector_width: Union[int, float] = 4e-3,
+            vector_scale: Union[int, float] = 3e2,
+            vector_color: str = "k",
+            vector_alpha: Union[int, float] = 0.5,
         ):
         """
         Function to create subplot of the reconstruction with the relative difference in global plate velocities for two cases.
@@ -844,6 +865,19 @@ class PlotReconstruction():
         :param coastlines_facecolour:   facecolour for coastlines
         :type coastlines_facecolour:    str
         :param coastlines_edgecolour:   edgecolour for coastlines
+        :type coastlines_edgecolour:    str
+        :param coastlines_linewidth:    linewidth for coastlines
+        :type coastlines_linewidth:     int, float
+        :param plate_boundaries_linewidth: linewidth for plate boundaries
+        :type plate_boundaries_linewidth: int, float
+        :vector_width:                 width of the vectors
+        :type vector_width:            int, float
+        :vector_scale:                 scale of the vectors
+        :type vector_scale:            int, float
+        :vector_color:                 color of the vectors
+        :type vector_color:            str
+        :vector_alpha:                 transparency of the vectors
+        :type vector_alpha:            int, float
 
         :return:                        image object and quiver object
         :rtype:                         matplotlib.image.AxesImage and matplotlib.quiver.Quiver
@@ -952,6 +986,149 @@ class PlotReconstruction():
 
         return im, qu
     
+    def plot_torques_map(
+            self,
+            ax: object,
+            age: int,
+            case: str = None,
+            cmap: str = "cmc.lajolla_r",
+            vmin: Union[int, float] = 0,
+            vmax: Union[int, float] = 250,
+            alpha: Union[int, float] = 0.5,
+            log_scale: bool = False,
+            normalise_vectors: bool = False,
+            coastlines_facecolour: str = "lightgrey",
+            coastlines_edgecolour: str = "lightgrey",
+            coastlines_linewidth: Union[int, float] = 0,
+            plate_boundaries_linewidth: Union[int, float] = 1,
+            vector_width: Union[int, float] = 8e-3,
+            vector_scale: Union[int, float] = 4.5e27,
+            vector_scale_units: str = "width",
+            vector_cmap: str = "cmc.glasgow_r",
+            vector_linewidth: Union[int, float] = .5,
+            vector_edgecolour: str = "k",
+            minimum_plate_area: Optional[Union[int, float]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]]]] = None,
+        ) -> Tuple[object, object]:
+        """
+        Function to create subplot of the reconstruction with the torques acting on the plates.
+
+        :param ax:                      axes object
+        :type ax:                       matplotlib.axes.Axes
+        :param age:                     the age for which to display the map
+        :type age:                      int
+        :param case:                    case for which to use the velocities
+        :type case:                     str
+        :param cmap:                    colormap to use
+        :type cmap:                     str
+        :param vmin:                    minimum value for colormap
+        :type vmin:                     int, float
+        :param vmax:                    maximum value for colormap
+        :type vmax:                     int, float
+        :param alpha:                   transparency of the colormap
+        :type alpha:                    int, float
+        :param log_scale:               whether or not to use log scale
+        :type log_scale:                bool
+        :param normalise_vectors:       whether or not to normalise magnitude of torque vector by the magnitude of the driving torque
+        :type normalise_vectors:        bool
+        :param coastlines_facecolour:   facecolour for coastlines
+        :type coastlines_facecolour:    str
+        :param coastlines_edgecolour:   edgecolour for coastlines
+        :type coastlines_edgecolour:    str
+        :param coastlines_linewidth:    linewidth for coastlines
+        :type coastlines_linewidth:     int, float
+        :param plate_boundaries_linewidth: linewidth for plate boundaries
+        :type plate_boundaries_linewidth: int, float
+        :param vector_width:            width of the vectors
+        :type vector_width:             int, float
+        :param vector_scale:            scale of the vectors
+        :type vector_scale:             int, float
+        :param vector_scale_units:      units of the vector scale
+        :type vector_scale_units:       str
+        :param vector_cmap:             colormap for the vectors
+        :type vector_cmap:              str
+        :param vector_linewidth:        linewidth of the vectors
+        :type vector_linewidth:         int, float
+        :param vector_edgecolour:       edgecolour of the vectors
+        :type vector_edgecolour:        str
+        :param minimum_plate_area:      minimum area for the plates
+        :type minimum_plate_area:       int, float
+        :param plateIDs:                list of plate IDs to plot
+        :type plateIDs:                 int, float, list
+
+        :return:                        image object and quiver object
+        :rtype:                         matplotlib.image.AxesImage and matplotlib.quiver.Quiver
+        """
+        # Set age to first in list if not provided
+        if age is None or age not in self.settings.ages:
+            warnings.warn("Invalid reconstruction age, using youngest age.")
+            age = self.settings.ages[0]
+        
+        # Set case to first in list if not provided
+        if case is None or case not in self.settings.cases:
+            warnings.warn("Invalid case, using first case.")
+            case = self.settings.cases[0]
+
+        # Plot seafloor age grid
+        im = self.plot_seafloor_age_map(
+            ax,
+            age,
+            cmap = cmap,
+            vmin = vmin,
+            vmax = vmax,
+            alpha = alpha,
+            log_scale = log_scale,
+            coastlines_facecolour = coastlines_facecolour,
+            coastlines_edgecolour = coastlines_edgecolour,
+            coastlines_linewidth = coastlines_linewidth,
+            plate_boundaries_linewidth = plate_boundaries_linewidth,
+        )
+
+        # Get colours for vectors
+        colours = _plt.get_cmap(vector_cmap)(_numpy.linspace(0, 1, 7))
+
+        # Get plate data
+        plate_data = self.plates.data[age][case].copy()
+
+        # Subselect plates by plateID
+        if plateIDs is not None:
+            if isinstance(plateIDs, (int, float)):
+                plateIDs = [plateIDs]
+            plate_data = plate_data[plate_data.plateID.isin(plateIDs)]
+
+        # Subselect plates with a minimum area
+        if minimum_plate_area is not None:
+            plate_data = plate_data[plate_data.area >= minimum_plate_area]
+
+        elif self.settings.options["Minimum plate area"] > 0:
+            plate_data = plate_data[plate_data.area >= self.settings.options["Minimum plate area"]]
+
+        # Initialise dictionary to store quiver objects
+        qu = {}
+
+        # Loop over the different torque components
+        for i, torque in enumerate(_numpy.flip(["residual", "slab_pull", "slab_suction", "GPE", "slab_bend", "mantle_drag"])):
+            # Only plot vectors if the mean value is larger than 0 (i.e. the torque has been calculated)
+            if plate_data[f"{torque}_force_mag"].mean() > 0:
+                qu[torque] = self.plot_vectors(
+                    ax,
+                    plate_data.centroid_lat.values,
+                    plate_data.centroid_lon.values,
+                    plate_data[f"{torque}_force_lat"].values,
+                    plate_data[f"{torque}_force_lon"].values,
+                    plate_data[f"driving_force_mag"].values,
+                    normalise_vectors = normalise_vectors,
+                    width = vector_width,
+                    scale = vector_scale,
+                    scale_units = vector_scale_units,
+                    facecolour = colours[i+2],
+                    alpha = 1.,
+                    linewidth = vector_linewidth,
+                    edgecolour = vector_edgecolour,
+                )
+
+        return im, qu
+
     def plot_residual_force_map(
             self,
             ax,
@@ -980,7 +1157,7 @@ class PlotReconstruction():
             plate_vector_edgecolour = "k",
             plate_vector_linewidth = 1,
             plate_vector_alpha = 1,
-        ):
+        ) -> Tuple[object, object]:
         """
         Function to create subplot of the reconstruction with the residual force acting on the plates.
         The residual force is displayed as a vector component (latitudinal, longitudinal, or magnitude), which can be plotted as a grid of the force acting on the points or as scatter points showing the force acting on the slabs.
@@ -1008,6 +1185,31 @@ class PlotReconstruction():
         :param coastlines_facecolour:   facecolour for coastlines
         :type coastlines_facecolour:    str
         :param coastlines_edgecolour:   edgecolour for coastlines
+        :type coastlines_edgecolour:    str
+        :param coastlines_linewidth:    linewidth for coastlines
+        :type coastlines_linewidth:     int, float
+        :param plate_boundaries_linewidth: linewidth for plate boundaries
+        :type plate_boundaries_linewidth: int, float
+        :param slab_vector_width:       width of the slab vectors
+        :type slab_vector_width:        int, float
+        :param slab_vector_scale:       scale of the slab vectors
+        :type slab_vector_scale:        int, float
+        :param slab_vector_colour:      colour of the slab vectors
+        :type slab_vector_colour:       str
+        :param slab_vector_alpha:       transparency of the slab vectors
+        :type slab_vector_alpha:        int, float
+        :param plate_vector_width:      width of the plate vectors
+        :type plate_vector_width:       int, float
+        :param plate_vector_scale:      scale of the plate vectors
+        :type plate_vector_scale:       int, float
+        :param plate_vector_facecolour: facecolour of the plate vectors
+        :type plate_vector_facecolour:  str
+        :param plate_vector_edgecolour: edgecolour of the plate vectors
+        :type plate_vector_edgecolour:  str
+        :param plate_vector_linewidth:  linewidth of the plate vectors
+        :type plate_vector_linewidth:   int, float
+        :param plate_vector_alpha:      transparency of the plate vectors
+        :type plate_vector_alpha:       int, float
 
         :return:                        image object and quiver object
         :rtype:                         matplotlib.image.AxesImage and matplotlib.quiver.Quiver
@@ -1169,13 +1371,13 @@ class PlotReconstruction():
     
     def plot_basemap(
             self,
-            ax: object
-        ):
+            ax: object,
+        ) -> object:
         """
         Function to plot a basemap on an axes object.
 
-        :param ax:      axes object
-        :type ax:       matplotlib.axes.Axes
+        :param ax:          axes object
+        :type ax:           matplotlib.axes.Axes
 
         :return:        gridlines object
         :rtype:         cartopy.mpl.gridliner.Gridliner
@@ -1184,9 +1386,6 @@ class PlotReconstruction():
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
 
-        # Set global extent
-        ax.set_global()
-
         # Set gridlines
         gl = ax.gridlines(
             crs=ccrs.PlateCarree(), 
@@ -1194,7 +1393,7 @@ class PlotReconstruction():
             linewidth=0.5, 
             color="gray", 
             alpha=0.5, 
-            linestyle="--", 
+            linestyle=":", 
             zorder=5
         )
 
@@ -1212,7 +1411,8 @@ class PlotReconstruction():
             vmin: Union[int, float] = 0,
             vmax: Union[int, float] = 1e3,
             cmap: str = "viridis",
-        ):
+            alpha: Union[int, float] = 1,
+        ) -> object:
         """
         Function to plot a grid.
 
@@ -1250,6 +1450,7 @@ class PlotReconstruction():
                     _numpy.log10(grid),
                 )
 
+        # Transform data from PlateCarree if necessary
         transform = None if ax.projection == ccrs.PlateCarree() else ccrs.PlateCarree()
 
         # Plot grid    
@@ -1261,7 +1462,8 @@ class PlotReconstruction():
             vmin = vmin, 
             vmax = vmax, 
             origin = "lower",
-            extent = [-180, 180, -90, 90]
+            extent = [-180, 180, -90, 90],
+            alpha = alpha,
         )
 
         return im

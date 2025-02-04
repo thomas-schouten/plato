@@ -144,6 +144,10 @@ def get_slab_data(
     # Convert trench segment length from degree to m
     slabs.trench_segment_length *= constants.equatorial_Earth_circumference / 360
 
+    # Ditch any trenches where the total trench segment length of a plate is below half the tesselation threshold
+    slabs = slabs[slabs.groupby("lower_plateID")["trench_segment_length"].transform("sum") > options["Slab tesselation spacing"]*1e3/2]
+    slabs.reset_index(inplace=True)
+
     # Get slab sampling points
     slabs["slab_sampling_lat"], slabs["slab_sampling_lon"] = project_points(
         slabs.lat,
@@ -179,7 +183,7 @@ def get_slab_data(
     # Upper plate
     slabs["arc_thickness"] = 0.
     slabs["arc_seafloor_age"] = 0.
-    slabs["continental_arc"] = False
+    slabs["continental_arc"] = True
     slabs["erosion_rate"] = 0.
 
     # Lower plate
@@ -591,9 +595,9 @@ def get_options(
         2e3,
         700e3,
         1e-12,
-        0.2225,
-        1/3,
-        1.44e20,
+        0.2104,
+        .0643,
+        1.25e20,
         250,
         1,
         0,
