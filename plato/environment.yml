@@ -1,4 +1,4 @@
-name: plato_env
+name: reveal_env
 channels:
   - conda-forge
   - defaults

@@ -184,12 +184,12 @@ def compute_interface_term(
         interface_term = 1.
     
     # Multiply by slab pull constant
-    interface_term *= slab_data["slab_pull_constant"]
+    slab_data["slab_pull_constant"] *= interface_term
 
     # Apply interface term to slab pull force
-    slab_data["slab_pull_force_mag"] *= interface_term
-    slab_data["slab_pull_force_lat"] *= interface_term
-    slab_data["slab_pull_force_lon"] *= interface_term
+    slab_data["slab_pull_force_mag"] *= slab_data["slab_pull_constant"]
+    slab_data["slab_pull_force_lat"] *= slab_data["slab_pull_constant"]
+    slab_data["slab_pull_force_lon"] *= slab_data["slab_pull_constant"]
 
     return slab_data
 
