@@ -11,7 +11,7 @@ import xarray as _xarray
 from tqdm import tqdm as _tqdm
 
 # Local libraries
-from . import utils_data, utils_init
+from . import utils_calc, utils_data, utils_init
 from .globe import Globe
 from .grids import Grids
 from .plates import Plates
@@ -284,6 +284,82 @@ class PlateTorques():
             PROGRESS_BAR,
         )
 
+    def remove_net_rotation(
+            self,
+            ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            cases: Optional[Union[str, List[str]]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            PROGRESS_BAR: bool = True,
+        ):
+        """
+        Function to remove net lithospheric rotation from the motion of plates.
+
+        :param ages:        ages of interest (default: None)
+        :type ages:         float, int, list, numpy.ndarray
+        :param cases:       cases of interest (default: None)
+        :type cases:        str, list
+        :param plateIDs:    plateIDs of interest (default: None)
+        :type plateIDs:     int, float, list, numpy.ndarray
+        """
+        # Define ages if not provided
+        _ages = utils_data.select_ages(ages, self.settings.ages)
+
+        # Define cases if not provided
+        if cases == "reconstructed" or cases == ["reconstructed"]:
+            _iterable = utils_data.select_iterable(None, self.settings.reconstructed_cases)
+        elif cases == "synthetic" or cases == ["synthetic"]:
+            _iterable = utils_data.select_iterable(None, self.settings.synthetic_cases)
+        else:
+            _iterable = utils_data.select_iterable(cases, self.settings.slab_pull_cases)
+
+        # Loop through ages
+        for _age in _tqdm(
+                _ages,
+                desc=f"Removing net rotation", 
+                disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
+            ):
+            logging.info(f"Removing net rotation at {_age} Ma")
+            for key, entries in _iterable.items():
+                # Select data
+                _plate_data = self.plates.data[_age][key].copy()
+                _point_data = self.points.data[_age][key].copy()
+
+                # Define plateIDs if not provided
+                _plateIDs = utils_data.select_plateIDs(plateIDs, _plate_data.plateID.unique())
+
+                # Select points
+                if plateIDs is not None:
+                    _plate_data = _plate_data[_plate_data.plateID.isin(_plateIDs)]
+                    _point_data = _point_data[_point_data.plateID.isin(_plateIDs)]
+
+                # Remove net rotation
+                computed_plate_data, computed_point_data = utils_calc.compute_no_net_rotation(
+                    _plate_data,
+                    _point_data,
+                )
+
+                # Enter sampled data back into the DataFrame
+                self.plates.data[_age][key].loc[_plate_data.index] = computed_plate_data.copy()
+                self.points.data[_age][key].loc[_point_data.index] = computed_point_data.copy()
+
+                # Copy DataFrames, if necessary
+                if len(entries) > 1:
+                    self.plates.data[_age] = utils_data.copy_values(
+                        self.plates.data[_age], 
+                        key, 
+                        entries, 
+                        ["pole_lat", "pole_lon", "pole_angle"], 
+                    )
+                    self.plates.data[_age] = utils_data.copy_values(
+                        self.plates.data[_age], 
+                        key, 
+                        entries, 
+                        ["velocity_lat", "velocity_lon", "velocity_mag", "velocity_azi", "spin_rate_mag"], 
+                    )
+        
+        # Recalculate net rotation
+        self.calculate_net_rotation(ages, cases, plateIDs, PROGRESS_BAR=False)
+
     def sample_all(
             self,
             ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
@@ -443,8 +519,8 @@ class PlateTorques():
         # Calculate LAB depths at points
         self.points.calculate_lab_depths(ages, cases, plateIDs, self.grids.continent, PROGRESS_BAR)
 
-        # Calculate mean LAB depths for each plate
-        self.plates.calculate_mean_lab_depth(self.points, ages, cases, plateIDs, PROGRESS_BAR)
+        # Calculate mean asthenospheric thickness for each plate
+        self.plates.calculate_mean_asthenospheric_thickness(self.points, ages, cases, plateIDs, PROGRESS_BAR)
 
     def calculate_all_torques(
             self,

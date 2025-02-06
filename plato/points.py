@@ -501,7 +501,7 @@ class Points:
                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
             ):
             for key, entries in _iterable.items():
-                if self.settings.options[key]["Continental keels"]:
+                if self.settings.options[key]["Depth-dependent mantle drag"]:
                     # Select points
                     _data = self.data[_age][key].copy()
 

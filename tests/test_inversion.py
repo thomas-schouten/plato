@@ -23,8 +23,8 @@ cm2in = 0.3937008
 reconstruction_name = "Muller2016" 
 
 # Reconstruction ages of interest
-ages = [30]
-plateIDs = [901, 902]
+ages = [0]
+plateIDs = [901, 911]
 
 path = "/Users/thomas/Documents/_Plato/Plato/sample_data/M2016"
 
@@ -34,7 +34,7 @@ for age in ages:
     seafloor_age_grids[age] = xr.open_dataset(f"{path}/seafloor_age_grids/M2016_SeafloorAgeGrid_{age}Ma.nc")
 
 # Set up PlateTorques object
-M2016 = PlateTorques(reconstruction_name = reconstruction_name, ages = ages, seafloor_age_grids = seafloor_age_grids, files_dir="output")
+M2016 = PlateTorques(reconstruction_name = reconstruction_name, ages = ages, seafloor_age_grids = seafloor_age_grids, files_dir="output", rotation_file = f"{path}/gplates_files/M2016_rotations_Lr-NNR.rot")
 
 # Set up PlotReconstruction object
 # plot_M2016 = PlotReconstruction(M2016)

@@ -318,7 +318,7 @@ class Plates:
                             ["continental_fraction"], 
                         )
 
-    def calculate_mean_lab_depth(
+    def calculate_mean_asthenospheric_thickness(
             self,
             points: Optional[Points] = None,
             ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
@@ -371,8 +371,14 @@ class Plates:
                         if _data.empty:
                             continue
 
-                        # Calculate continental fraction for plate
-                        self.data[_age][key].loc[self.data[_age][key]["plateID"] == _plateID, "mean_LAB_depth"] = _numpy.sum(_data["LAB_depth"] * _data["segment_area"]) / _data["segment_area"].sum()
+                        # Calculate mean LAB depth per plate
+                        # Calculate asthenospheric thickness
+                        asthenospheric_thickness = _numpy.where(
+                            _data["LAB_depth"] > self.settings.options[key]["LAB depth threshold"],
+                            self.settings.mech.La - _data["LAB_depth"] + self.settings.options[key]["LAB depth threshold"],
+                            self.settings.mech.La
+                        )
+                        self.data[_age][key].loc[self.data[_age][key]["plateID"] == _plateID, "mean_asthenospheric_thickness"] = _numpy.sum(asthenospheric_thickness * _data["segment_area"]) / _data["segment_area"].sum()
 
                     # Copy values to other cases, if necessary
                     if len(entries) > 1:
@@ -380,7 +386,7 @@ class Plates:
                             self.data[_age], 
                             key, 
                             entries, 
-                            ["mean_LAB_depth"], 
+                            ["mean_asthenospheric_thickness"], 
                         )
                     
     def calculate_rms_velocity(
@@ -492,6 +498,82 @@ class Plates:
                             entries, 
                             ["velocity_rms_mag", "velocity_rms_azi", "spin_rate_rms_mag"], 
                         )
+
+    def remove_net_rotation(
+            self,
+            points: Optional[Points] = None,
+            ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            cases: Optional[Union[str, List[str]]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            PROGRESS_BAR: bool = True,
+        ):
+        """
+        Function to remove net lithospheric rotation from the motion of plates.
+
+        :param ages:        ages of interest (default: None)
+        :type ages:         float, int, list, numpy.ndarray
+        :param cases:       cases of interest (default: None)
+        :type cases:        str, list
+        :param plateIDs:    plateIDs of interest (default: None)
+        :type plateIDs:     int, float, list, numpy.ndarray
+        """
+        # Define ages if not provided
+        _ages = utils_data.select_ages(ages, self.settings.ages)
+
+        # Check if no points are passed, initialise Points object
+        if points is None:
+            # Initialise a Points object
+            points = Points(
+                settings = self.settings,
+                reconstruction = self.reconstruction,
+                resolved_geometries = self.resolved_geometries
+            )
+
+        # Define cases if not provided
+        if cases == "reconstructed" or cases == ["reconstructed"]:
+            _iterable = utils_data.select_iterable(None, self.settings.reconstructed_cases)
+        elif cases == "synthetic" or cases == ["synthetic"]:
+            _iterable = utils_data.select_iterable(None, self.settings.synthetic_cases)
+        else:
+            _iterable = utils_data.select_iterable(cases, self.settings.slab_pull_cases)
+
+        # Loop through ages
+        for _age in _tqdm(
+                _ages,
+                desc=f"Removing net rotation", 
+                disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
+            ):
+            logging.info(f"Removing net rotation at {_age} Ma")
+            for key, entries in _iterable.items():
+                # Select data
+                _plate_data = self.data[_age][key].copy()
+                _point_data = points.data[_age][key].copy()
+
+                # Define plateIDs if not provided
+                _plateIDs = utils_data.select_plateIDs(plateIDs, _plate_data.plateID.unique())
+
+                # Select points
+                if plateIDs is not None:
+                    _plate_data = _plate_data[_plate_data.plateID.isin(_plateIDs)]
+                    _point_data = _point_data[_point_data.plateID.isin(_plateIDs)]
+
+                # Remove net rotation
+                computed_data = utils_calc.compute_no_net_rotation(
+                    _plate_data,
+                    _point_data,
+                )
+
+                # Enter sampled data back into the DataFrame
+                self.data[_age][key].loc[_plate_data.index] = computed_data.copy()
+
+                # Copy DataFrames, if necessary
+                if len(entries) > 1:
+                    self.data[_age] = utils_data.copy_values(
+                        self.data[_age], 
+                        key, 
+                        entries, 
+                        ["pole_lat", "pole_lon", "pole_angle"], 
+                    )
 
     def calculate_torque_on_plates(
             self,

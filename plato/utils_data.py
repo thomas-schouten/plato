@@ -65,6 +65,13 @@ def get_plate_data(
             anchor_plate_id=options["Anchor plateID"]
         )
         pole_lat, pole_lon, pole_angle = stage_rotation.get_lat_lon_euler_pole_and_angle_degrees()
+
+        # Make sure that the Euler poles are on the northern hemisphere
+        if pole_lat < 0:
+            pole_lat *= -1
+            pole_lon += 180 % 360
+            pole_angle *= -1
+
         plates[n,2] = pole_lat
         plates[n,3] = pole_lon
         plates[n,4] = pole_angle
@@ -552,8 +559,8 @@ def get_options(
         "Slab bend mechanism",
         "Reconstructed motions",
         "Continental crust",
-        "Continental keels",
-        "Lateral viscosity variation",
+        "Depth-dependent mantle drag",
+        "LAB depth threshold",
         "Seafloor age profile",
         "Sample sediment grid", 
         "Active margin sediments",
@@ -585,7 +592,7 @@ def get_options(
         True,
         False,
         False,
-        1,
+        150e3,
         "plate model",
         False,
         0,
@@ -614,7 +621,7 @@ def get_options(
         "Slab bend torque",
         "Reconstructed motions",
         "Continental crust",
-        "Continental keels",
+        "Depth-dependent mantle drag",
         "Randomise trench orientation",
         "Randomise slab age",
     ]

@@ -14,6 +14,7 @@ import numpy as _numpy
 import pandas as _pandas
 import pygplates as _pygplates
 import xarray as _xarray
+from scipy.spatial.transform import Rotation
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # VALUES
@@ -401,12 +402,19 @@ def compute_mantle_drag_force(
         # points.loc[mask, "mantle_drag_force_lon"] = -1 * points.loc[mask, "velocity_lon"] * constants.cm_a2m_s * options["Mantle viscosity"] / mech.La
         # points.loc[:, "mantle_drag_force_mag"] = _numpy.linalg.norm([points["mantle_drag_force_lat"], points["mantle_drag_force_lon"]], axis=0)
 
-        if options["Continental keels"]:
-            points["mantle_drag_force_lat"] = -1 * points["velocity_lat"] * constants.cm_a2m_s * options["Mantle viscosity"] / (300e3 - points["LAB_depth"])
-            points["mantle_drag_force_lon"] = -1 * points["velocity_lon"] * constants.cm_a2m_s * options["Mantle viscosity"] / (300e3 - points["LAB_depth"])
+        if options["Depth-dependent mantle drag"]:
+            # Calculate asthenospheric thickness
+            asthenospheric_thickness = _numpy.where(
+                points["LAB_depth"] > options["LAB depth threshold"],
+                mech.La - points["LAB_depth"] + options["LAB depth threshold"],
+                mech.La
+            )
         else:
-            points["mantle_drag_force_lat"] = -1 * points["velocity_lat"] * constants.cm_a2m_s * options["Mantle viscosity"] / mech.La
-            points["mantle_drag_force_lon"] = -1 * points["velocity_lon"] * constants.cm_a2m_s * options["Mantle viscosity"] / mech.La
+            asthenospheric_thickness = mech.La
+
+        # Calculate mantle drag force
+        points["mantle_drag_force_lat"] = -1 * points["velocity_lat"] * constants.cm_a2m_s * options["Mantle viscosity"] / asthenospheric_thickness
+        points["mantle_drag_force_lon"] = -1 * points["velocity_lon"] * constants.cm_a2m_s * options["Mantle viscosity"] / asthenospheric_thickness
 
         points["mantle_drag_force_mag"] = _numpy.linalg.norm([points["mantle_drag_force_lat"], points["mantle_drag_force_lon"]], axis=0)
         
@@ -1102,13 +1110,33 @@ def compute_synthetic_stage_rotation(
     stage_rotation_poles_mag = _numpy.nan_to_num(stage_rotation_poles_mag)
 
     # Normalise the rotation poles by the drag coefficient and the area of a plate
-    if options["Continental keels"]:
-        stage_rotation_poles_mag /= options["Mantle viscosity"] / (300e3 - plates.mean_LAB_depth) * plates.area
+    if options["Depth-dependent mantle drag"]:
+        stage_rotation_poles_mag /= options["Mantle viscosity"] / plates["mean_asthenospheric_thickness"] * plates.area
     else:
         stage_rotation_poles_mag /= options["Mantle viscosity"] / mech.La * plates.area
 
     # Convert to degrees because the 'geocentric_cartesian2spherical' does not convert the magnitude to degrees
     stage_rotation_poles_mag = _numpy.rad2deg(stage_rotation_poles_mag)
+
+    # Make sure that all poles are on the northern hemisphere
+    stage_rotation_poles_lat = _numpy.where(
+        stage_rotation_poles_lat < 0,
+        -1 * stage_rotation_poles_lat,
+        stage_rotation_poles_lat
+    )
+
+    stage_rotation_poles_lon = _numpy.where(
+        stage_rotation_poles_lat < 0,
+        stage_rotation_poles_lon + 180 % 360,
+        stage_rotation_poles_lon
+    )
+
+    stage_rotation_poles_lat = _numpy.where(
+        stage_rotation_poles_lat < 0,
+        -1 * stage_rotation_poles_mag,
+        stage_rotation_poles_mag
+    )
+
     
     # Assign to DataFrame
     plates["pole_lat"] = stage_rotation_poles_lat
@@ -1236,7 +1264,7 @@ def compute_net_rotation(
 
         # Calculate rotation pole in Cartesian coordinates
         # The shape of the rotation pole vector is (3,)
-        rotation_pole_xyz = _numpy.array(geocentric_spherical2cartesian(
+        rotation_xyz = _numpy.array(geocentric_spherical2cartesian(
             plate.pole_lat, 
             plate.pole_lon, 
             plate.pole_angle,
@@ -1244,17 +1272,17 @@ def compute_net_rotation(
 
         # Calculate the double cross product of the position vector and the velocity vector (see Torsvik et al. (2010), https://doi.org/10.1016/j.epsl.2009.12.055)
         # The shape of the rotation pole vector is modified to (1, 3) to allow broadcasting
-        point_rotations_xyz = _numpy.cross(_numpy.cross(rotation_pole_xyz[None, :], positions_xyz), positions_xyz)
+        point_rotations_xyz = _numpy.cross(_numpy.cross(rotation_xyz[None, :], positions_xyz), positions_xyz)
 
         # Weight the rotations by segment area (broadcasted multiplication)
         segment_area = (selected_points.segment_length_lat * selected_points.segment_length_lon).values[:, None]
         point_rotations_xyz *= segment_area
 
         # Accumulate the net rotation vector by summing across all points
-        net_rotation_xyz += point_rotations_xyz.sum(axis=0)
+        net_rotation_xyz += _numpy.sum(point_rotations_xyz, axis=0)
 
     # Normalise the net rotation vector by the total area of the lithosphere
-    net_rotation_xyz /= plate_data.area.sum()
+    net_rotation_xyz /= _numpy.sum(point_data.segment_length_lat * point_data.segment_length_lon)
 
     # Convert the net rotation vector to spherical coordinates
     net_rotation_pole_lat, net_rotation_pole_lon, _, _ = geocentric_cartesian2spherical(
@@ -1275,40 +1303,105 @@ def compute_no_net_rotation(
     """
     # Calculate net rotation in spherical coordinates
     net_rotation_lat, net_rotation_lon, net_rotation_mag = compute_net_rotation(plate_data, point_data)
+    # print(net_rotation_lat, net_rotation_lon, net_rotation_mag)
+    # rt net rotation pole to FiniteRotation
+    # net_rotation_pole = _pygplates.FiniteRotation((net_rotation_lat[0], net_rotation_lon[0]), _numpy.deg2rad(net_rotation_mag))
 
-    # Convert net rotation to Cartesian coordinates
-    net_rotation_xyz = _numpy.column_stack(geocentric_spherical2cartesian(
-        net_rotation_lat, 
-        net_rotation_lon, 
-        net_rotation_mag,
-    ))
+    # print(net_rotation_xyz)
 
     # Loop through plates
-    for index, plate in plate_data.iterrows():
-        # Calculate rotation pole in Cartesian coordinates
-        rotation_pole_xyz = _numpy.column_stack(geocentric_spherical2cartesian(
-            plate.pole_lat, 
-            plate.pole_lon, 
-            plate.pole_angle,
+    # for index, plate in plate_data.iterrows():
+    #     # Calculate rotation pole in Cartesian coordinates
+    #     rotation_xyz = _numpy.column_stack(geocentric_spherical2cartesian(
+    #         plate.pole_lat, 
+    #         plate.pole_lon, 
+    #         plate.pole_angle,
+    #     ))
+
+    #     # Convert Euler angles to rotation matrices
+    #     R1 = Rotation.from_euler('xyz', rotation_xyz.flatten(), degrees=True).as_matrix()
+    #     R2 = Rotation.from_euler('xyz', net_rotation_xyz.flatten(), degrees=True).as_matrix()
+        
+    #     # Compute the inverse of R2
+    #     R2_inv = R2.T  # Transpose is the inverse of an orthonormal matrix
+        
+    #     # Apply inverse rotation
+    #     R_new = R2_inv @ R1
+        
+    #     # Convert back to Euler angles
+    #     new_rotation_xyz = Rotation.from_matrix(R_new).as_euler('xyz', degrees=True)
+        
+    #     # Convert the new rotation pole to spherical coordinates
+    #     new_rotation_pole_lat, new_rotation_pole_lon, _, _ = geocentric_cartesian2spherical(
+    #         new_rotation_xyz[0], new_rotation_xyz[1], new_rotation_xyz[2],
+    #     )
+
+    #     # Compute magnitude of the rotation rate
+    #     new_rotation_rate = _numpy.linalg.norm(new_rotation_xyz)
+
+    #     # Assign new rotation pole to DataFrame
+    #     plate_data.loc[index, "pole_lat"] = new_rotation_pole_lat[0]
+    #     plate_data.loc[index, "pole_lon"] = new_rotation_pole_lon[0]
+    #     plate_data.loc[index, "pole_angle"] = new_rotation_rate
+    
+    # NOTE: This is done iteratively as the discretisation of the Earth into a 1x1 degree grid introduces numerical errors.
+    for k in range(1000):
+         # Convert net rotation to Cartesian coordinates
+        net_rotation_xyz = _numpy.column_stack(geocentric_spherical2cartesian(
+            net_rotation_lat, 
+            net_rotation_lon, 
+            net_rotation_mag,
         ))
 
-        # Subtract the net rotation from the stage rotation
-        new_rotation_pole_xyz = rotation_pole_xyz + net_rotation_xyz
+        # Loop through plates
+        for index, plate in plate_data.iterrows():
+            # # Calculate rotation pole in Cartesian coordinates
+            rotation_pole_xyz = _numpy.column_stack(geocentric_spherical2cartesian(
+                plate.pole_lat, 
+                plate.pole_lon, 
+                plate.pole_angle,
+            ))
 
-        # Convert the new rotation pole to spherical coordinates
-        new_rotation_pole_lat, new_rotation_pole_lon, _, _ = geocentric_cartesian2spherical(
-            new_rotation_pole_xyz[:, 0], new_rotation_pole_xyz[:, 1], new_rotation_pole_xyz[:, 2],
-        )
+            # Convert rotation pole to FiniteRotation
+            # rotation_pole = _pygplates.FiniteRotation((plate.pole_lat, plate.pole_lon), _numpy.deg2rad(plate.pole_angle))
 
-        # Calculate the magnitude of the new rotation pole
-        new_rotation_rate = _numpy.linalg.norm(new_rotation_pole_xyz)
+            # 
 
-        # Assign new rotation pole to DataFrame
-        plate_data.loc[index, "pole_lat"] = new_rotation_pole_lat[0]
-        plate_data.loc[index, "pole_lon"] = new_rotation_pole_lon[0]
-        plate_data.loc[index, "pole_angle"] = new_rotation_rate
+            # Add the net rotation from the stage rotation
+            # NOTE: not sure why it is addition and not subtraction, but it works the same as every other implementation I've tried.
+            new_rotation_pole_xyz = rotation_pole_xyz + net_rotation_xyz
+            # new_rotation_pole = _pygplates.FiniteRotation.compose(rotation_pole, net_rotation_pole)
 
-    return plate_data
+
+            # new_rotation_pole_lat, new_rotation_pole_lon, new_rotation_pole_angle = new_rotation_pole.get_lat_lon_euler_pole_and_angle_degrees()
+            # # Convert the new rotation pole to spherical coordinates
+            new_rotation_pole_lat, new_rotation_pole_lon, _, _ = geocentric_cartesian2spherical(
+                new_rotation_pole_xyz[:, 0], new_rotation_pole_xyz[:, 1], new_rotation_pole_xyz[:, 2],
+            )
+
+            # # Calculate the magnitude of the new rotation pole
+            new_rotation_rate = _numpy.linalg.norm(new_rotation_pole_xyz)
+
+            # Assign new rotation pole to DataFrame
+            plate_data.loc[index, "pole_lat"] = new_rotation_pole_lat
+            plate_data.loc[index, "pole_lon"] = new_rotation_pole_lon
+            plate_data.loc[index, "pole_angle"] = new_rotation_rate
+
+        # Compute velocity at points
+        point_velocities = compute_velocity(point_data, plate_data, constants)
+        for i, col in enumerate(["velocity_lat", "velocity_lon", "velocity_mag", "velocity_azi", "spin_rate_mag"]):
+            point_data.loc[point_data.index, col] = point_velocities[i]
+
+        # Recompute net rotation
+        # Calculate net rotation in spherical coordinates
+        net_rotation_lat, net_rotation_lon, net_rotation_mag = compute_net_rotation(plate_data, point_data)
+        # print(net_rotation_lat, net_rotation_lon, net_rotation_mag)
+
+        # If the net rotation is smaller than 0.000001 degrees, break
+        if net_rotation_mag < 1e-5:
+            break
+
+    return plate_data, point_data
 
 def compute_trench_migration(
         slab_data: _pandas.DataFrame,
