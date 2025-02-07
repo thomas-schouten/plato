@@ -310,7 +310,7 @@ class PlateTorques():
         elif cases == "synthetic" or cases == ["synthetic"]:
             _iterable = utils_data.select_iterable(None, self.settings.synthetic_cases)
         else:
-            _iterable = utils_data.select_iterable(cases, self.settings.slab_pull_cases)
+            _iterable = utils_data.select_iterable(cases, self.settings.cases)
 
         # Loop through ages
         for _age in _tqdm(
@@ -356,6 +356,12 @@ class PlateTorques():
                         entries, 
                         ["velocity_lat", "velocity_lon", "velocity_mag", "velocity_azi", "spin_rate_mag"], 
                     )
+
+        # Calculate velocity at slabs
+        # self.slabs.calculate_velocities(ages, cases, plateIDs, stage_rotation=self.plates.data, PROGRESS_BAR=False)
+        
+        # Calculate weighted area mean plate velocity
+        self.calculate_rms_velocity(ages, cases, plateIDs, PROGRESS_BAR)
         
         # Recalculate net rotation
         self.calculate_net_rotation(ages, cases, plateIDs, PROGRESS_BAR=False)

@@ -633,7 +633,7 @@ class Plates:
         elif torque_var == "slab_suction":
             point_data_plateID_col = "upper_plateID"
         else:
-            "plateID"
+            point_data_plateID_col = "plateID"
 
         # Define columns to store torque and force components and store them in one list
         torque_cols = [f"{torque_var}_torque_" + axis for axis in ["x", "y", "z", "mag"]]

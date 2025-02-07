@@ -66,12 +66,6 @@ def get_plate_data(
         )
         pole_lat, pole_lon, pole_angle = stage_rotation.get_lat_lon_euler_pole_and_angle_degrees()
 
-        # Make sure that the Euler poles are on the northern hemisphere
-        if pole_lat < 0:
-            pole_lat *= -1
-            pole_lon += 180 % 360
-            pole_angle *= -1
-
         plates[n,2] = pole_lat
         plates[n,3] = pole_lon
         plates[n,4] = pole_angle
