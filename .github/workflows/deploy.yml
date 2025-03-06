@@ -1,0 +1,36 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Check environment.yml
+        run: find $GITHUB_WORKSPACE -name "environment.yml"
+
+      - name: Setup Conda Environment 🏗️
+        run: |
+          mamba env create -f $GITHUB_WORKSPACE/plato/environment.yml || mamba env update --file $GITHUB_WORKSPACE/plato/environment.yml --prune
+
+      - name: Build Documentation 📖
+        run: |
+          source ~/miniconda/etc/profile.d/conda.sh
+          mamba activate reveal_env
+          cd docs
+          make html
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs/build/html
+          branch: gh-pages
