@@ -1394,7 +1394,7 @@ def compute_no_net_rotation(
         if net_rotation_mag < THRESHOLD:
             break
 
-    return plate_data, point_data
+    return plate_data
 
 def compute_trench_migration(
         slab_data: _pandas.DataFrame,

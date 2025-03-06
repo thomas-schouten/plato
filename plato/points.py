@@ -184,6 +184,7 @@ class Points:
             self,
             ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
             cases: Optional[Union[str, List[str]]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
             stage_rotation: Optional[Dict[Union[int, float], Dict[str, _pandas.DataFrame]]] = None,
             PROGRESS_BAR: bool = True,
             PARALLEL_MODE: bool = None,
@@ -219,7 +220,10 @@ class Points:
                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
             ):
             for _case in _cases:
-                for plateID in self.data[_age][_case].plateID.unique():
+                # Get plateIDs if not provided
+                _plateIDs = utils_data.select_plateIDs(plateIDs, self.data[_age][_case].plateID.unique())
+
+                for _plateID in _plateIDs:
                     # Get stage rotation, if not provided
                     if (
                         isinstance(stage_rotation, dict)
@@ -239,7 +243,7 @@ class Points:
                     else:
                         stage_rotation = self.reconstruction.rotation_model.get_rotation(
                             to_time =_age,
-                            moving_plate_id = int(plateID),
+                            moving_plate_id = int(_plateID),
                             from_time=_age + self.settings.options[_case]["Velocity time step"],
                             anchor_plate_id = self.settings.options[_case]["Anchor plateID"]
                         ).get_lat_lon_euler_pole_and_angle_degrees()
@@ -247,7 +251,7 @@ class Points:
 
                         # Organise as DataFrame
                         _stage_rotation = _pandas.DataFrame({
-                                "plateID": [plateID],
+                                "plateID": [_plateID],
                                 "pole_lat": [stage_rotation[0]],
                                 "pole_lon": [stage_rotation[1]],
                                 "pole_angle": [stage_rotation[2]],
@@ -255,7 +259,7 @@ class Points:
                         
                     # Make mask for plates
                     if area is not None:
-                        mask = self.data[_age][_case].plateID == plateID
+                        mask = self.data[_age][_case].plateID == _plateID
                     else:
                         mask = self.data[_age][_case].index
                                             

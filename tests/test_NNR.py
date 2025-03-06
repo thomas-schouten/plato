@@ -36,6 +36,11 @@ seafloor_age_grids = {}
 for age in ages:
     seafloor_age_grids[age] = xr.open_dataset(f"{path}/seafloor_age_grids/M2016_SeafloorAgeGrid_{age}Ma.nc")
 
+# Load the continental grids
+continental_grids = {}
+for age in ages:
+    continental_grids[age] = xr.open_dataset(f"{path}/continental_grids/M2016_ContinentalGrid_{age}Ma.nc")
+
 # Set up PlateTorques object
 M2016 = PlateTorques(
     reconstruction_name = reconstruction_name, 
@@ -43,6 +48,7 @@ M2016 = PlateTorques(
     cases_file = settings_file,
     cases_sheet = "Sheet2",
     seafloor_age_grids = seafloor_age_grids,
+    continental_grids = continental_grids,
     rotation_file = f"{path}/gplates_files/M2016_rotations_Lr-Hb.rot",
     topology_file = f"{path}/gplates_files/M2016_topologies.gpml",
 )

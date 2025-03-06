@@ -685,7 +685,6 @@ class Plates:
                     _point_data[f"{torque_var}_force_lat"].values, 
                     _point_data[f"{torque_var}_force_lon"].values,
                     selected_points_area,
-                    self.settings.constants,
                     torque_var = torque_var,
                 )
     
@@ -887,7 +886,7 @@ class Plates:
                         _data = _data[_data.plateID.isin(_plateIDs)]
 
                     # Calculate synthetic mantle drag torque
-                    computed_data1 = utils_calc.sum_torque(_data, "mantle_drag", self.settings.constants)
+                    computed_data1 = utils_calc.sum_torque(_data, "mantle_drag")
 
                     # Calculate synthetic stage rotation
                     computed_data2 = utils_calc.compute_synthetic_stage_rotation(computed_data1, self.settings.options[_case])

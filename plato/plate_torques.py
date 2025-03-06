@@ -349,7 +349,6 @@ class PlateTorques():
                 computed_plate_data = utils_calc.compute_no_net_rotation(
                     _plate_data,
                     _point_data,
-                    self.options[key],
                     NUM_ITERATIONS,
                     THRESHOLD,
                     VERSION,
@@ -366,7 +365,6 @@ class PlateTorques():
                         entries, 
                         ["pole_lat", "pole_lon", "pole_angle"], 
                     )
-            
 
         # Calculate velocity at slabs
         # NOTE: the absolute motion of the trench should be included in the slab data first
