@@ -17,6 +17,8 @@ from .plate_torques import PlateTorques
 
 # For plotting
 cm2in = 0.3937008
+plt.rcParams["font.size"] = 12
+plt.rcParams["font.family"] = "Arial"
 
 class Optimisation():
     """
@@ -60,7 +62,7 @@ class Optimisation():
             weight_by_area: Optional[bool] = True,
             minimum_plate_area: Optional[Union[int, float]] = None,
             plot: Optional[bool] = True,
-            savefig: Optional[str] = None,
+            savefig: Optional[str] = False,
         ):
         """
         Function to find optimised coefficients to match plate motions using a grid search.
@@ -102,11 +104,10 @@ class Optimisation():
         # Loop through ages
         for _age in _ages:
             for _case in _cases:
-
                 # Set range of slab pull coefficients
                 if self.settings.options[_case]["Sediment subduction"]:
                     # Range is smaller with sediment subduction
-                    sp_consts = _numpy.linspace(1e-5, 0.25, grid_size)
+                    sp_consts = _numpy.linspace(1e-5, 0.1, grid_size)
                 else:
                     sp_consts = _numpy.linspace(1e-5, 1., grid_size)
 
@@ -115,15 +116,37 @@ class Optimisation():
                 ones_grid = _numpy.ones_like(visc_grid)
 
                 # Filter plates
-                _data = self.plates.data[_age][_case]
+                _data = self.plates.data[_age][_case].copy()
 
                 _plateIDs = utils_data.select_plateIDs(plateIDs, self.plates.data[_age][_case].plateID)
 
                 if plateIDs is not None:
-                    _data = _data[_data["plateID"].isin(_plateIDs)]
+                    _data = _data[_data["plateID"].isin(_plateIDs)].copy()
 
                 if minimum_plate_area is not None:
-                    _data = _data[_data["area"] > minimum_plate_area]
+                    _data = _data[_data["area"] > minimum_plate_area].copy()
+
+                # Recalculate slab pull torque correctly to prevent issues
+                # Get slab data and filter accordingly
+                _slab_data = self.slabs.data[_age][_case].copy()
+                _slab_data = _slab_data[_slab_data.lower_plateID.isin(_data.plateID)]
+
+                # Calculate slab pull force
+                _slab_pull_force_lat = _slab_data.slab_pull_force_lat / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+                _slab_pull_force_lon = _slab_data.slab_pull_force_lon / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+
+                # Calculate slab pull torque with the modified slab pull forces
+                computed_data = utils_calc.compute_torque_on_plates(
+                    _data,
+                    _slab_data.lat.values,
+                    _slab_data.lon.values,
+                    _slab_data.lower_plateID.values,
+                    _slab_pull_force_lat, 
+                    _slab_pull_force_lon,
+                    _slab_data.trench_segment_length.values,
+                    torque_var = "slab_pull",
+                )
+                _data = computed_data
 
                 # Get total area
                 total_area = _data["area"].sum()
@@ -176,8 +199,7 @@ class Optimisation():
                 residual_mag_normalised = _numpy.log10(residual_mag / driving_mag)
 
                 # Find the indices of the minimum value
-                opt_i = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=1))
-                opt_j = _numpy.argmin(_numpy.min(residual_mag_normalised, axis=0))
+                opt_i, opt_j = _numpy.unravel_index(_numpy.argmin(residual_mag_normalised), residual_mag_normalised.shape)
                 opt_visc = visc_grid[opt_i, opt_j]
                 opt_sp_const = sp_const_grid[opt_i, opt_j]
 
@@ -193,7 +215,7 @@ class Optimisation():
                     ax.set_ylabel("Slab pull reduction factor")
                     ax.scatter(opt_j, opt_i, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
                     fig.colorbar(im, label = "Log(residual torque/driving torque)")
-                    if savefig is not None:
+                    if savefig is not False:
                         plt.savefig(savefig, dpi=300, bbox_inches="tight")
                     plt.show()
 
@@ -360,7 +382,7 @@ class Optimisation():
                     plt.show()
 
                 # Print results
-                print(f"Optimal coefficients for ", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
+                print(f"Optimal coefficients for ", ", for ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
                 print("Minimum residual torque: {:.2%} of driving torque".format(10**(_numpy.amin(residual_mag_normalised))))
                 print("Optimum lateral viscosity variation: {:.2e}".format(opt_visc))
                 print("Optimum slab suction constant: {:.2%}".format(opt_sp_const))
@@ -552,7 +574,7 @@ class Optimisation():
             weight_by_area: Optional[bool] = True,
             minimum_plate_area: Optional[Union[int, float]] = None,
             plot: Optional[bool] = True,
-            savefig: Optional[str] = None,
+            savefig: Optional[str] = False,
         ):
         """
         Function to find optimised coefficients to match plate motions using a grid search.
@@ -602,7 +624,7 @@ class Optimisation():
                 # Set range of slab pull coefficients
                 if self.settings.options[_case]["Sediment subduction"]:
                     # Range is smaller with sediment subduction
-                    sp_consts = _numpy.linspace(1e-5, 0.25, grid_size)
+                    sp_consts = _numpy.linspace(1e-5, 0.1, grid_size)
                 else:
                     sp_consts = _numpy.linspace(1e-5, 1., grid_size)
 
@@ -616,10 +638,53 @@ class Optimisation():
                 _plateIDs = utils_data.select_plateIDs(plateIDs, self.plates.data[_age][_case].plateID)
 
                 if plateIDs is not None:
-                    _data = _data[_data["plateID"].isin(_plateIDs)]
+                    _data = _data[_data["plateID"].isin(_plateIDs)].copy()
 
                 if minimum_plate_area is not None:
-                    _data = _data[_data["area"] > minimum_plate_area]
+                    _data = _data[_data["area"] > minimum_plate_area].copy()
+
+                # Recalculate slab pull and suction torques correctly to prevent issues
+                # Get slab data and filter accordingly
+                _slab_data = self.slabs.data[_age][_case]
+                _slab_data = _slab_data[_slab_data.lower_plateID.isin(_data.plateID)].copy()
+
+                # Calculate slab pull force
+                _slab_pull_force_lat = _slab_data.slab_pull_force_lat / \
+                    _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+                _slab_pull_force_lon = _slab_data.slab_pull_force_lon / \
+                    _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+
+                # Calculate slab pull torque with the modified slab pull forces
+                computed_data = utils_calc.compute_torque_on_plates(
+                    _data,
+                    _slab_data.lat.values,
+                    _slab_data.lon.values,
+                    _slab_data.lower_plateID.values,
+                    _slab_pull_force_lat, 
+                    _slab_pull_force_lon,
+                    _slab_data.trench_segment_length.values,
+                    torque_var = "slab_pull",
+                )
+                _data = computed_data
+
+                # Calculate slab suction force
+                _slab_suction_force_lat = _slab_data.slab_suction_force_lat / \
+                    _slab_data.slab_suction_constant * self.settings.options[_case]["Slab suction constant"]
+                _slab_suction_force_lon = _slab_data.slab_suction_force_lon / \
+                    _slab_data.slab_suction_constant * self.settings.options[_case]["Slab suction constant"]
+                
+                # Calculate slab pull torque with the modified slab pull forces
+                computed_data = utils_calc.compute_torque_on_plates(
+                    _data,
+                    _slab_data.lat.values,
+                    _slab_data.lon.values,
+                    _slab_data.upper_plateID.values,
+                    _slab_suction_force_lat, 
+                    _slab_suction_force_lon,
+                    _slab_data.trench_segment_length.values,
+                    torque_var = "slab_suction",
+                )
+                _data = computed_data
 
                 # Get total area
                 total_area = _data["area"].sum()
@@ -639,9 +704,9 @@ class Optimisation():
                             residual_z -= _data.slab_pull_torque_z.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"]
 
                         if self.settings.options[_case]["Slab suction torque"] and "slab_suction_torque_x" in _data.columns:
-                            residual_x -= _data.slab_suction_torque_x.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
-                            residual_y -= _data.slab_suction_torque_y.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
-                            residual_z -= _data.slab_suction_torque_z.iloc[k] * sp_const_grid / self.settings.options[_case]["Slab pull constant"] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_x -= _data.slab_suction_torque_x.iloc[k] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_y -= _data.slab_suction_torque_y.iloc[k] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
+                            residual_z -= _data.slab_suction_torque_z.iloc[k] * ss_const_grid / self.settings.options[_case]["Slab suction constant"]
 
                         # Add GPE torque
                         if self.settings.options[_case]["GPE torque"] and "GPE_torque_x" in _data.columns:
@@ -685,7 +750,6 @@ class Optimisation():
 
                 # Unpack the indices
                 opt_i, opt_j, opt_k = opt_index
-
                 opt_visc = visc_grid[opt_i, opt_j, opt_k]
                 opt_sp_const = sp_const_grid[opt_i, opt_j, opt_k]
                 opt_ss_const = ss_const_grid[opt_i, opt_j, opt_k]
@@ -700,7 +764,7 @@ class Optimisation():
 
                 # Plot
                 if plot == True:
-                    fig = plt.figure(figsize=(18*cm2in*2, 10.5*cm2in*2))
+                    fig = plt.figure(figsize=(18*cm2in*2, 8*cm2in*2))
                     gs = gridspec.GridSpec(1, 2)
 
                     ax1 = plt.subplot(gs[0, 0])
@@ -712,8 +776,8 @@ class Optimisation():
                     ax1.set_ylabel("Mantle viscosity [Pa s]")
                     ax1.set_xlabel("Slab pull constant")
                     ax1.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
-                    # fig.colorbar(im1, label = "Log(residual torque/driving torque)")
-
+                    ax1.annotate("a", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
+                    
                     ax2 = plt.subplot(gs[0, 1])
                     im2 = ax2.imshow(residual_mag_normalised[opt_i, :, :], cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
                     ax2.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
@@ -723,16 +787,17 @@ class Optimisation():
                     ax2.set_ylabel("")
                     ax2.set_xlabel("Slab suction constant")
                     ax2.scatter(opt_k, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
+                    ax2.annotate("b", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
 
-                    cax = fig.add_axes([0.412, 0.06, 0.2, 0.02])
+                    cax = fig.add_axes([0.412, 0, 0.2, 0.02*(10.5/8)])
                     cbar = plt.colorbar(im2, cax=cax, orientation="horizontal")
-                    cbar.set_label("Log(residual torque/driving torque)")
-                    if savefig is not None:
+                    cbar.set_label("Log10(residual torque/driving torque)")
+                    if savefig:
                         fig.savefig(savefig, dpi=300, bbox_inches="tight")
                     plt.show()
 
                 # Print results
-                print(f"Optimal coefficients for case {_case}", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
+                print(f"Optimal coefficients for case {_case} at {_age} Ma: for the", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
                 print("Minimum residual torque: {:.2%} of driving torque".format(10**(_numpy.amin(residual_mag_normalised))))
                 print("Optimum viscosity [Pa s]: {:.2e}".format(opt_visc))
                 print("Optimum drag coefficient [Pa s/m]: {:.2e}".format(opt_visc / self.settings.mech.La))
@@ -754,7 +819,7 @@ class Optimisation():
             cases = None, 
             plateIDs = None, 
             grid_size = 500, 
-            viscosity = 1.23e20, 
+            viscosity = None,
             plot = False, 
         ):
         """
@@ -784,6 +849,10 @@ class Optimisation():
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
                 for _case in _cases:
+                    # Select viscosity, if not provided
+                    if viscosity is None:
+                        viscosity = self.settings.options[_cases[0]]["Mantle viscosity"]
+
                     # Generate range of possible slab pull coefficients
                     sp_consts = _numpy.linspace(1e-5,1,grid_size)
                     ones = _numpy.ones_like(sp_consts)
@@ -794,7 +863,28 @@ class Optimisation():
                     _plateIDs = utils_data.select_plateIDs(plateIDs, _data.plateID)
 
                     if plateIDs is not None:
-                        _data = _data[_data["plateID"].isin(_plateIDs)]
+                        _data = _data[_data["plateID"].isin(_plateIDs)].copy()
+
+                    _slab_data = self.slabs.data[_age][_case][self.slabs.data[_age][_case].isin(_data.plateID)].copy()
+
+                    # Calculate slab pull force
+                    _slab_pull_force_lat = _slab_data.slab_pull_force_lat / \
+                        _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+                    _slab_pull_force_lon = _slab_data.slab_pull_force_lon / \
+                        _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+
+                    # Calculate slab pull torque with the modified slab pull forces
+                    computed_data = utils_calc.compute_torque_on_plates(
+                        _data,
+                        _slab_data.lat.values,
+                        _slab_data.lon.values,
+                        _slab_data.lower_plateID.values,
+                        _slab_pull_force_lat, 
+                        _slab_pull_force_lon,
+                        _slab_data.trench_segment_length.values,
+                        torque_var = "slab_pull",
+                    )
+                    _data = computed_data
                 
                     # Loop through plates
                     for _plateID in _data.plateID:
@@ -802,9 +892,6 @@ class Optimisation():
                         slab_mask = self.slabs.data[_age][_case]["lower_plateID"] == _plateID
                         if slab_mask.sum() == 0:
                             continue
-
-                        self.slabs.data[_age][_case].loc[slab_mask, "slab_pull_constant"] = self.options[_case]["Slab pull constant"]
-                        self.plate_torques.calculate_slab_pull_torque(ages=_age, cases=_case, plateIDs=_plateID, PROGRESS_BAR=False)
 
                         # Initialise residual torque arrays
                         residual_x = _numpy.zeros_like(sp_consts)
@@ -845,11 +932,12 @@ class Optimisation():
 
                         if plot:
                             fig, ax = plt.subplots(figsize=(10,10))
+                            ax.set_title(f"Normalised residual torque as a function of slab pull constant for plate {_plateID}")
                             p = ax.plot(residual_mag/driving_mag)
                             ax.semilogy()
                             ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
                             ax.set_xticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                            ax.set_ylim([10**-1.5, 10**1.5])
+                            ax.set_ylim([10**-3.5, 10**1.5])
                             ax.set_xlim([0, grid_size])
                             ax.set_ylabel("Normalised residual torque")
                             ax.set_xlabel("Slab pull reduction factor")
@@ -1683,7 +1771,7 @@ class Optimisation():
                         slab_pull_force_mag = _slab_data["slab_pull_force_mag"].values
 
                         # Get the maximum slab pull force magnitude
-                        max_slab_pull_force_mag = slab_pull_force_mag / (_slab_data["slab_pull_constant"].values * 2)
+                        max_slab_pull_force_mag = slab_pull_force_mag / _slab_data["slab_pull_constant"].values
 
                         # Get the residual force along subduction zones
                         residual_force_lat = _slab_data["slab_residual_force_lat"].values
@@ -1855,7 +1943,7 @@ class Optimisation():
                             opt_iter = 0
 
                         self.slabs.data[_age][_case].loc[_slab_data.index, "slab_pull_constant"] = (
-                            _slab_pull_force_mag[opt_iter] / (max_slab_pull_force_mag * 2)
+                            _slab_pull_force_mag[opt_iter] / max_slab_pull_force_mag
                         )
 
                         if PLOT:

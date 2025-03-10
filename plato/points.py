@@ -164,6 +164,7 @@ class Points:
                         self.calculate_velocities(
                             _age,
                             _case,
+                            None,
                             plate_data,
                             PROGRESS_BAR = False
                         )
@@ -232,7 +233,7 @@ class Points:
                         and isinstance(stage_rotation[_age][_case], _pandas.DataFrame)
                     ):
                         # Get stage rotation from the provided DataFrame in the dictionary
-                        _stage_rotation = stage_rotation[_age][_case][stage_rotation[_age][_case].plateID == plateID]
+                        _stage_rotation = stage_rotation[_age][_case][stage_rotation[_age][_case].plateID == _plateID]
 
                         if _stage_rotation.empty or _stage_rotation.area.values[0] < self.settings.options[_case]["Minimum plate area"]:
                             continue
@@ -590,7 +591,6 @@ class Points:
                         _data,
                         seafloor_grid[_age].seafloor_age,
                         self.settings.options[key],
-                        self.settings.mech,
                     )
 
                     # Enter sampled data back into the DataFrame

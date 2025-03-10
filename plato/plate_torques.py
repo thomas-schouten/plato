@@ -371,7 +371,7 @@ class PlateTorques():
         # self.slabs.calculate_velocities(ages, cases, plateIDs, stage_rotation=self.plates.data, PROGRESS_BAR=False)
 
         # Calculate velocity at points
-        self.points.calculate_velocities(ages, cases, plateIDs, stage_rotation=self.plates.data, PROGRESS_BAR=False)
+        self.points.calculate_velocities(ages, cases, plateIDs, self.plates.data, PROGRESS_BAR=False)
         
         # Calculate weighted area mean plate velocity
         self.calculate_rms_velocity(ages, cases, plateIDs, PROGRESS_BAR)
@@ -910,6 +910,7 @@ class PlateTorques():
         self.points.calculate_velocities(
             _ages,
             _cases,
+            plateIDs,
             self.plates.data,
             PROGRESS_BAR,
         )

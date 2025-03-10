@@ -657,14 +657,17 @@ class Slabs:
                     if ITERATIONS:
                         if plate == "lower":
                             current_sampling_distance = -30
-                            iter_num = 20
+                            iter_num = 15
                         if plate == "upper":
                             current_sampling_distance = +100
                             iter_num = 6
 
                         for i in range(iter_num):
                             # Mask data
-                            mask = _numpy.isnan(accumulated_data)
+                            if i < 11:
+                                mask = _numpy.isnan(accumulated_data)
+                            else:
+                                mask = (_numpy.isnan(accumulated_data)) & (_data.upper_plateID == 201)
                             
                             # Exit if there are no more points to sample
                             if len(accumulated_data[mask]) == 0:
@@ -676,7 +679,7 @@ class Slabs:
                             # Calculate new sampling points
                             sampling_lat, sampling_lon = utils_calc.project_points(
                                 _data.loc[_data.index[mask], f"{type}_sampling_lat"],
-                                _data.loc[_data.index[mask], f"{type}_sampling_lat"],
+                                _data.loc[_data.index[mask], f"{type}_sampling_lon"],
                                 _data.loc[_data.index[mask], "trench_normal_azimuth"],
                                 current_sampling_distance,
                             )
@@ -700,10 +703,12 @@ class Slabs:
 
                             # Define new sampling distance
                             if plate == "lower":
-                                if i <= 1:
+                                if i < 11:
                                     current_sampling_distance -= 30
+                                elif i < 16:
+                                    current_sampling_distance -= 90
                                 else:
-                                    current_sampling_distance -= 30 * (2 ** (i // 2))
+                                    current_sampling_distance -= 270
 
                             elif plate == "upper":
                                 current_sampling_distance += 50
@@ -855,20 +860,20 @@ class Slabs:
                         continue
                         
                     # Calculate slab pull force
-                    computed_data1 = utils_calc.compute_slab_pull_force(
+                    computed_data = utils_calc.compute_slab_pull_force(
                         _data,
                         self.settings.options[key],
-                        self.settings.mech,
                     )
 
                     # Compute interface term
-                    computed_data2 = utils_calc.compute_interface_term(
-                        computed_data1,
+                    computed_data = utils_calc.compute_interface_term(
+                        computed_data,
                         self.settings.options[key],
+                        type = "pull",
                     )
 
                     # Enter sampled data back into the DataFrame
-                    self.data[_age][key].loc[_data.index] = computed_data2
+                    self.data[_age][key].loc[_data.index] = computed_data
                     
                     # Copy to other entries
                     if len(entries) > 1:
@@ -950,7 +955,13 @@ class Slabs:
                     # Calculate slab suction force
                     computed_data = utils_calc.compute_slab_suction_force(
                         _data,
+                    )
+
+                    # Compute interface term
+                    computed_data = utils_calc.compute_interface_term(
+                        computed_data,
                         self.settings.options[key],
+                        type = "suction"
                     )
 
                     # Enter sampled data back into the DataFrame
@@ -959,6 +970,8 @@ class Slabs:
                     # Copy to other entries
                     if len(entries) > 1:
                         cols = [
+                            "shear_zone_width",
+                            "sediment_fraction",
                             "slab_suction_force_lat",
                             "slab_suction_force_lon",
                             "slab_suction_force_mag",
@@ -1032,7 +1045,6 @@ class Slabs:
                     _data = utils_calc.compute_slab_bend_force(
                         _data,
                         self.settings.options[key],
-                        self.settings.mech,
                     )
 
                     # Enter sampled data back into the DataFrame

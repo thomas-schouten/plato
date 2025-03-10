@@ -23,7 +23,7 @@ cm2in = 0.3937008
 reconstruction_name = "Muller2016" 
 
 # Reconstruction ages of interest
-ages = [0]
+ages = [180]
 
 # Load excel file with settings
 settings_file = os.path.join(os.getcwd(), "cases_test.xlsx")
@@ -56,11 +56,27 @@ M2016 = PlateTorques(
 # %%
 # print(M2016.plates.data[0]["syn_nnr"][M2016.plates.data[0]["syn_nnr"].plateID == 901].pole_lat)
 
-M2016.sample_all()
-M2016.calculate_all_torques()
-M2016.calculate_synthetic_velocity()
+M2016.sample_slab_seafloor_ages(ITERATIONS=True)
+M2016.calculate_slab_pull_torque()
+
+# %%
+data = M2016.slabs.data[age]["ref"]
+# data = data[data.slab_pull_force_mag=0]
+fig, ax = plt.subplots(figsize=(10,10))
+p = ax.scatter(
+    data.slab_sampling_lon,
+    data.slab_sampling_lat,
+    marker = "o",
+    facecolor = "none", edgecolors="k"
+)
+ax.imshow(M2016.grids.seafloor_age[ages[0]].seafloor_age.values, extent=[-180, 180, 90, -90])
+ax.set_xlim(-180, 180); ax.set_ylim(-90, 90)
+plt.colorbar(p, orientation="horizontal")
+plt.show()
+# M2016.calculate_all_torques()
+# M2016.calculate_synthetic_velocity()
 # print("ref")
-M2016.remove_net_rotation(cases = ["nnr", "syn_nnr"])
+# M2016.remove_net_rotation(cases = ["nnr", "syn_nnr"])
 # print("syn")
 # %%
 plt.scatter(M2016.plates.data[0]["syn_nnr"].pole_lon, M2016.plates.data[0]["syn_nnr"].pole_lat, c=M2016.plates.data[0]["syn_nnr"].pole_angle)
@@ -79,7 +95,16 @@ print(M2016.plates.data[0]["syn_nnr"][M2016.plates.data[0]["syn_nnr"].plateID ==
 plt.scatter(
     M2016.points.data[0]["ref"].lon,
     M2016.points.data[0]["ref"].lat,
-    c = M2016.points.data[0]["syn_ref"].velocity_mag/M2016.points.data[0]["syn_nnr"].velocity_mag,
+    c = M2016.points.data[0]["syn_ref"].velocity_mag/M2016.points.data[0]["syn_keels"].velocity_mag,
+)
+plt.colorbar()
+plt.show()
+
+# %%
+plt.scatter(
+    M2016.slabs.data[0]["ref"].lon,
+    M2016.slabs.data[0]["ref"].lat,
+    c = M2016.slabs.data[0]["syn_ref"].slab_pull_force_mag
 )
 plt.colorbar()
 plt.show()
@@ -95,7 +120,8 @@ M2016.calculate_synthetic_velocity(cases = ["syn_ref", "syn_nnr"], VERSION=2)
 plt.scatter(
     M2016.points.data[0]["ref"].lon,
     M2016.points.data[0]["ref"].lat,
-    c = M2016.points.data[0]["syn_nnr"].velocity_mag-M2016.points.data[0]["syn_ref"].velocity_mag,
+    c = M2016.points.data[0]["keels"].mantle_drag_force_mag,
+    # vmin=0, vmax = 25#-M2016.points.data[0]["syn_ref"].velocity_mag,
 )
 plt.colorbar()
 
@@ -105,10 +131,10 @@ plot_M2016 = PlotReconstruction(M2016)
 
 # Plotting parameters
 cm2in = 0.3937008
-fig_width = 18*cm2in*2; fig_height_graphs = 8*cm2in*2; fig_height_maps = 10*cm2in*2
+fig_width = 18*cm2in*2; fig_height_graphs = 8*cm2in*2; fig_height_maps = 10.5*cm2in*2
 plt.rcParams["font.size"] = 12
 plt.rcParams["font.family"] = "Arial"
-title_fontsize = 20
+title_fontsize = 18
 plot_times = [45, 60, 75, 90]
 projection = ccrs.Robinson(central_longitude = 160)
 annotations = ["a", "b", "c", "d"]
@@ -118,27 +144,27 @@ annotations = ["a", "b", "c", "d"]
 # %%
 # Create a figure and gridspec
 fig = plt.figure(figsize=(fig_width, fig_height_maps), dpi=300)
-gs = gridspec.GridSpec(2, 2, wspace=0.1, hspace=0.2)
+gs = gridspec.GridSpec(2, 2, wspace=0.1, hspace=0.1)
 
 ax1 = fig.add_subplot(gs[0, 0], projection=projection)
 ax1.set_title("Moving hotspot reference frame", fontsize=title_fontsize)
-vels = plot_M2016.plot_velocity_map(ax1, ages[0], "ref")#, plateIDs = plateIDs)
+vels = plot_M2016.plot_velocity_map(ax1, ages[0], "syn_ref")#, plateIDs = plateIDs)
 
 ax2 = fig.add_subplot(gs[0, 1], projection=projection)
 ax2.set_title("No-net-rotation reference frame", fontsize=title_fontsize)
-plot_M2016.plot_velocity_map(ax2, ages[0], "nnr")#, plateIDs = plateIDs)
+plot_M2016.plot_velocity_map(ax2, ages[0], "syn_nnr")#, plateIDs = plateIDs)
 
 ax3 = fig.add_subplot(gs[1, 0], projection=projection)
 ax3.set_title("Plate speed difference", fontsize=title_fontsize)
-vels_diff = plot_M2016.plot_velocity_difference_map(ax3, ages[0], "ref", "nnr", vmin=-5, vmax=5, vector_scale=1e2)#, plateIDs = plateIDs, vmin=-5, vmax=5, vector_scale=1e2)
+vels_diff = plot_M2016.plot_velocity_difference_map(ax3, ages[0], "syn_ref", "syn_nnr", vmin=-5, vmax=5, vector_scale=1e2)#, plateIDs = plateIDs, vmin=-5, vmax=5, vector_scale=1e2)
 
 ax4 = fig.add_subplot(gs[1, 1], projection=projection)
 ax4.set_title("Relative plate speed difference", fontsize=title_fontsize)
-rel_vels_diff = plot_M2016.plot_relative_velocity_difference_map(ax4, ages[0], "ref", "nnr")#, plateIDs = plateIDs)
+rel_vels_diff = plot_M2016.plot_relative_velocity_difference_map(ax4, ages[0], "syn_ref", "syn_nnr")#, plateIDs = plateIDs)
 
 for i in range(2):
-    lon = M2016.globe.data["ref"].net_rotation_pole_lon.values[0]
-    lat = M2016.globe.data["ref"].net_rotation_pole_lat.values[0]
+    lon = M2016.globe.data["syn_ref"].net_rotation_pole_lon.values[0]
+    lat = M2016.globe.data["syn_ref"].net_rotation_pole_lat.values[0]
     lon = (lon + 180) % 360 if i == 0 else lon
     lat = -lat if i == 0 else lat
     ax3.scatter(
@@ -161,7 +187,7 @@ for i in range(2):
     )
 
 # Create a new grid for the colorbar
-cax1 = fig.add_axes([0.162, 0.06, 0.2, 0.02])
+cax1 = fig.add_axes([0.162, 0.06, 0.2, 0.03])
 
 # Create a colorbar below the subplots
 cbar1 = plt.colorbar(vels[0], cax=cax1, orientation="horizontal", extend="max", extendfrac=25e-3)
@@ -170,7 +196,7 @@ cbar1 = plt.colorbar(vels[0], cax=cax1, orientation="horizontal", extend="max", 
 cbar1.set_label("Plate speed [cm/a]", labelpad=5)
 
 # Create a new grid for the colorbar
-cax2 = fig.add_axes([0.412, 0.06, 0.2, 0.02])
+cax2 = fig.add_axes([0.412, 0.06, 0.2, 0.03])
 
 # Create a colorbar below the subplots
 cbar2 = plt.colorbar(vels_diff[0], cax=cax2, orientation="horizontal", extend="both", extendfrac=25e-3)
@@ -179,7 +205,7 @@ cbar2 = plt.colorbar(vels_diff[0], cax=cax2, orientation="horizontal", extend="b
 cbar2.set_label("Plate speed difference [cm/a]", labelpad=5)
 
 # Create a new grid for the colorbar
-cax3 = fig.add_axes([0.662, 0.06, 0.2, 0.02])
+cax3 = fig.add_axes([0.662, 0.06, 0.2, 0.03])
 
 # Create a colorbar below the subplots
 cbar3 = plt.colorbar(rel_vels_diff[0], cax=cax3, orientation="horizontal", extend="both", extendfrac=25e-3)

@@ -426,7 +426,7 @@ class PlotReconstruction():
             case: str = None,
             cmap = "cmc.davos_r",
             vmin: Union[int, float] = 0,
-            vmax: Union[int, float] = 2.5e5,
+            vmax: Union[int, float] = 2.5e2,
             log_scale: bool = False,
             coastlines_facecolour: str = "none",
             coastlines_edgecolour: str = "none",
@@ -434,7 +434,7 @@ class PlotReconstruction():
             plate_boundaries_linewidth: Union[int, float] = 1,
         ):
         """
-        Function to create subplot of the reconstruction with continental lithosphere-asthenosphere boundary (LAB) depths.
+        Function to create subplot of the reconstruction with continental lithosphere-asthenosphere boundary (LAB) depths in km.
         Erosion rates are plotted as the grid stored in the continent grid with the key corresponding to the 'Sample erosion rate' option.
 
         :param ax:                      axes object
@@ -507,7 +507,7 @@ class PlotReconstruction():
 
             im = self.plot_grid(
                 ax,
-                grid.LAB_depth.values,
+                grid.LAB_depth.values/1e3,
                 cmap = cmap,
                 vmin = vmin,
                 vmax = vmax,

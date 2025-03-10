@@ -103,7 +103,6 @@ constants = set_constants()
 def compute_slab_pull_force(
         slab_data: _pandas.DataFrame,
         options: Dict[str, Any],
-        mech, # Is this really needed?
     ) -> _pandas.DataFrame:
     """
     Function to calculate slab pull force along subduction zones.
@@ -150,6 +149,7 @@ def compute_slab_pull_force(
 def compute_interface_term(
         slab_data: _pandas.DataFrame,
         options: Dict[str, Any],
+        type: Optional[str] = "pull"
     ) -> _pandas.DataFrame:
     """
     Function to calculate the interface term that accounts for resisting forces at the subduction interface.
@@ -189,15 +189,14 @@ def compute_interface_term(
         interface_term = 1.
 
     # Apply interface term to slab pull force
-    slab_data["slab_pull_force_mag"] *= slab_data["slab_pull_constant"] * interface_term
-    slab_data["slab_pull_force_lat"] *= slab_data["slab_pull_constant"] * interface_term
-    slab_data["slab_pull_force_lon"] *= slab_data["slab_pull_constant"] * interface_term
+    slab_data[f"slab_{type}_force_mag"] *= slab_data[f"slab_{type}_constant"] * interface_term
+    slab_data[f"slab_{type}_force_lat"] *= slab_data[f"slab_{type}_constant"] * interface_term
+    slab_data[f"slab_{type}_force_lon"] *= slab_data[f"slab_{type}_constant"] * interface_term
 
     return slab_data
 
 def compute_slab_suction_force(
         slab_data: _pandas.DataFrame,
-        options: Dict[str, Any],
     ) -> _pandas.DataFrame:
     """
     Function to calculate slab suction force at subduction zones.
@@ -235,8 +234,6 @@ def compute_slab_suction_force(
 def compute_slab_bend_force(
         slab_data: _pandas.DataFrame,
         options: Dict[str, Any],
-        mech,  # Is this needed?
-        constants  # Is this needed?
     ) -> _pandas.DataFrame:
     """
     Function to calculate the slab bending force.
@@ -270,7 +267,6 @@ def compute_GPE_force(
         points: _pandas.DataFrame,
         seafloor_grid: _xarray.DataArray,
         options: Dict[str, Any],
-        mech: Dict, # Is this necessary?
     ) -> _pandas.DataFrame:
     """
     Function to calculate GPE force at points.
@@ -1253,7 +1249,7 @@ def compute_rms_velocity(
     v_rms_azi = _numpy.where(v_rms_azi < 0, v_rms_azi + 360, v_rms_azi)
     
     # Calculate spin rate
-    omega_rms = _numpy.sqrt(_numpy.sum(omega **2 * segment_areas) / total_area)
+    omega_rms = _numpy.sqrt(_numpy.sum(omega**2 * segment_areas) / total_area)
 
     return v_rms_mag, v_rms_azi, omega_rms
 
