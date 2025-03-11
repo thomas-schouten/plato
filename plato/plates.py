@@ -622,7 +622,7 @@ class Plates:
         elif torque_var == "GPE":
             matching_cases = self.settings.gpe_cases
         elif torque_var == "mantle_drag":
-            matching_cases = self.settings.mantle_drag_cases
+            matching_cases = self.settings.cases
         
         # Define iterable, if cases not provided
         # Define cases if not provided
