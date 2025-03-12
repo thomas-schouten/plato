@@ -421,6 +421,9 @@ class Points:
                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)
             ):
             for key, entries in _iterable.items():
+                if "LAB_depth" in _vars and not self.settings.options[key]["Depth-dependent mantle drag"]:
+                    continue
+
                 # Define plateIDs if not provided
                 _plateIDs = utils_data.select_plateIDs(plateIDs, self.data[_age][key].plateID.unique())
 
