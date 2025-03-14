@@ -142,7 +142,8 @@ class PlateTorques():
             self.slabs = Slabs(
                 self.settings,
                 self.reconstruction,
-                resolved_geometries = self.plates.resolved_geometries,
+                plate_data = self.plates.data,
+                resolved_geometries = self.plates.resolved_geometries
             )
 
         # Get grids object

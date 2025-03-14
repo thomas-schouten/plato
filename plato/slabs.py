@@ -70,6 +70,7 @@ class Slabs:
             cases_file: Optional[str] = None,
             cases_sheet: str = "Sheet1",
             files_dir: Optional[str] = None,
+            plate_data: Optional[Dict[float, Dict[str, _pandas.DataFrame]]] = None,
             resolved_geometries: Dict[float, Dict[str, _geopandas.GeoDataFrame]] = None,
             PARALLEL_MODE: bool = False,
             DEBUG_MODE: bool = False,
@@ -164,15 +165,17 @@ class Slabs:
                         for entry in entries[1:]:
                             self.data[_age][entry] = self.data[_age][key].copy()
 
-        # Calculate velocities along slabs
+        # Calculate velocities at points
         if CALCULATE_VELOCITIES:
-            for _age in self.NEW_DATA.keys():
-                if len(self.NEW_DATA[_age]) > 0:
-                    self.calculate_velocities(
-                        _age,
-                        self.NEW_DATA[_age],
-                        PROGRESS_BAR = PROGRESS_BAR
-                    )
+            for _age in self.settings.ages:
+                for _case in self.settings.reconstructed_cases:
+                    if self.data[_age][_case]["lower_plate_velocity_mag"].mean() == 0:
+                        self.calculate_velocities(
+                            _age,
+                            _case,
+                            plate_data,
+                            PROGRESS_BAR = False
+                        )
 
         # Calculate total slab length as a function of age and case
         self.total_slab_length = _numpy.zeros((len(self.settings.ages), len(self.settings.slab_pull_cases)))
@@ -282,7 +285,6 @@ class Slabs:
                         velocities = utils_calc.compute_velocity(
                             self.data[_age][_case].loc[mask],
                             _stage_rotation,
-                            self.settings.constants,
                             plateID_col,
                             PARALLEL_MODE = PARALLEL_MODE,
                         )

@@ -742,6 +742,12 @@ def compute_thicknesses(
         hw = _numpy.where(hw <= 81, 2600 + 345 * _numpy.sqrt(hw), hw)
         lithospheric_mantle_thickness = (hw - 2600) * ((mech.rho_sw - mech.rho_a) / (mech.rho_a - mech.rho_l))
 
+        lithospheric_mantle_thickness = _numpy.where(
+            _numpy.isnan(seafloor_ages),
+            mech.cont_lith_thick,
+            lithospheric_mantle_thickness
+        )
+
         if crust:
             crustal_thickness = _numpy.where(
                 _numpy.isnan(seafloor_ages), 
