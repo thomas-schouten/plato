@@ -8,3 +8,5 @@ scipy
 cartopy
 xarray
 geopandas
+cmcrameri
+tqdm
