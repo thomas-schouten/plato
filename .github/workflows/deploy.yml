@@ -5,6 +5,9 @@ on:
     branches:
       - main  # Trigger deploy when pushing to the main branch
 
+permissions:
+  contents: write  # Allow the GitHub token to write to repository contents
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -30,11 +33,12 @@ jobs:
       # Build the Sphinx documentation
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -b html docs/source docs/build/html
-          
+          sphinx-build -b html docs/source docs/build/html  # Build the docs
+
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
           publish_dir: ./docs/build/html  # The folder containing the generated HTML files
+          target_branch: gh-pages  # Specify the branch where the documentation will be deployed
