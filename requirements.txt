@@ -1,2 +1,10 @@
 sphinx
 gplately
+pygplates
+numpy
+pandas
+matplotlib
+scipy
+cartopy
+xarray
+geopandas
