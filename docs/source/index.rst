@@ -2,8 +2,8 @@
 Plato
 #################
 
-These pages provide the documentation of the `plato` python package. 
-`plato` was developed to provide a simple, flexible, and efficient way to perform geodynamic analyses of global plate reconstructions in GPlates.
+These pages provide the documentation of the `Plato` python package. 
+`Plato` was developed to provide a simple, flexible, and efficient way to perform geodynamic analyses of global plate reconstructions in GPlates.
 Here you'll find the relevant documentation as well as a set of notebooks with examples of such analyses.
 
 Plato is tested on Python 3.10.12. In theory, it should work well on any system that has
@@ -12,8 +12,7 @@ access to Conda.
 Quickstart
 ----------
 
-To download the repo, create a Conda environment, and install all dependencies, run the
-following: 
+To install Plato, run the following:
 
 .. code-block:: bash    
 
@@ -23,9 +22,8 @@ following:
     > $ conda activate plato
     > $ pip install -e .
 
-The resulting Conda environment should be able to run all notebooks found in
-hmclab/notebooks. See the installation page for more detailed instructions.
-
+This will create a Conda environment with `Plato` and all required dependencies, which should be able to run all notebooks found in
+plato/notebooks.
 
 .. toctree::
     :maxdepth: 1

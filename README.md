@@ -5,11 +5,11 @@
 
 **Plato** is an object-oriented Python package that provide an efficient and standardised workflow to analyse the motions of tectonic plates using the torque balance expected from their reconstructed geometries.
 
-This package leverages [GPlately](https://gplates.github.io/gplately/v1.3.0/) to interrogate quantitative plate reconstructions built using [GPlates](https://www.gplates.org). GPlates is open-source application software offering a novel combination of interactive plate-tectonic reconstructions, geographic information system functionality and raster data visualisation.
+This package leverages [`GPlately`](https://gplates.github.io/gplately/v1.3.0/) to interrogate quantitative plate reconstructions built using [`GPlates`](https://www.gplates.org). `GPlates` is open-source application software offering a novel combination of interactive plate-tectonic reconstructions, geographic information system functionality and raster data visualisation.
 
 The package is based on the algorithm initially published by [Clennett et al. (2023)](https://www.nature.com/articles/s41598-023-37117-w).
 
-<!-- - **Website:** https://hmclab.science -->
+- **Website:** https://thomas-schouten.github.io/plato/index.html
 <!-- - **Python documentation:** https://python.hmclab.science -->
 - **Source code:** https://github.com/thomas-schouten/plato
 <!-- - **Docker image:** https://hub.docker.com/repository/docker/larsgebraad/hmclab -->
@@ -17,8 +17,15 @@ The package is based on the algorithm initially published by [Clennett et al. (2
 
 # Installation
 
-To install Plato, simply download the files from GitHub or clone the environment using:
+To install `Plato`, create a Conda environment and run the following:
 
 ```
-git clone https://github.com/thomas-schouten/plato.git
+> $ git clone https://github.com/thomas-schouten/plato.git
+> $ cd plato
+> $ conda env create -f environment.yml
+> $ conda activate plato
+> $ pip install -e .
 ```
+
+This will create a Conda environment with `Plato` and all required dependencies, which should be able to run all notebooks found in
+plato/notebooks.
