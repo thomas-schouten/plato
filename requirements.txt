@@ -22,3 +22,4 @@ xarray
 geopandas
 cmcrameri
 tqdm
+furo
