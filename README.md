@@ -15,60 +15,10 @@ The package is based on the algorithm initially published by [Clennett et al. (2
 <!-- - **Docker image:** https://hub.docker.com/repository/docker/larsgebraad/hmclab -->
 - **Bug reports:** https://github.com/thomas-schouten/plato/issues
 
-<!-- It provides all the ingredients to set up probabilistic (and deterministic) inverse
-problems, appraise them, and analyse them. This includes a plethora of prior
-distributions, different physical modelling modules and various MCMC (and
-other) algorithms. 
+# Installation
 
-In particular it provides prior distributions, physics and appraisal algorithms.
-
-**Prior distributions:**
-- Normal
-- Laplace
-- Uniform
-- Arbitrary composites of other priors
-- Bayes rule
-- User supplied distributions -->
-
-# Online tutorial notebooks
-
-All tutorial notebooks can also be accessed online in a non-interactive fashion. Simply 
-use https://python.hmclab.science or use the following links:
-
-- [Getting_started.ipynb](notebooks/tutorials/0%20-%20Getting%20started.ipynb)
-- [Example_workflow_PlateTorques.ipynb](notebooks/tutorials/1%20-%20Tuning%20Hamiltonian%20Monte%20Carlo.ipynb)
-- [Example_workflow_Slabs.ipynb](notebooks/tutorials/2%20-%20Separate%20priors%20per%20dimension.ipynb)
-
-# The long way around: installing the package on your system
-
-For full installation instructions, including creating a proper Python environment, [see the installation instructions](https://python.hmclab.science/setup.html). 
-
-Directly to your environment:
+To install Plato, simply download the files from GitHub or clone the environment using:
 
 ```
-pip install -e git+git@github.com:thomas-schouten/plato.git@master#egg=hmclab
-```
-
-From the project root directory:
-
-```
-pip install -e .
-```
-
-### Development dependencies
-
-If you want to develop within this repo, we recommend a few extra packages. They can also be installed using pip.
-
-In Bash:
-
-```
-pip install -e git+git@github.com:thomas-schouten/plato.git@master#egg=plato[dev] # from github repo
-pip install -e .[dev] # from local clone
-```
-
-... or Zsh (which requires escapes for brackets):
-
-```
-pip install -e git+git@github.com:thomas-schouten/plato.git@master#egg=plato\[dev\] # from github repo
-pip install -e .\[dev\] # from local clone
+git clone https://github.com/thomas-schouten/plato.git
 ```

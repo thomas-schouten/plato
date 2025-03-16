@@ -731,7 +731,7 @@ def compute_thicknesses(
             water_depth = _numpy.where(
                 _numpy.isnan(seafloor_ages), 
                 0.,
-                (lithospheric_mantle_thickness * ((mech.rho_a - mech.rho_l) / (mech.rho_sw - mech.rho_a))) + 2600
+                (lithospheric_mantle_thickness * ((mech.rho_a - mech.rho_l) / (mech.rho_sw - mech.rho_a)))
             )
         else:
             water_depth = _numpy.nan

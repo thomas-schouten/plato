@@ -551,6 +551,7 @@ class PlotReconstruction():
             vector_scale_units = "width",
             vector_color = "k",
             vector_alpha = 0.5,
+            NET_ROTATION_POLE = False,
         ):
         """
         Function to create subplot of the reconstruction with global plate velocities.
@@ -660,6 +661,20 @@ class PlotReconstruction():
             facecolour = vector_color,
             alpha = vector_alpha
         )
+        
+        # Plot Euler pole of net lithospheric rotation, if necessary
+        if NET_ROTATION_POLE:
+            for i in range(2):
+                _globe_data = self.globe.data["ref"]
+                _index = _numpy.where(_globe_data.age.values == age)[0][0]
+                ax.scatter(
+                    _globe_data.net_rotation_pole_lon.values[_index] if i == 0 else (_globe_data.net_rotation_pole_lon.values[_index] + 180) % 360,
+                    _globe_data.net_rotation_pole_lat.values[_index] if i == 0 else -_globe_data.net_rotation_pole_lat.values[_index],
+                    transform=ccrs.PlateCarree(),
+                    s=200,
+                    marker="*",
+                    c="k",
+                )
 
         # Plot plates and coastlines
         ax = self.plot_reconstruction(
