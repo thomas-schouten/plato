@@ -1,4 +1,9 @@
 sphinx
+nbsphinx
+sphinx_rtd_theme
+sphinxcontrib-serializinghtml
+autoclasstoc
+IPython
 gplately
 pygplates
 numpy
@@ -10,5 +15,3 @@ xarray
 geopandas
 cmcrameri
 tqdm
-autoclasstoc
-IPython
