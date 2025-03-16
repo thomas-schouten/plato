@@ -11,3 +11,4 @@ geopandas
 cmcrameri
 tqdm
 autoclasstoc
+IPython
