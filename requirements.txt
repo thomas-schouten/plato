@@ -10,3 +10,4 @@ xarray
 geopandas
 cmcrameri
 tqdm
+autoclasstoc
