@@ -12,7 +12,7 @@ from typing import Dict, List, Optional, Tuple, Union, Any
 # Third-party libraries
 import numpy as _numpy
 import pandas as _pandas
-import pygplates as _pygplates
+from gplately import pygplates as _pygplates
 import xarray as _xarray
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from scipy.spatial.transform import Rotation

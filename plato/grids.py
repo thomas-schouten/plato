@@ -3,7 +3,6 @@ from copy import deepcopy
 from typing import Dict, List, Optional, Union
 
 import numpy as _numpy
-import gplately as _gplately
 import xarray as _xarray
 from tqdm import tqdm as _tqdm
 

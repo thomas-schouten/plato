@@ -24,8 +24,8 @@ import geopandas as _geopandas
 
 import numpy as _numpy
 import gplately as _gplately
+from gplately import pygplates as _pygplates
 import pandas as _pandas
-import pygplates as _pygplates
 import xarray as _xarray
 from tqdm import tqdm as _tqdm
 
