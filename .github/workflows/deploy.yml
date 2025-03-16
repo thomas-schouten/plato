@@ -25,15 +25,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install sphinx
+          pip install -r requirements.txt  # Install all dependencies, including gplately
 
       # Build the Sphinx documentation
       - name: Build Sphinx documentation
         run: |
-          sphinx-build -b html . docs/source/html  # Adjust if your Sphinx source dir is different
-
+          sphinx-build -b html docs/source docs/build/html
+          
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/html  # The folder containing the generated HTML files
+          publish_dir: ./docs/build/html  # The folder containing the generated HTML files
