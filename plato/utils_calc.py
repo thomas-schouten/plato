@@ -184,6 +184,14 @@ def compute_interface_term(
             
         # Calculate interface term
         interface_term = 11 - 10**(1-slab_data["sediment_fraction"])
+
+        # Account for difference in interface length
+        interface_term = _numpy.where(
+            slab_data["continental_arc"] == True,
+            interface_term / 2,
+            interface_term
+        )
+        
         logging.info(f"Mean, min and max of interface terms: {interface_term.mean()}, {interface_term.min()}, {interface_term.max()}")
     else:
         interface_term = 1.
