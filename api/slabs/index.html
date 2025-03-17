@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="prev" title="Points" href="../points/index.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>Slabs - Version a63ac00</title>
+        <title>Slabs - Version f164b23</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version a63ac00</div></a>
+      <a href="../../index.html"><div class="brand">Version f164b23</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/HMC Lab-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version a63ac00</span>
+  <span class="sidebar-brand-text">Version f164b23</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -336,6 +336,24 @@ where the variable to sample from the grid is set to “seafloor_age” and the 
 <dd><p>Samples seafloor age at arcs.
 This is a special case of the sample_grid function,
 where the variable to sample from the grid is set to “seafloor_age” and the column to store the sampled values is set to “arc_seafloor_age”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ages</strong> (<em>float</em><em>, </em><em>int</em><em>, </em><em>list</em><em>, </em><em>numpy.ndarray</em>) – ages of interest (default: None)</p></li>
+<li><p><strong>cases</strong> (<em>str</em><em>, </em><em>list</em>) – cases of interest (default: None)</p></li>
+<li><p><strong>plateIDs</strong> (<em>list</em><em>, </em><em>numpy.ndarray</em>) – plateIDs of interest (default: None)</p></li>
+<li><p><strong>grids</strong> (<em>dict</em><em>[</em><em>float</em><em>, </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>xarray.Dataset</em><em>]</em><em>]</em>) – grids to sample from (default: None)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plato.slabs.Slabs.sample_arc_LAB_depth">
+<span class="sig-name descname"><span class="pre">sample_arc_LAB_depth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ITERATIONS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PROGRESS_BAR</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/slabs.html#Slabs.sample_arc_LAB_depth"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.slabs.Slabs.sample_arc_LAB_depth" title="Link to this definition">¶</a></dt>
+<dd><p>Samples LAB depth at arcs.
+This is a special case of the sample_grid function,
+where the variable to sample from the grid is set to “LAB_depth” and the column to store the sampled values is set to “arc_LAB_depth”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -574,6 +592,7 @@ Data of the ‘Slabs’ object is exported to .csv files.</p>
 <li><a class="reference internal" href="#plato.slabs.Slabs.calculate_velocities"><code class="docutils literal notranslate"><span class="pre">Slabs.calculate_velocities()</span></code></a></li>
 <li><a class="reference internal" href="#plato.slabs.Slabs.sample_slab_seafloor_ages"><code class="docutils literal notranslate"><span class="pre">Slabs.sample_slab_seafloor_ages()</span></code></a></li>
 <li><a class="reference internal" href="#plato.slabs.Slabs.sample_arc_seafloor_ages"><code class="docutils literal notranslate"><span class="pre">Slabs.sample_arc_seafloor_ages()</span></code></a></li>
+<li><a class="reference internal" href="#plato.slabs.Slabs.sample_arc_LAB_depth"><code class="docutils literal notranslate"><span class="pre">Slabs.sample_arc_LAB_depth()</span></code></a></li>
 <li><a class="reference internal" href="#plato.slabs.Slabs.sample_slab_sediment_thickness"><code class="docutils literal notranslate"><span class="pre">Slabs.sample_slab_sediment_thickness()</span></code></a></li>
 <li><a class="reference internal" href="#plato.slabs.Slabs.set_continental_arc"><code class="docutils literal notranslate"><span class="pre">Slabs.set_continental_arc()</span></code></a></li>
 <li><a class="reference internal" href="#plato.slabs.Slabs.sample_grid"><code class="docutils literal notranslate"><span class="pre">Slabs.sample_grid()</span></code></a></li>
@@ -598,7 +617,7 @@ Data of the ‘Slabs’ object is exported to .csv files.</p>
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=dcd4f1e3"></script>
+</div><script src="../../_static/documentation_options.js?v=03b3d068"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

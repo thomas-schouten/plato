@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>plato.optimisation - Version a63ac00</title>
+        <title>plato.optimisation - Version f164b23</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version a63ac00</div></a>
+      <a href="../../index.html"><div class="brand">Version f164b23</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/HMC Lab-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version a63ac00</span>
+  <span class="sidebar-brand-text">Version f164b23</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -873,9 +873,6 @@
         <span class="c1"># Set range of viscosities</span>
         <span class="n">viscs</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">viscosity_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">viscosity_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">grid_size</span><span class="p">)</span>
 
-        <span class="c1"># Set range of slab suction constants</span>
-        <span class="n">ss_consts</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
-
         <span class="c1"># Make dictionary to store results</span>
         <span class="n">normalised_residual_torques</span> <span class="o">=</span> <span class="p">{</span><span class="n">_age</span><span class="p">:</span> <span class="p">{</span><span class="n">_case</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">}</span> <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_ages</span><span class="p">}</span>
         <span class="n">optimal_sp_consts</span> <span class="o">=</span> <span class="p">{</span><span class="n">_age</span><span class="p">:</span> <span class="p">{</span><span class="n">_case</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">}</span> <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_ages</span><span class="p">}</span>
@@ -886,12 +883,14 @@
         <span class="c1"># Loop through ages</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_ages</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">:</span>
-                <span class="c1"># Set range of slab pull coefficients</span>
+                <span class="c1"># Set range of slab pull and slab suction coefficients</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Sediment subduction&quot;</span><span class="p">]:</span>
                     <span class="c1"># Range is smaller with sediment subduction</span>
                     <span class="n">sp_consts</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
+                    <span class="n">ss_consts</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">sp_consts</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
+                    <span class="n">ss_consts</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">)</span>
 
                 <span class="c1"># Create grids from ranges of viscosities and slab pull coefficients</span>
                 <span class="n">visc_grid</span><span class="p">,</span> <span class="n">sp_const_grid</span><span class="p">,</span> <span class="n">ss_const_grid</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">viscs</span><span class="p">,</span> <span class="n">sp_consts</span><span class="p">,</span> <span class="n">ss_consts</span><span class="p">)</span>
@@ -936,8 +935,8 @@
                 <span class="n">_slab_suction_force_lat</span> <span class="o">=</span> <span class="n">_slab_data</span><span class="o">.</span><span class="n">slab_suction_force_lat</span> <span class="o">/</span> \
                     <span class="n">_slab_data</span><span class="o">.</span><span class="n">slab_suction_constant</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Slab suction constant&quot;</span><span class="p">]</span>
                 <span class="n">_slab_suction_force_lon</span> <span class="o">=</span> <span class="n">_slab_data</span><span class="o">.</span><span class="n">slab_suction_force_lon</span> <span class="o">/</span> \
-                    <span class="n">_slab_data</span><span class="o">.</span><span class="n">slab_suction_constant</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Slab suction constant&quot;</span><span class="p">]</span>
-                
+                    <span class="n">_slab_data</span><span class="o">.</span><span class="n">slab_suction_constant</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Slab suction constant&quot;</span><span class="p">]</span>  
+                              
                 <span class="c1"># Calculate slab pull torque with the modified slab pull forces</span>
                 <span class="n">computed_data</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_torque_on_plates</span><span class="p">(</span>
                     <span class="n">_data</span><span class="p">,</span>
@@ -1054,7 +1053,7 @@
                     <span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">opt_k</span><span class="p">,</span> <span class="n">opt_j</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># Use opt_i and opt_k here</span>
                     <span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">),</span> <span class="n">xycoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
 
-                    <span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.412</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.02</span><span class="o">*</span><span class="p">(</span><span class="mf">10.5</span><span class="o">/</span><span class="mi">8</span><span class="p">)])</span>
+                    <span class="n">cax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.362</span><span class="p">,</span> <span class="o">-</span><span class="mf">.02</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.02</span><span class="o">*</span><span class="p">(</span><span class="mf">10.5</span><span class="o">/</span><span class="mi">8</span><span class="p">)])</span>
                     <span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im2</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span><span class="p">)</span>
                     <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Log10(residual torque/driving torque)&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">savefig</span><span class="p">:</span>
@@ -3099,7 +3098,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=dcd4f1e3"></script>
+</div><script src="../../_static/documentation_options.js?v=03b3d068"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>plato.slabs - Version a63ac00</title>
+        <title>plato.slabs - Version f164b23</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version a63ac00</div></a>
+      <a href="../../index.html"><div class="brand">Version f164b23</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/HMC Lab-dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version a63ac00</span>
+  <span class="sidebar-brand-text">Version f164b23</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -659,6 +659,51 @@
         <span class="c1"># Set sampling flag to true</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sampled_seafloor_at_arcs</span> <span class="o">=</span> <span class="kc">True</span></div>
 
+
+<div class="viewcode-block" id="Slabs.sample_arc_LAB_depth">
+<a class="viewcode-back" href="../../api/slabs/index.html#plato.slabs.Slabs.sample_arc_LAB_depth">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample_arc_LAB_depth</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">grids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">ITERATIONS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Samples LAB depth at arcs.</span>
+<span class="sd">        This is a special case of the sample_grid function, </span>
+<span class="sd">        where the variable to sample from the grid is set to &quot;LAB_depth&quot; and the column to store the sampled values is set to &quot;arc_LAB_depth&quot;.</span>
+
+<span class="sd">        :param ages:            ages of interest (default: None)</span>
+<span class="sd">        :type ages:             float, int, list, numpy.ndarray</span>
+<span class="sd">        :param cases:           cases of interest (default: None)</span>
+<span class="sd">        :type cases:            str, list</span>
+<span class="sd">        :param plateIDs:        plateIDs of interest (default: None)</span>
+<span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
+<span class="sd">        :param grids:           grids to sample from (default: None)</span>
+<span class="sd">        :type grids:            dict[float, dict[str, xarray.Dataset]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get cases if not provided</span>
+        <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">slab_pull_cases</span><span class="p">)</span>
+
+        <span class="c1"># Sample grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span>
+            <span class="n">ages</span><span class="p">,</span>
+            <span class="n">_cases</span><span class="p">,</span>
+            <span class="n">plateIDs</span><span class="p">,</span>
+            <span class="n">grids</span><span class="p">,</span>
+            <span class="n">plate</span> <span class="o">=</span> <span class="s2">&quot;upper&quot;</span><span class="p">,</span>
+            <span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LAB_depth&quot;</span><span class="p">],</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;arc_LAB_depth&quot;</span><span class="p">],</span>
+            <span class="n">ITERATIONS</span> <span class="o">=</span> <span class="n">ITERATIONS</span><span class="p">,</span>
+            <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+        <span class="c1"># Set sampling flag to true</span>
+        <span class="c1"># self.sampled_seafloor_at_arcs = True</span>
 
 <div class="viewcode-block" id="Slabs.sample_slab_sediment_thickness">
 <a class="viewcode-back" href="../../api/slabs/index.html#plato.slabs.Slabs.sample_slab_sediment_thickness">[docs]</a>
@@ -1142,9 +1187,10 @@
                         <span class="k">continue</span>
                         
                     <span class="c1"># Calculate slab pull force</span>
-                    <span class="n">computed_data</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_slab_pull_force</span><span class="p">(</span>
+                    <span class="n">computed_data</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_slab_force</span><span class="p">(</span>
                         <span class="n">_data</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;pull&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
 
                     <span class="c1"># Compute interface term</span>
@@ -1165,6 +1211,7 @@
                             <span class="s2">&quot;slab_water_depth&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;shear_zone_width&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;sediment_fraction&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;slab_pull_constant&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_pull_force_lat&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_pull_force_lon&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_pull_force_mag&quot;</span><span class="p">,</span>
@@ -1238,8 +1285,10 @@
                         <span class="k">continue</span>
                         
                     <span class="c1"># Calculate slab suction force</span>
-                    <span class="n">computed_data</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_slab_suction_force</span><span class="p">(</span>
+                    <span class="n">computed_data</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_slab_force</span><span class="p">(</span>
                         <span class="n">_data</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">],</span>
+                        <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;suction&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
 
                     <span class="c1"># Compute interface term</span>
@@ -1255,8 +1304,12 @@
                     <span class="c1"># Copy to other entries</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="s2">&quot;slab_lithospheric_thickness&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;slab_crustal_thickness&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;slab_water_depth&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;shear_zone_width&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;sediment_fraction&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;slab_suction_constant&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_suction_force_lat&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_suction_force_lon&quot;</span><span class="p">,</span>
                             <span class="s2">&quot;slab_suction_force_mag&quot;</span><span class="p">,</span>
@@ -1680,7 +1733,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=dcd4f1e3"></script>
+</div><script src="../../_static/documentation_options.js?v=03b3d068"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
