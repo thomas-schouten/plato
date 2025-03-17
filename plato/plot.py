@@ -665,7 +665,7 @@ class PlotReconstruction():
         # Plot Euler pole of net lithospheric rotation, if necessary
         if NET_ROTATION_POLE:
             for i in range(2):
-                _globe_data = self.globe.data["ref"]
+                _globe_data = self.globe.data[case]
                 _index = _numpy.where(_globe_data.age.values == age)[0][0]
                 ax.scatter(
                     _globe_data.net_rotation_pole_lon.values[_index] if i == 0 else (_globe_data.net_rotation_pole_lon.values[_index] + 180) % 360,

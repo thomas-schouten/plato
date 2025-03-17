@@ -394,6 +394,48 @@ class Slabs:
         # Set sampling flag to true
         self.sampled_seafloor_at_arcs = True
 
+    def sample_arc_LAB_depth(
+            self,
+            ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            cases: Optional[Union[str, List[str]]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            grids: Optional[Dict[Union[int, float], _xarray.Dataset]] = None,
+            ITERATIONS: bool = False,
+            PROGRESS_BAR: bool = True,
+        ):
+        """
+        Samples LAB depth at arcs.
+        This is a special case of the sample_grid function, 
+        where the variable to sample from the grid is set to "LAB_depth" and the column to store the sampled values is set to "arc_LAB_depth".
+
+        :param ages:            ages of interest (default: None)
+        :type ages:             float, int, list, numpy.ndarray
+        :param cases:           cases of interest (default: None)
+        :type cases:            str, list
+        :param plateIDs:        plateIDs of interest (default: None)
+        :type plateIDs:         list, numpy.ndarray
+        :param grids:           grids to sample from (default: None)
+        :type grids:            dict[float, dict[str, xarray.Dataset]]
+        """
+        # Get cases if not provided
+        _cases = utils_data.select_cases(cases, self.settings.slab_pull_cases)
+
+        # Sample grid
+        self.sample_grid(
+            ages,
+            _cases,
+            plateIDs,
+            grids,
+            plate = "upper",
+            vars = ["LAB_depth"],
+            cols = ["arc_LAB_depth"],
+            ITERATIONS = ITERATIONS,
+            PROGRESS_BAR = PROGRESS_BAR,
+        )
+
+        # Set sampling flag to true
+        # self.sampled_seafloor_at_arcs = True
+
     def sample_slab_sediment_thickness(
             self,
             ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
@@ -862,9 +904,10 @@ class Slabs:
                         continue
                         
                     # Calculate slab pull force
-                    computed_data = utils_calc.compute_slab_pull_force(
+                    computed_data = utils_calc.compute_slab_force(
                         _data,
                         self.settings.options[key],
+                        type = "pull",
                     )
 
                     # Compute interface term
@@ -885,6 +928,7 @@ class Slabs:
                             "slab_water_depth",
                             "shear_zone_width",
                             "sediment_fraction",
+                            "slab_pull_constant",
                             "slab_pull_force_lat",
                             "slab_pull_force_lon",
                             "slab_pull_force_mag",
@@ -955,8 +999,10 @@ class Slabs:
                         continue
                         
                     # Calculate slab suction force
-                    computed_data = utils_calc.compute_slab_suction_force(
+                    computed_data = utils_calc.compute_slab_force(
                         _data,
+                        self.settings.options[key],
+                        type = "suction",
                     )
 
                     # Compute interface term
@@ -972,8 +1018,12 @@ class Slabs:
                     # Copy to other entries
                     if len(entries) > 1:
                         cols = [
+                            "slab_lithospheric_thickness",
+                            "slab_crustal_thickness",
+                            "slab_water_depth",
                             "shear_zone_width",
                             "sediment_fraction",
+                            "slab_suction_constant",
                             "slab_suction_force_lat",
                             "slab_suction_force_lon",
                             "slab_suction_force_mag",

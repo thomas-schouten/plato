@@ -608,9 +608,6 @@ class Optimisation():
         # Set range of viscosities
         viscs = _numpy.linspace(viscosity_range[0], viscosity_range[1], grid_size)
 
-        # Set range of slab suction constants
-        ss_consts = _numpy.linspace(1e-5, 1., grid_size)
-
         # Make dictionary to store results
         normalised_residual_torques = {_age: {_case: None for _case in _cases} for _age in _ages}
         optimal_sp_consts = {_age: {_case: None for _case in _cases} for _age in _ages}
@@ -621,12 +618,14 @@ class Optimisation():
         # Loop through ages
         for _age in _ages:
             for _case in _cases:
-                # Set range of slab pull coefficients
+                # Set range of slab pull and slab suction coefficients
                 if self.settings.options[_case]["Sediment subduction"]:
                     # Range is smaller with sediment subduction
                     sp_consts = _numpy.linspace(1e-5, 0.1, grid_size)
+                    ss_consts = _numpy.linspace(1e-5, 0.1, grid_size)
                 else:
                     sp_consts = _numpy.linspace(1e-5, 1., grid_size)
+                    ss_consts = _numpy.linspace(1e-5, 1., grid_size)
 
                 # Create grids from ranges of viscosities and slab pull coefficients
                 visc_grid, sp_const_grid, ss_const_grid = _numpy.meshgrid(viscs, sp_consts, ss_consts)
@@ -671,8 +670,8 @@ class Optimisation():
                 _slab_suction_force_lat = _slab_data.slab_suction_force_lat / \
                     _slab_data.slab_suction_constant * self.settings.options[_case]["Slab suction constant"]
                 _slab_suction_force_lon = _slab_data.slab_suction_force_lon / \
-                    _slab_data.slab_suction_constant * self.settings.options[_case]["Slab suction constant"]
-                
+                    _slab_data.slab_suction_constant * self.settings.options[_case]["Slab suction constant"]  
+                              
                 # Calculate slab pull torque with the modified slab pull forces
                 computed_data = utils_calc.compute_torque_on_plates(
                     _data,
@@ -789,7 +788,7 @@ class Optimisation():
                     ax2.scatter(opt_k, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
                     ax2.annotate("b", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
 
-                    cax = fig.add_axes([0.412, 0, 0.2, 0.02*(10.5/8)])
+                    cax = fig.add_axes([0.362, -.02, 0.3, 0.02*(10.5/8)])
                     cbar = plt.colorbar(im2, cax=cax, orientation="horizontal")
                     cbar.set_label("Log10(residual torque/driving torque)")
                     if savefig:

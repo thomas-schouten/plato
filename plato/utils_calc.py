@@ -100,9 +100,10 @@ constants = set_constants()
 # FORCE CALCULATIONS
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-def compute_slab_pull_force(
+def compute_slab_force(
         slab_data: _pandas.DataFrame,
         options: Dict[str, Any],
+        type: Optional[str] = "pull",
     ) -> _pandas.DataFrame:
     """
     Function to calculate slab pull force along subduction zones.
@@ -126,23 +127,28 @@ def compute_slab_pull_force(
 
     # Calculate slab pull force acting on point along subduction zone where there is a seafloor age, and set to 0 where there is no seafloor age
     mask = slab_data["slab_seafloor_age"].isna()
-    slab_data.loc[mask, "slab_pull_force_mag"] = 0.
-    slab_data.loc[~mask, "slab_pull_force_mag"] = (
+    slab_data.loc[mask, f"slab_{type}_force_mag"] = 0.
+    slab_data.loc[~mask, f"slab_{type}_force_mag"] = (
         slab_data.loc[~mask, "slab_lithospheric_thickness"] * slab_data.loc[~mask, "slab_length"] * \
         mech.drho_slab * mech.g * 1/_numpy.sqrt(_numpy.pi)
     )
 
     # Add the sediments, if necessary
     if options["Sediment subduction"]:
-        slab_data.loc[~mask, "slab_pull_force_mag"] += (
+        slab_data.loc[~mask, f"slab_{type}_force_mag"] += (
             slab_data.loc[~mask, "sediment_thickness"] * slab_data.loc[~mask, "slab_length"] * mech.drho_sed * mech.g
         )
 
     # Decompose into latitudinal and longitudinal components
-    slab_data["slab_pull_force_lat"], slab_data["slab_pull_force_lon"] = mag_azi2lat_lon(
-        slab_data["slab_pull_force_mag"], 
+    slab_data[f"slab_{type}_force_lat"], slab_data[f"slab_{type}_force_lon"] = mag_azi2lat_lon(
+        slab_data[f"slab_{type}_force_mag"], 
         slab_data["trench_normal_azimuth"]
     )
+
+    # Flip the force direction if the type is suction
+    if type == "suction":
+        slab_data[f"slab_{type}_force_lat"] *= -1
+        slab_data[f"slab_{type}_force_lon"] *= -1
 
     return slab_data
 
@@ -188,11 +194,12 @@ def compute_interface_term(
         # Account for difference in interface length
         interface_term = _numpy.where(
             slab_data["continental_arc"] == True,
-            interface_term / 2,
+            interface_term / 1.23,
             interface_term
         )
         
         logging.info(f"Mean, min and max of interface terms: {interface_term.mean()}, {interface_term.min()}, {interface_term.max()}")
+
     else:
         interface_term = 1.
 
@@ -205,6 +212,7 @@ def compute_interface_term(
 
 def compute_slab_suction_force(
         slab_data: _pandas.DataFrame,
+        options: Dict[str, Any],
     ) -> _pandas.DataFrame:
     """
     Function to calculate slab suction force at subduction zones.
@@ -222,15 +230,26 @@ def compute_slab_suction_force(
 
     NOTE: The magnitude of the slab suction constant needs to be optimised in some way.
     """
-    # Mask entries with seafloor age (and thus a nonzero magnitude of the slab pull force)
-    mask = ~slab_data["slab_seafloor_age"].isna()
+    # Calculate thicknesses
+    slab_data["slab_lithospheric_thickness"], slab_data["slab_crustal_thickness"], slab_data["slab_water_depth"] = compute_thicknesses(slab_data.slab_seafloor_age, options)
 
-    # Set magnitude of entries with no seafloor age to zero
-    slab_data.loc[~mask, "slab_suction_force_mag"] = 0
+    # Calculate length of slab
+    # TODO: Implement variable slab length based on some proxy?
+    slab_data["slab_length"] = options["Slab length"]
 
-    # Set magnitude of entries with seafloor age proportional to the slab pull force magnitude
-    slab_data.loc[mask, "slab_suction_force_mag"] = slab_data.loc[mask, "slab_suction_constant"] * slab_data.loc[mask, "slab_pull_force_mag"]
+    # Calculate slab pull force acting on point along subduction zone where there is a seafloor age, and set to 0 where there is no seafloor age
+    mask = slab_data["slab_seafloor_age"].isna()
+    slab_data.loc[mask, "slab_pull_force_mag"] = 0.
+    slab_data.loc[~mask, "slab_pull_force_mag"] = (
+        slab_data.loc[~mask, "slab_lithospheric_thickness"] * slab_data.loc[~mask, "slab_length"] * \
+        mech.drho_slab * mech.g * 1/_numpy.sqrt(_numpy.pi)
+    )
 
+    # Add the sediments, if necessary
+    if options["Sediment subduction"]:
+        slab_data.loc[~mask, "slab_suction_force_mag"] += (
+            slab_data.loc[~mask, "sediment_thickness"] * slab_data.loc[~mask, "slab_length"] * mech.drho_sed * mech.g
+        )
     # Decompose all entries into latitudinal and longitudinal components, with the vector pointing in the opposite direction of the trench normal vector
     slab_data["slab_suction_force_lat"], slab_data["slab_suction_force_lon"] = mag_azi2lat_lon(
         slab_data["slab_suction_force_mag"],

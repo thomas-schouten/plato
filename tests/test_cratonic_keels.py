@@ -98,17 +98,20 @@ litho_cut
 # Load the reconstruction model
 rotations = pygplates.RotationModel("/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/gplates_files/M2016_rotations_Lr-Hb.rot")
 topologies = pygplates.FeatureCollection("/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/gplates_files/M2016_topologies.gpml")
-polgyons = pygplates.FeatureCollection("/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/gplates_files/M2016_polygons.gpml")
+polgyons = pygplates.FeatureCollection("/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/gplates_files/M2016_static_polygons.gpml")
 reconstruction_model = gplately.PlateReconstruction(rotations, topologies)
 
 # %%
-for age in [100]:#np.arange(0, 181):
+for age in [0]:#np.arange(0, 181):
     # if age == 100:
     #     continue
 
     reconstructed_da = {}
     for var, _var in zip(["LAB", "Elevation", "Moho"], ["LAB_depth", "elevation", "Moho_depth"]):
-        reconstructed_litho = reconstruct_raster(litho_cut, reconstruction_model, polgyons, age, target_variable=var)
+        if age == 0:
+            reconstructed_litho = lithoref
+        else:
+            reconstructed_litho = reconstruct_raster(litho_cut, reconstruction_model, polgyons, age, target_variable=var)
         reconstructed_da[_var] = np.abs(reconstructed_litho[var])
     
     reconstructed_ds = xr.Dataset(
@@ -116,42 +119,54 @@ for age in [100]:#np.arange(0, 181):
         coords={"lat": reconstructed_litho.lat, "lon": reconstructed_litho.lon}
     )
 
+    # Rename lat and lon to latitude and longitude
+    reconstructed_ds = reconstructed_ds.rename({"lat": "latitude", "lon": "longitude"})
+
+    print(reconstructed_ds)
+
     # Interpolate to resolution of the seafloor grid
-    reconstructed_ds = reconstructed_ds.interp_like(seafloor_grids[age])
+    if age != 0:
+        reconstructed_ds = reconstructed_ds.interp_like(seafloor_grids[age])
 
     # Interpolate NaN values
-    for var in reconstructed_ds.data_vars:
-        reconstructed_ds[var] = reconstructed_ds[var].interpolate_na(dim="lat").interpolate_na(dim="lon")
+    if age != 0:
+        for var in reconstructed_ds.data_vars:
+            reconstructed_ds[var] = reconstructed_ds[var].interpolate_na(dim="lat").interpolate_na(dim="lon")
 
     plt.imshow(reconstructed_ds.LAB_depth, origin="lower")
     plt.colorbar()
     plt.show()
 
     # Remove seafloor ages
-    for var in reconstructed_ds.data_vars:
-        reconstructed_ds[var].values = np.where(
-            ~np.isnan(seafloor_grids[age].z.values),
-            np.nan,
-            reconstructed_ds[_var].values
-        )
+    if age != 0:
+        for var in reconstructed_ds.data_vars:
+            reconstructed_ds[var].values = np.where(
+                ~np.isnan(seafloor_grids[age].z.values),
+                np.nan,
+                reconstructed_ds[_var].values
+            )
 
-    # Interpolate back to the original resolution
-    reconstructed_ds = reconstructed_ds.interp_like(lithoref)
+        # Interpolate back to the original resolution
+        reconstructed_ds = reconstructed_ds.interp_like(lithoref)
 
     # Modify the origin to "lower" by flipping the 'lat' axis
-    reconstructed_ds = reconstructed_ds.reindex(lat=list(reversed(reconstructed_ds.lat)))
+    # if age != 0:
+    reconstructed_ds = reconstructed_ds.reindex(latitude=list(reversed(reconstructed_ds.latitude)))
 
     plt.imshow(reconstructed_ds.LAB_depth, origin="lower")
     plt.colorbar()
     plt.show()
 
-    # reconstructed_ds.to_netcdf(f"/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/continental_grids/M2016_ContinentalGrid_{age}Ma.nc")
+    reconstructed_ds.to_netcdf(f"/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/continental_grids/M2016_ContinentalGrid_{age}Ma.nc")
     print(f"Reconstructed continental grids for {age} Ma")
 # %%
 reconstructed_ds
+
 
 # %%
 age = 5
 reconstructed_100ma = xr.open_dataset(f"/Users/thomas/Documents/_Plato/Plato/sample_data/M2016/continental_grids/M2016_ContinentalGrid_{age}Ma.nc")
 
-plt.imshow(reconstructed_100ma.Moho, origin="lower")
+plt.imshow(reconstructed_100ma.LAB_depth, origin="lower")
+
+reconstructed_100ma

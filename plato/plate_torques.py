@@ -410,6 +410,9 @@ class PlateTorques():
         # Sample arc seafloor ages
         self.sample_arc_seafloor_ages(ages, cases, plateIDs, PROGRESS_BAR)
 
+        # Sample arc LAB depths
+        self.sample_arc_LAB_depth(ages, cases, plateIDs, PROGRESS_BAR)
+
         # Sample slab sediment thicknesses
         self.sample_slab_sediment_thicknesses(ages, cases, plateIDs, PROGRESS_BAR)
 
@@ -497,6 +500,25 @@ class PlateTorques():
         self.slabs.sample_arc_seafloor_ages(ages, cases, plateIDs, self.grids.seafloor_age, PROGRESS_BAR)
 
         self.slabs.set_continental_arc(ages, cases, plateIDs, PROGRESS_BAR)
+
+    def sample_arc_LAB_depth(
+            self,
+            ages: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            cases: Optional[Union[str, List[str]]] = None,
+            plateIDs: Optional[Union[int, float, List[Union[int, float]], _numpy.ndarray]] = None,
+            PROGRESS_BAR: bool = True,
+        ):
+        """
+        Function to sample the arc LAB depth and other variables (if available).
+
+        :param ages:        ages of interest (default: None)
+        :type ages:         float, int, list, numpy.ndarray
+        :param cases:       cases of interest (default: None)
+        :type cases:        str, list
+        :param plateIDs:    plateIDs of interest (default: None)
+        :type plateIDs:     int, float, list, numpy.ndarray
+        """
+        self.slabs.sample_arc_LAB_depth(ages, cases, plateIDs, self.grids.continent, PROGRESS_BAR)
 
     def sample_slab_sediment_thicknesses(
             self,

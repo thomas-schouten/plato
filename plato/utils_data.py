@@ -182,7 +182,7 @@ def get_slab_data(
 
     # Initialise other columns to store seafloor ages and forces
     # Upper plate
-    slabs["arc_thickness"] = 0.
+    slabs["arc_LAB_depth"] = 0.
     slabs["arc_seafloor_age"] = 0.
     slabs["continental_arc"] = True
     slabs["erosion_rate"] = 0.

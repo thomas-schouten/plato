@@ -107,7 +107,7 @@ class Settings:
             "Slab pull constant", "Shear zone width", "Slab length", "Slab tesselation spacing"
         ])
         self.slab_suction_cases = self.process_cases([
-            "Slab suction torque", "Slab pull torque", "Seafloor age profile", "Sample sediment grid", 
+            "Slab suction torque", "Seafloor age profile", "Sample sediment grid", 
             "Active margin sediments", "Sediment subduction", "Sample erosion grid", 
             "Slab pull constant", "Shear zone width", "Slab length", "Slab tesselation spacing"
         ])
@@ -160,6 +160,9 @@ class Settings:
             503, # Arabia
             505, # Iran
             606, # Xigaze
+            662, # Japan
+            686, # Sunda
+            736, # Java
             802, # Antarctica
             833, # Gondwanaland
             8680, # East Australia
