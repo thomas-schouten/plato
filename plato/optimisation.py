@@ -789,7 +789,7 @@ class Optimisation():
                     ax2.annotate("b", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
 
                     cax = fig.add_axes([0.362, -.02, 0.3, 0.02*(10.5/8)])
-                    cbar = plt.colorbar(im2, cax=cax, orientation="horizontal")
+                    cbar = plt.colorbar(im2, cax=cax, orientation="horizontal", extend="both", extendfrac=5e-2)
                     cbar.set_label("Log10(residual torque/driving torque)")
                     if savefig:
                         fig.savefig(savefig, dpi=300, bbox_inches="tight")
