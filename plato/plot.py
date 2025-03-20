@@ -482,28 +482,31 @@ class PlotReconstruction():
 
         # Get LAB depth grid
         if age in self.grids.continent: 
+            if age == 0:
+                grid = self.grids.continent[0]
+            
+            else:
+                data = self.points.data[age][case]
 
-            data = self.points.data[age][case]
-
-            grid = _xarray.Dataset(
-                {
-                    "LAB_depth": _xarray.DataArray(
-                        data=data.LAB_depth.values.reshape(
-                            data.lat.unique().size, data.lon.unique().size
-                        ),
-                        coords={
-                            "lat": data.lat.unique(),
-                            "lon": data.lon.unique(),
-                        },
-                        dims=["lat", "lon"],
-                    )
-                },
-                coords={
-                    "lat": (["lat"], data.lat.unique()),
-                    "lon": (["lon"], data.lon.unique()),
-                },
-            )
-            grid = grid.interp_like(self.grids.seafloor_age[age], method="spline")
+                grid = _xarray.Dataset(
+                    {
+                        "LAB_depth": _xarray.DataArray(
+                            data=data.LAB_depth.values.reshape(
+                                data.lat.unique().size, data.lon.unique().size
+                            ),
+                            coords={
+                                "lat": data.lat.unique(),
+                                "lon": data.lon.unique(),
+                            },
+                            dims=["lat", "lon"],
+                        )
+                    },
+                    coords={
+                        "lat": (["lat"], data.lat.unique()),
+                        "lon": (["lon"], data.lon.unique()),
+                    },
+                )
+                grid = grid.interp_like(self.grids.seafloor_age[age], method="spline")
 
             im = self.plot_grid(
                 ax,

@@ -209,12 +209,12 @@ class Optimisation():
                     im = ax.imshow(residual_mag_normalised.T, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
                     ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
                     ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
-                    ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
-                    ax.set_yticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
+                    ax.set_yticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
+                    ax.set_xticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
                     ax.set_ylabel("Asthenospheric viscosity [Pa s]")
                     ax.set_xlabel("Slab pull coefficient")
                     ax.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
-                    fig.colorbar(im, label = "Log(residual torque/driving torque)")
+                    fig.colorbar(im, label = "Log(residual torque/driving torque)", extend="both", extendfrac=5e-2)
                     if savefig is not False:
                         plt.savefig(savefig, dpi=300, bbox_inches="tight")
                     plt.show()
