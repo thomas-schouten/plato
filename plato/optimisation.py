@@ -206,14 +206,14 @@ class Optimisation():
                 # Plot
                 if plot == True:
                     fig, ax = plt.subplots(figsize=(9*cm2in*2, 7.2*cm2in*2))
-                    im = ax.imshow(residual_mag_normalised, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
-                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
+                    im = ax.imshow(residual_mag_normalised.T, cmap="cmc.lapaz_r", vmin=-1.5, vmax=1.5)
                     ax.set_xticks(_numpy.linspace(0, grid_size - 1, 5))
+                    ax.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
                     ax.set_xticklabels(["{:.2e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
                     ax.set_yticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                    ax.set_xlabel("Mantle viscosity [Pa s]")
-                    ax.set_ylabel("Slab pull reduction factor")
-                    ax.scatter(opt_j, opt_i, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
+                    ax.set_ylabel("Asthenospheric viscosity [Pa s]")
+                    ax.set_xlabel("Slab pull coefficient")
+                    ax.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
                     fig.colorbar(im, label = "Log(residual torque/driving torque)")
                     if savefig is not False:
                         plt.savefig(savefig, dpi=300, bbox_inches="tight")
@@ -222,9 +222,9 @@ class Optimisation():
                 # Print results
                 print(f"Optimal coefficients for ", ", ".join(_data.name.astype(str)), " plate(s), (PlateIDs: ", ", ".join(_data.plateID.astype(str)), ")")
                 print("Minimum residual torque: {:.2%} of driving torque".format(10**(_numpy.amin(residual_mag_normalised))))
-                print("Optimum mantle viscosity [Pa s]: {:.2e}".format(opt_visc))
+                print("Optimum asthenospheric viscosity [Pa s]: {:.2e}".format(opt_visc))
                 print("Optimum drag coefficient [Pa s/m]: {:.2e}".format(opt_visc / self.settings.mech.La))
-                print("Optimum slab pull constant: {:.2%}".format(opt_sp_const))
+                print("Optimum slab pull coefficient: {:.2%}".format(opt_sp_const))
 
                 # Store results
                 normalised_residual_torques[_age][_case] = residual_mag_normalised
@@ -772,8 +772,8 @@ class Optimisation():
                     ax1.set_yticks(_numpy.linspace(0, grid_size - 1, 5))
                     ax1.set_yticklabels(["{:.1e}".format(visc) for visc in _numpy.linspace(viscosity_range[0], viscosity_range[1], 5)])
                     ax1.set_xticklabels(["{:.2f}".format(sp_const) for sp_const in _numpy.linspace(sp_consts.min(), sp_consts.max(), 5)])
-                    ax1.set_ylabel("Mantle viscosity [Pa s]")
-                    ax1.set_xlabel("Slab pull constant")
+                    ax1.set_ylabel("Asthenospheric viscosity [Pa s]")
+                    ax1.set_xlabel("Slab pull coefficient")
                     ax1.scatter(opt_i, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Adjust the marker style and size as needed
                     ax1.annotate("a", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
                     
@@ -784,7 +784,7 @@ class Optimisation():
                     ax2.set_yticklabels([])
                     ax2.set_xticklabels(["{:.2f}".format(ss_const) for ss_const in _numpy.linspace(ss_consts.min(), ss_consts.max(), 5)])
                     ax2.set_ylabel("")
-                    ax2.set_xlabel("Slab suction constant")
+                    ax2.set_xlabel("Slab suction coefficient")
                     ax2.scatter(opt_k, opt_j, marker="*", facecolor="none", edgecolor="k", s=30)  # Use opt_i and opt_k here
                     ax2.annotate("b", xy=(0, 1.03), xycoords="axes fraction", fontsize=18, fontweight="bold")
 
@@ -934,7 +934,7 @@ class Optimisation():
                             ax.set_ylim([10**-3.5, 10**1.5])
                             ax.set_xlim([0, 1])
                             ax.set_ylabel("Normalised residual torque")
-                            ax.set_xlabel("Slab pull reduction factor")
+                            ax.set_xlabel("Slab pull coefficient")
                             plt.show()
                         
                         # Find optimal slab pull coefficient

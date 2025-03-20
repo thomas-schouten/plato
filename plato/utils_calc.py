@@ -275,7 +275,7 @@ def compute_slab_bend_force(
     # Calculate slab bending torque
     if options["Bending mechanism"] == "viscous":
         bending_force = (-2. / 3.) * ((slab_data.lower_plate_thickness) / \
-                        (mech.rad_curv)) ** 3 * mech.lith_visc * slab_data.v_convergence * constants.cm_a2m_s # [n-s , e-w], [N/m]
+                        (mech.rad_curv)) ** 3 * mech.lith_visc * slab_data.v_convergence_mag * constants.cm_a2m_s # [n-s , e-w], [N/m]
     elif options["Bending mechanism"] == "plastic":
         bending_force = (-1. / 6.) * ((slab_data.lower_plate_thickness ** 2) / \
                         mech.rad_curv) * mech.yield_stress * _numpy.asarray(
