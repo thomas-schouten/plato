@@ -7,11 +7,10 @@ These pages provide the documentation of the `Plato` python package.
 Here you'll find the relevant documentation as well as a set of notebooks with examples of such analyses.
 
 .. figure:: figures/Plate_forces.png
-    :alt: Optional alt text
     :align: center
     :width: 80%
 
-    Optional caption for the figure.
+    Plate forces considered in `Plato`.
 
 Plato is tested on Python 3.10.12. In theory, it should work well on any system that has
 access to Conda. 
