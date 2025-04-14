@@ -12,3 +12,6 @@
 **/credentials.json
 **/client_secrets.json
 **/client_secret.json
+
+# Ignore any file starting with "_defence" in the notebooks folder
+notebooks/_defence*
