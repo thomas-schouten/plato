@@ -71,11 +71,11 @@ extensions = [
     "sphinxcontrib.bibtex",
 ]
 
-html_static_path = ["_static"]
+html_static_path = ["_static", "figures"]
 html_title = f"Version {str(version).split('-')[0]}"
 html_theme_options = {
-    "light_logo": "figures/Logo_light.png",
-    "dark_logo": "figures/Logo_dark.png",
+    "light_logo": "Logo_light.png",
+    "dark_logo": "Logo_dark.png",
 }
 
 bibtex_bibfiles = ["biblio.bib"]
