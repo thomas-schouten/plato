@@ -37,7 +37,7 @@ nbsphinx_execute = "never"
 # -- Project information -----------------------------------------------------
 
 project = "Plato"
-copyright = "2023-2024, Thomas Schouten"
+copyright = "2023-2025, Thomas Schouten"
 author = "Thomas Schouten"
 
 # The short X.Y version
@@ -74,8 +74,8 @@ extensions = [
 html_static_path = ["_static"]
 html_title = f"Version {str(version).split('-')[0]}"
 html_theme_options = {
-    "light_logo": "HMC Lab.png",
-    "dark_logo": "HMC Lab-dark.png",
+    "light_logo": "figures/Logo_light.png",
+    "dark_logo": "figures/Logo_dark.png",
 }
 
 bibtex_bibfiles = ["biblio.bib"]
