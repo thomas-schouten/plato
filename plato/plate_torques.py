@@ -938,6 +938,15 @@ class PlateTorques():
             PROGRESS_BAR,
         )
 
+        # Calculate RMS velocity of plates
+        self.plates.calculate_rms_velocity(
+            self.points,
+            _ages,
+            _cases,
+            plateIDs,
+            PROGRESS_BAR,
+        )
+
         # Calculate net rotation
         self.calculate_net_rotation(
             _ages,
@@ -946,31 +955,13 @@ class PlateTorques():
             PROGRESS_BAR,
         )
 
-        if not RECONSTRUCTED_CASES:
-        #     # Calculate velocities at points
-        #     self.points.calculate_velocities(
-        #         _ages,
-        #         _cases,
-        #         self.plates.data,
-        #         PROGRESS_BAR,
-        #     )
-
-        #     # Calculate velocities at slabs
-        #     self.slabs.calculate_velocities(
-        #         _ages,
-        #         _cases,
-        #         self.plates.data,
-        #         PROGRESS_BAR,
-        #     )
-
-            # Calculate RMS velocity of plates
-            self.plates.calculate_rms_velocity(
-                self.points,
-                _ages,
-                _cases,
-                plateIDs,
-                PROGRESS_BAR,
-            )
+        # Calculate velocities at slabs
+        self.slabs.calculate_velocities(
+            _ages,
+            _cases,
+            self.plates.data,
+            PROGRESS_BAR,
+        )
 
     def rotate_torque(
             self,

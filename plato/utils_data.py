@@ -233,7 +233,7 @@ def get_point_data(
     )
     lons = _numpy.arange(
         -180+options["Grid spacing"],
-        180,
+        181,
         options["Grid spacing"], 
         dtype=float
     )

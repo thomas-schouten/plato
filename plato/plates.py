@@ -1049,19 +1049,29 @@ class Plates:
                 # Select data for the given age and case
                 _data = self.data[_age][_case]
 
-                # Loop through plateIDs
+                # Preprocess plate IDs to handle exceptions
+                processed_plateIDs = []
+                # for _plateID in _plateIDs:
+                #     # Replace Indo-Australian plate (501) with 801 for 20–43 Ma
+                #     if int(_plateID) == 501 and 20 <= _age <= 43:
+                #         processed_plateIDs.append(801)
+                #     else:
+                #         processed_plateIDs.append(_plateID)
+
+                # Loop through processed plate IDs
                 for _plateID in _plateIDs:
-                    if _data.plateID.isin([_plateID]).any():
-                        # Hard-coded exception for the Indo-Australian plate for 20-43 Ma (which is defined as 801 in the Müller et al. (2016) reconstruction)
-                        _plateID = 801 if _plateID == 501 and _age >= 20 and _age <= 43 else _plateID
-
-                        # Extract data
+                    # Extract the value
+                    if _plateID == 501 and 21 <= _age <= 43:
+                        # Replace Indo-Australian plate (501) with 801 for 20–43 Ma
+                        value = _data[_data.plateID == 801][var].values[0]
+                    elif  _data.plateID.isin([_plateID]).any():
                         value = _data[_data.plateID == _plateID][var].values[0]
+                    else:
+                        value = 0
 
-                        # Assign value to DataFrame if not zero
-                        # This assumes that any of the variables of interest are never zero
-                        # Hard-coded exception for the trapped piece of Izanagi plate after 55 Ma and the Philippine Sea Plate
-                        if value != 0 and not (_plateID == 926 and _age < 55) and not (_plateID == 608 and _age > 35):
+                    # Assign value to DataFrame with exceptions
+                    if value != 0:
+                        if not (_plateID == 926 and _age < 55) and not (_plateID == 608 and _age > 35):
                             extracted_data[_case].loc[i, _plateID] = value
 
         # Return extracted data

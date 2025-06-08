@@ -63,6 +63,7 @@ class Optimisation():
             minimum_plate_area: Optional[Union[int, float]] = None,
             plot: Optional[bool] = True,
             savefig: Optional[str] = False,
+            RECALCULATE_SLAB_PULL: Optional[bool] = True,
         ):
         """
         Function to find optimised coefficients to match plate motions using a grid search.
@@ -127,26 +128,27 @@ class Optimisation():
                     _data = _data[_data["area"] > minimum_plate_area].copy()
 
                 # Recalculate slab pull torque correctly to prevent issues
-                # Get slab data and filter accordingly
-                _slab_data = self.slabs.data[_age][_case].copy()
-                _slab_data = _slab_data[_slab_data.lower_plateID.isin(_data.plateID)]
+                if RECALCULATE_SLAB_PULL:
+                    # Get slab data and filter accordingly
+                    _slab_data = self.slabs.data[_age][_case].copy()
+                    _slab_data = _slab_data[_slab_data.lower_plateID.isin(_data.plateID)]
 
-                # Calculate slab pull force
-                _slab_pull_force_lat = _slab_data.slab_pull_force_lat / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
-                _slab_pull_force_lon = _slab_data.slab_pull_force_lon / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+                    # Calculate slab pull force
+                    _slab_pull_force_lat = _slab_data.slab_pull_force_lat / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
+                    _slab_pull_force_lon = _slab_data.slab_pull_force_lon / _slab_data.slab_pull_constant * self.settings.options[_case]["Slab pull constant"]
 
-                # Calculate slab pull torque with the modified slab pull forces
-                computed_data = utils_calc.compute_torque_on_plates(
-                    _data,
-                    _slab_data.lat.values,
-                    _slab_data.lon.values,
-                    _slab_data.lower_plateID.values,
-                    _slab_pull_force_lat, 
-                    _slab_pull_force_lon,
-                    _slab_data.trench_segment_length.values,
-                    torque_var = "slab_pull",
-                )
-                _data = computed_data
+                    # Calculate slab pull torque with the modified slab pull forces
+                    computed_data = utils_calc.compute_torque_on_plates(
+                        _data,
+                        _slab_data.lat.values,
+                        _slab_data.lon.values,
+                        _slab_data.lower_plateID.values,
+                        _slab_pull_force_lat, 
+                        _slab_pull_force_lon,
+                        _slab_data.trench_segment_length.values,
+                        torque_var = "slab_pull",
+                    )
+                    _data = computed_data
 
                 # Get total area
                 total_area = _data["area"].sum()
