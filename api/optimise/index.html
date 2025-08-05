@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Plates" href="../plates/index.html" /><link rel="prev" title="Grids" href="../grids/index.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>Optimisation - Version daf3462</title>
+        <title>Optimisation - Version 31a58ef</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -167,7 +167,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version daf3462</div></a>
+      <a href="../../index.html"><div class="brand">Version 31a58ef</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -195,7 +195,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/Logo_dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version daf3462</span>
+  <span class="sidebar-brand-text">Version 31a58ef</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -273,7 +273,36 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="plato.optimisation.Optimisation.minimise_residual_torque">
-<span class="sig-name descname"><span class="pre">minimise_residual_torque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5e+18,</span> <span class="pre">5e+20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RECALCULATE_SLAB_PULL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">minimise_residual_torque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5e+18,</span> <span class="pre">5e+20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RECALCULATE_SLAB_PULL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">INCLUDE_SLAB_SUCTION</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque" title="Link to this definition">¶</a></dt>
+<dd><p>Function to find optimised coefficients to match plate motions using a grid search.
+The optimal coefficients are those that minimise the residual torque normalised by the driving torque.
+If more than one plate is provided, the normalised residual torque is weighted by the plate area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
+<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
+<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
+<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal viscosity and slab pull coefficient</p></li>
+<li><p><strong>plot</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
+<li><p><strong>weight_by_area</strong> (<em>boolean</em>) – whether or not to weight the residual torque by plate area</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The optimal slab pull coefficient, optimal viscosity, normalised residual torque, and indices of the optimal coefficients</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, float, numpy.ndarray, tuple</p>
+</dd>
+</dl>
+<p>NOTE: This is a wrapper function that calls either <cite>minimise_residual_torque_v0</cite> or <cite>minimise_residual_torque_v1</cite> depending on the value of <cite>INCLUDE_SLAB_SUCTION</cite>.
+This could be written more elegantly in the future.</p>
+<p>NOTE: Lateral viscosity variations need to be introduced along a third dimension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plato.optimisation.Optimisation.minimise_residual_torque_v0">
+<span class="sig-name descname"><span class="pre">minimise_residual_torque_v0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5e+18,</span> <span class="pre">5e+20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RECALCULATE_SLAB_PULL</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque_v0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque_v0" title="Link to this definition">¶</a></dt>
 <dd><p>Function to find optimised coefficients to match plate motions using a grid search.
 The optimal coefficients are those that minimise the residual torque normalised by the driving torque.
 If more than one plate is provided, the normalised residual torque is weighted by the plate area.</p>
@@ -299,33 +328,8 @@ If more than one plate is provided, the normalised residual torque is weighted b
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.minimise_residual_torque_v2">
-<span class="sig-name descname"><span class="pre">minimise_residual_torque_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lateral_viscosity_variation_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">100]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque_v2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque_v2" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised coefficients to match plate motions using a grid search</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal viscosity and slab pull coefficient</p></li>
-<li><p><strong>plot</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-<li><p><strong>weight_by_area</strong> (<em>boolean</em>) – whether or not to weight the residual torque by plate area</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient, optimal viscosity, normalised residual torque, and indices of the optimal coefficients</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float, float, numpy.ndarray, tuple</p>
-</dd>
-</dl>
-<p>NOTE: Slab suction will be removed shortly and optimisation of lateral viscosity variation will be moved to the original <cite>minimise_residual_torque</cite> function.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.minimise_residual_torque_v4">
-<span class="sig-name descname"><span class="pre">minimise_residual_torque_v4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5e+18,</span> <span class="pre">5e+20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque_v4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque_v4" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="plato.optimisation.Optimisation.minimise_residual_torque_v1">
+<span class="sig-name descname"><span class="pre">minimise_residual_torque_v1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">viscosity_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5e+18,</span> <span class="pre">5e+20]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_by_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_plate_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.minimise_residual_torque_v1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.minimise_residual_torque_v1" title="Link to this definition">¶</a></dt>
 <dd><p>Function to find optimised coefficients to match plate motions using a grid search.
 The optimal coefficients are those that minimise the residual torque normalised by the driving torque.
 If more than one plate is provided, the normalised residual torque is weighted by the plate area.</p>
@@ -374,135 +378,8 @@ If more than one plate is provided, the normalised residual torque is weighted b
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque_v0">
-<span class="sig-name descname"><span class="pre">invert_residual_torque_v0</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-13.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-7.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque_v0"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque_v0" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised slab pull constant by projecting the residual torque onto the subduction zones.
-The function loops through all the unique combinations of ages and cases and optimises the slab pull coefficient for each plate.
-The model space for the slab pull constant is explored using an iterative approach with an adaptive step size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal slab pull coefficient</p></li>
-<li><p><strong>plot</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<p>NOTE: This function should be optimised in several places.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque_v2">
-<span class="sig-name descname"><span class="pre">invert_residual_torque_v2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">age</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">13.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque_v2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque_v2" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised slab pull coefficient or mantle viscosity by projecting the residual torque onto the subduction zones and grid points.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal slab pull coefficient</p></li>
-<li><p><strong>plot</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-<p>NOTE: This function is still under development and may not work as intended.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque_v3">
-<span class="sig-name descname"><span class="pre">invert_residual_torque_v3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-14.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-6.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque_v3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque_v3" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised slab pull constant by projecting the residual torque onto the subduction zones.
-The function loops through all the unique combinations of ages and cases and optimises the slab pull coefficient for each plate.
-The model space for the slab pull constant is explored using an iterative approach with an adaptive step size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal slab pull coefficient</p></li>
-<li><p><strong>plot</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque">
 <span class="sig-name descname"><span class="pre">invert_residual_torque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_slab_pull_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_slab_pull_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-14.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-6.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NUM_ITERATIONS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PLOT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised slab pull constant by projecting the residual torque onto the subduction zones.
-The function loops through all the unique combinations of ages and cases and optimises the slab pull coefficient for each plate.
-The model space for the slab pull constant is explored using an iterative approach with an adaptive step size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal slab pull coefficient</p></li>
-<li><p><strong>NUM_ITERATIONS</strong> (<em>int</em>) – number of iterations to perform</p></li>
-<li><p><strong>PLOT</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque_v6">
-<span class="sig-name descname"><span class="pre">invert_residual_torque_v6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-14.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-6.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NUM_ITERATIONS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PLOT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PARALLEL_MODE</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque_v6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque_v6" title="Link to this definition">¶</a></dt>
-<dd><p>Function to find optimised slab pull constant by projecting the residual torque onto the subduction zones.
-The function loops through all the unique combinations of ages and cases and optimises the slab pull coefficient for each plate.
-The model space for the slab pull constant is explored using an iterative approach with an adaptive step size.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>age</strong> (<em>int</em><em>, </em><em>float</em>) – reconstruction age to optimise</p></li>
-<li><p><strong>case</strong> (<em>str</em>) – case to optimise</p></li>
-<li><p><strong>plateIDs</strong> (<em>list</em><em> of </em><em>integers</em><em> or </em><em>None</em>) – plate IDs to include in optimisation</p></li>
-<li><p><strong>grid_size</strong> (<em>int</em>) – size of the grid to find optimal slab pull coefficient</p></li>
-<li><p><strong>NUM_ITERATIONS</strong> (<em>int</em>) – number of iterations to perform</p></li>
-<li><p><strong>PLOT</strong> (<em>boolean</em>) – whether or not to plot the grid</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The optimal slab pull coefficient</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="plato.optimisation.Optimisation.invert_residual_torque_v5">
-<span class="sig-name descname"><span class="pre">invert_residual_torque_v5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plateIDs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Slab</span> <span class="pre">pull</span> <span class="pre">constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-18.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">NUM_ITERATIONS</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PLOT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/plato/optimisation.html#Optimisation.invert_residual_torque_v5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plato.optimisation.Optimisation.invert_residual_torque_v5" title="Link to this definition">¶</a></dt>
 <dd><p>Function to find optimised slab pull constant by projecting the residual torque onto the subduction zones.
 The function loops through all the unique combinations of ages and cases and optimises the slab pull coefficient for each plate.
 The model space for the slab pull constant is explored using an iterative approach with an adaptive step size.</p>
@@ -652,15 +529,10 @@ The model space for the slab pull constant is explored using an iterative approa
 <li><a class="reference internal" href="#">Optimisation</a><ul>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation"><code class="docutils literal notranslate"><span class="pre">Optimisation</span></code></a><ul>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.minimise_residual_torque"><code class="docutils literal notranslate"><span class="pre">Optimisation.minimise_residual_torque()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.minimise_residual_torque_v2"><code class="docutils literal notranslate"><span class="pre">Optimisation.minimise_residual_torque_v2()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.minimise_residual_torque_v4"><code class="docutils literal notranslate"><span class="pre">Optimisation.minimise_residual_torque_v4()</span></code></a></li>
+<li><a class="reference internal" href="#plato.optimisation.Optimisation.minimise_residual_torque_v0"><code class="docutils literal notranslate"><span class="pre">Optimisation.minimise_residual_torque_v0()</span></code></a></li>
+<li><a class="reference internal" href="#plato.optimisation.Optimisation.minimise_residual_torque_v1"><code class="docutils literal notranslate"><span class="pre">Optimisation.minimise_residual_torque_v1()</span></code></a></li>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.optimise_slab_pull_constant"><code class="docutils literal notranslate"><span class="pre">Optimisation.optimise_slab_pull_constant()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque_v0"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque_v0()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque_v2"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque_v2()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque_v3"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque_v3()</span></code></a></li>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque_v6"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque_v6()</span></code></a></li>
-<li><a class="reference internal" href="#plato.optimisation.Optimisation.invert_residual_torque_v5"><code class="docutils literal notranslate"><span class="pre">Optimisation.invert_residual_torque_v5()</span></code></a></li>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.optimise_torques"><code class="docutils literal notranslate"><span class="pre">Optimisation.optimise_torques()</span></code></a></li>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.remove_net_rotation"><code class="docutils literal notranslate"><span class="pre">Optimisation.remove_net_rotation()</span></code></a></li>
 <li><a class="reference internal" href="#plato.optimisation.Optimisation.remove_net_trench_migration"><code class="docutils literal notranslate"><span class="pre">Optimisation.remove_net_trench_migration()</span></code></a></li>
@@ -679,7 +551,7 @@ The model space for the slab pull constant is explored using an iterative approa
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=2d78adc2"></script>
+</div><script src="../../_static/documentation_options.js?v=6f6d943b"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
