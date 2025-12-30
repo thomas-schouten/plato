@@ -33,3 +33,5 @@ plato/notebooks.
 # References
 
 Schouten, T. L. A. (2025). *From puzzling plates to mantle mysteries: New approaches and applications for plate tectonic reconstructions* (Doctoral dissertation, ETH Zurich). ETH Research Collection. https://doi.org/10.3929/ethz-c-000788918
+
+Clennett, E. J., Holt, A. F., Tetley, M. G., Becker, T. W., & Faccenna, C. (2023). Assessing plate reconstruction models using plate driving forces. *Scientific Reports*, 13, 10191. https://doi.org/10.1038/s41598-023-37117-w
