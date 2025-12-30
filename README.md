@@ -29,3 +29,7 @@ To install `Plato`, create a Conda environment and run the following:
 
 This will create a Conda environment with `Plato` and all required dependencies, which should be able to run all notebooks found in
 plato/notebooks.
+
+# References
+
+Schouten, T. L. A. (2025). *From puzzling plates to mantle mysteries: New approaches and applications for plate tectonic reconstructions* (Doctoral dissertation, ETH Zurich). ETH Research Collection. https://doi.org/10.3929/ethz-c-000788918
