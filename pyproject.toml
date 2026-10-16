@@ -38,6 +38,11 @@ dependencies = [
     "pygmt",
     "rioxarray",
     "xarray",
+    "pyarrow",
+    "gplately",
+    "pygplates",
+    "pandas",
+    "cmcrameri",
 ]
 
 [tool.setuptools.packages.find]
