@@ -43,3 +43,4 @@ dependencies:
   - python-wget
   - ipykernel
   - pip
+  - jupyterlab

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "plato"
-version = "0.1.0"
+version = "1.0.0"
 description = "Object-orientated Python interface for efficient geodynamic characterisation of plate tectonic reconstructions in GPlates"
 readme = "README.md"
 authors = [{ name = "Thomas Schouten", email = "thomas.schouten.work@gmail.com" }]
