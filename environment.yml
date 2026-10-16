@@ -43,8 +43,3 @@ dependencies:
   - python-wget
   - ipykernel
   - pip
-  - pip:
-      - pmagpy==4.2.121
-      - pyvista==0.44.2
-      - vtk==9.3.1
-      - gitpython
