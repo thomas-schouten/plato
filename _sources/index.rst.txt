@@ -25,7 +25,7 @@ To install Plato, run the following:
     > $ git clone https://github.com/thomas-schouten/plato.git
     > $ cd plato
     > $ conda env create -f environment.yml
-    > $ conda activate plato
+    > $ conda activate plato_env
     > $ pip install -e .
 
 This will create a Conda environment with `Plato` and all required dependencies, which should be able to run all notebooks found on the GitHub repository.
@@ -36,7 +36,7 @@ This will create a Conda environment with `Plato` and all required dependencies,
     :hidden:
 
     self
-    plato
+    setup
     api/index
     genindex
 
