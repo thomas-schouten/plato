@@ -1,30 +1,10 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel",
-    "versioneer-518",
-    "numpy>=1.16.0",
-    "scipy>=1.0.0",
-    "shapely",
-    "matplotlib==3.5.2",
-    "cartopy",
-    "pooch",
-    "tqdm",
-    "netcdf4",
-    "rasterio",
-    "geopandas",
-    "stripy",
-    "plate-model-manager>=1.2.1",
-    "pyyaml",
-    "pygmt",
-    "rioxarray",
-    "xarray",
-]
+requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "plato"
-dynamic = ["version"]
+version = "0.1.0"
 description = "Object-orientated Python interface for efficient geodynamic characterisation of plate tectonic reconstructions in GPlates"
 readme = "README.md"
 authors = [{ name = "Thomas Schouten", email = "thomas.schouten.work@gmail.com" }]
@@ -42,13 +22,13 @@ classifiers = [
 ]
 keywords = ["Tectonics", "Earth"]
 dependencies = [
-    "numpy>=1.16.0",
+    "numpy>=1.16.0,<2",
     "scipy>=1.0.0",
     "shapely",
     "matplotlib==3.5.2",
     "cartopy",
     "pooch",
-    "tqdm",
+    "tqdm", 
     "netcdf4",
     "rasterio",
     "geopandas",
