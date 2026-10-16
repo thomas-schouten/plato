@@ -39,7 +39,7 @@ dependencies = [
     "rioxarray",
     "xarray",
     "pyarrow",
-    "gplately",
+    "gplately>=1.3,<2",
     "pygplates",
     "pandas",
     "cmcrameri",

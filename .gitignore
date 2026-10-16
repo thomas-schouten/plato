@@ -31,3 +31,6 @@ __pycache__/
 # Sphinx build output (the docs workflow builds these itself)
 docs/build/
 doctrees/
+
+# Log files
+*.log
