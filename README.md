@@ -23,7 +23,7 @@ To install `Plato`, create a Conda environment and run the following:
 > $ git clone https://github.com/thomas-schouten/plato.git
 > $ cd plato
 > $ conda env create -f environment.yml
-> $ conda activate plato
+> $ conda activate plato_env
 > $ pip install -e .
 ```
 
