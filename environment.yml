@@ -8,6 +8,8 @@ dependencies:
   - scipy=1.13
   - scikit-learn=1.5
   - matplotlib=3.5.2
+  - pyarrow
+  - matplotlib-inline<0.2
   - cartopy=0.22
   - geopandas=0.14
   - shapely=2.0
