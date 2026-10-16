@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>plato.grids - Version 4926ade</title>
+        <title>plato.grids - Version 9735f96</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version 4926ade</div></a>
+      <a href="../../index.html"><div class="brand">Version 9735f96</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/Logo_dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version 4926ade</span>
+  <span class="sidebar-brand-text">Version 9735f96</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -266,7 +266,7 @@
 <div class="viewcode-block" id="Grids">
 <a class="viewcode-back" href="../../api/grids/index.html#plato.grids.Grids">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Grids</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class to hold gridded data.</span>
 <span class="sd">    </span>
 <span class="sd">    Seafloor grids contain lithospheric age and, optionally, sediment thickness.</span>
@@ -289,7 +289,7 @@
 <span class="sd">    :type ages:                 float, int, list, numpy.ndarray</span>
 <span class="sd">    :param cases_file:          filepath to excel file with cases (default: None)</span>
 <span class="sd">    :type cases_file:           str</span>
-<span class="sd">    :param cases_sheet:         name of the sheet in the excel file with cases (default: &quot;Sheet1&quot;)</span>
+<span class="sd">    :param cases_sheet:         name of the sheet in the excel file with cases (default: "Sheet1")</span>
 <span class="sd">    :type cases_sheet:          str</span>
 <span class="sd">    :param files_dir:           directory to store files (default: None)</span>
 <span class="sd">    :type files_dir:            str</span>
@@ -305,7 +305,7 @@
 <span class="sd">    :type DEBUG_MODE:           bool</span>
 <span class="sd">    :param PARALLEL_MODE:       flag to enable parallel mode (default: False)</span>
 <span class="sd">    :type PARALLEL_MODE:        bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">settings</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -316,7 +316,7 @@
             <span class="n">reconstruction_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">ages</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases_file</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">cases_sheet</span> <span class="o">=</span> <span class="s2">&quot;Sheet1&quot;</span><span class="p">,</span>
+            <span class="n">cases_sheet</span> <span class="o">=</span> <span class="s2">"Sheet1"</span><span class="p">,</span>
             <span class="n">files_dir</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">seafloor_age_grids</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">sediment_grids</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -325,9 +325,9 @@
             <span class="n">DEBUG_MODE</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="n">PARALLEL_MODE</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Constructor for the `Grids` class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Store settings object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">utils_init</span><span class="o">.</span><span class="n">get_settings</span><span class="p">(</span>
             <span class="n">settings</span><span class="p">,</span> 
@@ -356,52 +356,52 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span> <span class="o">=</span> <span class="p">{</span><span class="n">_age</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">}</span>
 
         <span class="c1"># Load seafloor grids</span>
-        <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading grids&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Loading grids"</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">seafloor_age_grids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">seafloor_age_grids</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">seafloor_age_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
                 <span class="c1"># If the seafloor is present in the provided dictionary, copy</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading seafloor age grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading seafloor age grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">seafloor_age_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading seafloor age grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Downloading seafloor age grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">get_seafloor_age_grid</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">_age</span><span class="p">,</span>
                 <span class="p">)</span>
 
             <span class="c1"># Make sure that the coordinates and variables are named correctly</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="s2">&quot;z&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;seafloor_age&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="s2">"z"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span><span class="o">.</span><span class="n">data_vars</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">"z"</span><span class="p">,</span> <span class="s2">"seafloor_age"</span><span class="p">)</span>
                 
         <span class="c1"># Store sediment, continental and velocity grids, if provided, otherwise initialise empty dictionaries to store them at a later stage.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sediment</span> <span class="o">=</span> <span class="p">{</span><span class="n">_age</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">}</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sediment_grids</span><span class="p">,</span> <span class="n">Dict</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading sediment grids&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Loading sediment grids"</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">sediment_grids</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sediment_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
                     <span class="c1"># If the sediment is present in the provided dictionary, copy</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading sediment grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading sediment grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">sediment_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span>
 
                     <span class="c1"># Make sure that the coordinates and variables are named correctly</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;sediment_thickness&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">"z"</span><span class="p">,</span> <span class="s2">"sediment_thickness"</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">continent</span> <span class="o">=</span> <span class="n">continental_grids</span> <span class="k">if</span> <span class="n">continental_grids</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">continental_grids</span> <span class="ow">is</span> <span class="n">Dict</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading continent grids&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Loading continent grids"</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">continental_grids</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">continental_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
                     <span class="c1"># If the sediment is present in the provided dictionary, copy</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading continent grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading continent grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">continental_grids</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span>
 
                     <span class="c1"># Make sure that the coordinates and variables are named correctly</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;continental_thickness&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">rename_coordinates_and_variables</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> <span class="s2">"z"</span><span class="p">,</span> <span class="s2">"continental_thickness"</span><span class="p">)</span>
 
         <span class="c1"># Initialise dictionary to store velocity grids</span>
         <span class="c1"># The entries are empty because the velocity is interpolated from point data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="p">{</span><span class="n">_age</span><span class="p">:</span> <span class="p">{</span><span class="n">_case</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">}</span> <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Grids is a class that contains data and methods for working with (reconstructed) global grids.&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Grids is a class that contains data and methods for working with (reconstructed) global grids."</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
@@ -411,17 +411,17 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">add_grid</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">input_grids</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span>
-            <span class="n">variable_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;new_grid&quot;</span><span class="p">,</span>
-            <span class="n">grid_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;seafloor_age&quot;</span><span class="p">,</span>
-            <span class="n">target_variable</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span>
+            <span class="n">variable_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"new_grid"</span><span class="p">,</span>
+            <span class="n">grid_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"seafloor_age"</span><span class="p">,</span>
+            <span class="n">target_variable</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"z"</span><span class="p">,</span>
             <span class="n">mask_continents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="n">interpolate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">prefactor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to add another grid of a variable to the seafloor grid.</span>
 <span class="sd">        The grids should be organised in a dictionary with each item being an xarray.Dataset with each key being the corresponding reconstruction age, or a single xarray.Dataset, in which case it will be stored without an age.</span>
-<span class="sd">        &#39;mask_continents&#39; is a boolean that determines whether or not to cut the grids to the seafloor. It should only be used for grids that only describe the seafloor, e.g. marine sediment distributions, and not e.g. continental erosion rate grids.</span>
+<span class="sd">        'mask_continents' is a boolean that determines whether or not to cut the grids to the seafloor. It should only be used for grids that only describe the seafloor, e.g. marine sediment distributions, and not e.g. continental erosion rate grids.</span>
 <span class="sd">        </span>
 <span class="sd">        :param input_grids:     input grids to add</span>
 <span class="sd">        :type input_grids:      dict, xarray.Dataset</span>
@@ -437,7 +437,7 @@
 <span class="sd">        :type interpolate:      bool</span>
 <span class="sd">        :param prefactor:       prefactor to apply to the grid (default: 1.)</span>
 <span class="sd">        :type prefactor:        float</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Check if the attribute exists and is initially None</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># Initialize to the type of input_grids</span>
@@ -465,7 +465,7 @@
                 <span class="n">new_grids</span><span class="p">[</span><span class="n">variable_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">_input_grids</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target variable &#39;</span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">&#39; does not exist in the input grids.&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Target variable '</span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">' does not exist in the input grids."</span><span class="p">)</span>
 
         <span class="c1"># If input_grids is a dictionary of xarray.Datasets, loop through the ages to store the grids</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_grids</span><span class="p">,</span> <span class="n">Dict</span><span class="p">):</span>
@@ -481,7 +481,7 @@
 
                     <span class="k">if</span> <span class="n">interpolate</span><span class="p">:</span>
                         <span class="c1"># Interpolate input grids to the resolution of the seafloor age grid</span>
-                        <span class="n">_input_grid</span> <span class="o">=</span> <span class="n">_input_grid</span><span class="o">.</span><span class="n">interp_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">age</span><span class="p">][</span><span class="s2">&quot;seafloor_age&quot;</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+                        <span class="n">_input_grid</span> <span class="o">=</span> <span class="n">_input_grid</span><span class="o">.</span><span class="n">interp_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">[</span><span class="n">age</span><span class="p">][</span><span class="s2">"seafloor_age"</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s2">"nearest"</span><span class="p">)</span>
                         <span class="n">_input_grid</span><span class="p">[</span><span class="n">variable_name</span><span class="p">]</span> <span class="o">*=</span> <span class="n">prefactor</span>
 
                     <span class="c1"># Align grids if mask_continents is True</span>
@@ -498,28 +498,28 @@
                     <span class="n">new_grids</span><span class="p">[</span><span class="n">age</span><span class="p">]</span> <span class="o">=</span> <span class="n">_input_grid</span>
 
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target variable &#39;</span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">&#39; does not exist in the input grids for </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Target variable '</span><span class="si">{</span><span class="n">target_variable</span><span class="si">}</span><span class="s2">' does not exist in the input grids for </span><span class="si">{</span><span class="n">age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
         
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input grids should be either a single xarray.Dataset or a dictionary of xarray.Datasets.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Input grids should be either a single xarray.Dataset or a dictionary of xarray.Datasets."</span><span class="p">)</span>
         
-        <span class="c1"># Ensure the modified new_grids is saved back to the object&#39;s attribute</span>
+        <span class="c1"># Ensure the modified new_grids is saved back to the object's attribute</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">,</span> <span class="n">new_grids</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> updated:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">))</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> updated:"</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">))</span></div>
 
 
     <span class="c1"># def reconstruct_grid(</span>
     <span class="c1">#         self,</span>
     <span class="c1">#         grid: Union[Dict[Union[int, float], _xarray.DataArray], _xarray.DataArray],</span>
-    <span class="c1">#         target_variables: str = &quot;z&quot;,</span>
+    <span class="c1">#         target_variables: str = "z",</span>
     <span class="c1">#         ages: Optional[Union[int, float]] = None,</span>
     <span class="c1">#         PROGRESS_BAR: bool = True,</span>
     <span class="c1">#     ):</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     """</span>
     <span class="c1">#     Function to reconstruct a grid to a given reconstruction age.</span>
 
     <span class="c1">#     NOTE: This function needs to be tested still.</span>
-    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     """</span>
     <span class="c1">#     # Define ages if not provided</span>
     <span class="c1">#     _ages = utils_data.select_ages(ages, self.settings.ages)</span>
 
@@ -536,14 +536,14 @@
     <span class="c1">#             raster = _gplately.Raster(</span>
     <span class="c1">#                 plate_reconstruction = self.reconstruction,</span>
     <span class="c1">#                 data = raster[_variables].values,</span>
-    <span class="c1">#                 extent=&quot;global&quot;,    # equivalent to (-180, 180, -90, 90)</span>
-    <span class="c1">#                 origin=&quot;lower&quot;,     # or set extent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                 extent="global",    # equivalent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                 origin="lower",     # or set extent to (-180, 180, -90, 90)</span>
     <span class="c1">#             )</span>
 
     <span class="c1">#         # Loop through ages</span>
     <span class="c1">#         for _age in _tqdm(</span>
     <span class="c1">#                 _ages,</span>
-    <span class="c1">#                 desc = &quot;Reconstructing grids&quot;,</span>
+    <span class="c1">#                 desc = "Reconstructing grids",</span>
     <span class="c1">#                 disable=(self.settings.logger.level in [logging.INFO, logging.DEBUG] or not PROGRESS_BAR)</span>
     <span class="c1">#             ):</span>
     <span class="c1">#             # If a dictionary of grids is passed, convert each entry to gplately.Raster object</span>
@@ -551,8 +551,8 @@
     <span class="c1">#                     raster = _gplately.Raster(</span>
     <span class="c1">#                     plate_reconstruction = self.reconstruction,</span>
     <span class="c1">#                     data = raster[_variable].values,</span>
-    <span class="c1">#                     extent=&quot;global&quot;,    # equivalent to (-180, 180, -90, 90)</span>
-    <span class="c1">#                     origin=&quot;lower&quot;,     # or set extent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                     extent="global",    # equivalent to (-180, 180, -90, 90)</span>
+    <span class="c1">#                     origin="lower",     # or set extent to (-180, 180, -90, 90)</span>
     <span class="c1">#                 )</span>
                     
     <span class="c1">#             # Reconstruct the raster back to the current reconstruction age</span>
@@ -562,11 +562,11 @@
     <span class="c1">#             )</span>
 
     <span class="c1">#             # Convert reconstructed raster back to xarray.DataArray</span>
-    <span class="c1">#             reconstructed_grids[_age] = _xarray.Dataset(_variable: ([&quot;latitude&quot;, &quot;longitude&quot;], reconstructed_raster.data)</span>
-    <span class="c1">#                 data_vars = {target_variable: ([&quot;latitude&quot;, &quot;longitude&quot;], reconstructed_raster.data)},</span>
+    <span class="c1">#             reconstructed_grids[_age] = _xarray.Dataset(_variable: (["latitude", "longitude"], reconstructed_raster.data)</span>
+    <span class="c1">#                 data_vars = {target_variable: (["latitude", "longitude"], reconstructed_raster.data)},</span>
     <span class="c1">#                 coords = {</span>
-    <span class="c1">#                         &quot;latitude&quot;: ([&quot;latitude&quot;], reconstructed_raster.lats),</span>
-    <span class="c1">#                         &quot;longitude&quot;: ([&quot;longitude&quot;], reconstructed_raster.lons)</span>
+    <span class="c1">#                         "latitude": (["latitude"], reconstructed_raster.lats),</span>
+    <span class="c1">#                         "longitude": (["longitude"], reconstructed_raster.lons)</span>
     <span class="c1">#                     }</span>
     <span class="c1">#                 )</span>
 
@@ -582,7 +582,7 @@
             <span class="n">components</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to generate a velocity grid.</span>
 
 <span class="sd">        :param ages:        ages of interest</span>
@@ -595,7 +595,7 @@
 <span class="sd">        :type components:   str, list</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages, if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
@@ -603,19 +603,19 @@
         <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
 
         <span class="c1"># Define components, if not provided</span>
-        <span class="n">_components</span> <span class="o">=</span> <span class="n">components</span> <span class="k">if</span> <span class="n">components</span> <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;velocity_lat&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_lon&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity_mag&quot;</span><span class="p">,</span> <span class="s2">&quot;spin_rate_mag&quot;</span><span class="p">]</span>
+        <span class="n">_components</span> <span class="o">=</span> <span class="n">components</span> <span class="k">if</span> <span class="n">components</span> <span class="k">else</span> <span class="p">[</span><span class="s2">"velocity_lat"</span><span class="p">,</span> <span class="s2">"velocity_lon"</span><span class="p">,</span> <span class="s2">"velocity_mag"</span><span class="p">,</span> <span class="s2">"spin_rate_mag"</span><span class="p">]</span>
         <span class="n">_components</span> <span class="o">=</span> <span class="p">[</span><span class="n">_components</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_components</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">_components</span>
 
         <span class="c1"># Loop through the ages</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Generating velocity grids&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Generating velocity grids"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="c1"># Loop through the cases</span>
             <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">point_data</span> <span class="ow">and</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">]:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating velocity grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma and case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Generating velocity grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma and case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
 
                     <span class="c1"># Initialise a dictionary to store DataArrays for each component</span>
                     <span class="n">data_arrays</span> <span class="o">=</span> <span class="p">{}</span>
@@ -623,11 +623,11 @@
                     <span class="c1"># Interpolate the different components of the velocity to the resolution of the seafloor age grid</span>
                     <span class="k">for</span> <span class="n">_component</span> <span class="ow">in</span> <span class="n">_components</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">_component</span> <span class="ow">in</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating velocity grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma and case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Generating velocity grid for </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma and case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
 
                             <span class="c1"># Get the component longitude and latitude</span>
-                            <span class="n">lon</span> <span class="o">=</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;lon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-                            <span class="n">lat</span> <span class="o">=</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                            <span class="n">lon</span> <span class="o">=</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"lon"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                            <span class="n">lat</span> <span class="o">=</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"lat"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 
                             <span class="c1"># Reshape the component data to 2D</span>
                             <span class="n">data</span> <span class="o">=</span> <span class="n">point_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="n">_component</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lat</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">lon</span><span class="p">))</span>
@@ -635,8 +635,8 @@
                             <span class="c1"># Create a DataArray for this component</span>
                             <span class="n">data_arrays</span><span class="p">[</span><span class="n">_component</span><span class="p">]</span> <span class="o">=</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
                                 <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-                                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="n">lon</span><span class="p">},</span>
-                                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span>
+                                <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s2">"lat"</span><span class="p">:</span> <span class="n">lat</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">:</span> <span class="n">lon</span><span class="p">},</span>
+                                <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s2">"lat"</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">],</span>
                             <span class="p">)</span>
 
                     <span class="c1"># Create a Dataset from the collected DataArrays</span>
@@ -655,9 +655,9 @@
             <span class="n">lon</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
             <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
             <span class="n">case</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">grid_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;velocity&quot;</span><span class="p">,</span>
+            <span class="n">grid_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"velocity"</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to interpolate data to the resolution of the seafloor age grid.</span>
 
 <span class="sd">        :param age:         age of the grid</span>
@@ -670,9 +670,9 @@
 <span class="sd">        :type data:         float, list, numpy.ndarray</span>
 <span class="sd">        :param case:        case of the grid (default: None)</span>
 <span class="sd">        :type case:         str</span>
-<span class="sd">        :param grid_type:   type of grid to interpolate to (default: &quot;velocity&quot;)</span>
+<span class="sd">        :param grid_type:   type of grid to interpolate to (default: "velocity")</span>
 <span class="sd">        :type grid_type:    str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Convert inputs to numpy arrays if they are lists</span>
         <span class="n">lat</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span>
         <span class="n">lon</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
@@ -687,7 +687,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lat</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">lon</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data should be 2D with dimensions of lat and lon.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data should be 2D with dimensions of lat and lon."</span><span class="p">)</span>
 
         <span class="c1"># Check if the attribute exists and is initially None</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -702,11 +702,11 @@
         <span class="c1"># Make an xarray.Dataset with the data</span>
         <span class="n">dataset</span> <span class="o">=</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span>
             <span class="p">{</span>
-                <span class="n">grid_type</span><span class="p">:</span> <span class="p">([</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">),</span>
+                <span class="n">grid_type</span><span class="p">:</span> <span class="p">([</span><span class="s2">"lat"</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">],</span> <span class="n">data</span><span class="p">),</span>
             <span class="p">},</span>
             <span class="n">coords</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="p">([</span><span class="s2">&quot;lat&quot;</span><span class="p">],</span> <span class="n">lat</span><span class="p">),</span>
-                <span class="s2">&quot;lon&quot;</span><span class="p">:</span> <span class="p">([</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">lon</span><span class="p">),</span>
+                <span class="s2">"lat"</span><span class="p">:</span> <span class="p">([</span><span class="s2">"lat"</span><span class="p">],</span> <span class="n">lat</span><span class="p">),</span>
+                <span class="s2">"lon"</span><span class="p">:</span> <span class="p">([</span><span class="s2">"lon"</span><span class="p">],</span> <span class="n">lon</span><span class="p">),</span>
             <span class="p">},</span>
         <span class="p">)</span>
 
@@ -718,9 +718,9 @@
             <span class="c1"># Store the dataset without the case</span>
             <span class="n">new_grids</span><span class="p">[</span><span class="n">age</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span>
 
-        <span class="c1"># Ensure the modified new_grids is saved back to the object&#39;s attribute</span>
+        <span class="c1"># Ensure the modified new_grids is saved back to the object's attribute</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">,</span> <span class="n">new_grids</span><span class="p">)</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> updated:&quot;</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">))</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">grid_type</span><span class="si">}</span><span class="s2"> updated:"</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid_type</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="Grids.save_all">
@@ -732,7 +732,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save all the grids</span>
 
 <span class="sd">        :param ages:        ages of interest (default: None)</span>
@@ -743,7 +743,7 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Save seafloor grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_seafloor_age</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
 
@@ -765,7 +765,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save the the seafloor age grid.</span>
 
 <span class="sd">        :param ages:        ages of interest (default: None)</span>
@@ -774,8 +774,8 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">,</span> <span class="s2">&quot;Seafloor_age&quot;</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seafloor_age</span><span class="p">,</span> <span class="s2">"Seafloor_age"</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Grids.save_sediment">
@@ -787,7 +787,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save the the sediment grid.</span>
 
 <span class="sd">        :param ages:        ages of interest (default: None)</span>
@@ -798,9 +798,9 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sediment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">,</span> <span class="s2">&quot;Sediment&quot;</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sediment</span><span class="p">,</span> <span class="s2">"Sediment"</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Grids.save_continent">
@@ -812,7 +812,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save the the continental grid.</span>
 
 <span class="sd">        :param ages:        ages of interest (default: None)</span>
@@ -823,10 +823,10 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Check if grids exists</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">continent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">,</span> <span class="s2">&quot;Continent&quot;</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">continent</span><span class="p">,</span> <span class="s2">"Continent"</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Grids.save_velocity">
@@ -838,7 +838,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save the the velocity grid.</span>
 
 <span class="sd">        :param ages:        ages of interest (default: None)</span>
@@ -849,10 +849,10 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Check if grids exists</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">,</span> <span class="s2">&quot;Velocity&quot;</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_grid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">,</span> <span class="s2">"Velocity"</span><span class="p">,</span> <span class="n">ages</span><span class="p">,</span> <span class="n">cases</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">,</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span></div>
 
         
 <div class="viewcode-block" id="Grids.save_grid">
@@ -866,7 +866,7 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to save a grid.</span>
 
 <span class="sd">        :param data:        data to save</span>
@@ -881,7 +881,7 @@
 <span class="sd">        :type file_dir:     str</span>
 <span class="sd">        :param PROGRESS_BAR:flag to show progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages, if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
@@ -894,7 +894,7 @@
         <span class="c1"># Loop through ages</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Saving </span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2"> grids&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Saving </span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2"> grids"</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="ow">is</span> <span class="n">Dict</span><span class="p">:</span>
@@ -954,7 +954,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c871b553"></script>
+</div><script src="../../_static/documentation_options.js?v=9dc433c9"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <!-- Generated with Sphinx 8.0.2 and Furo 2024.08.06 -->
-        <title>plato.points - Version 4926ade</title>
+        <title>plato.points - Version 9735f96</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/autoclasstoc.css?v=08871587" />
@@ -166,7 +166,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Version 4926ade</div></a>
+      <a href="../../index.html"><div class="brand">Version 9735f96</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -194,7 +194,7 @@
     <img class="sidebar-logo only-dark" src="../../_static/Logo_dark.png" alt="Dark Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Version 4926ade</span>
+  <span class="sidebar-brand-text">Version 9735f96</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -274,7 +274,7 @@
 <div class="viewcode-block" id="Points">
 <a class="viewcode-back" href="../../api/points/index.html#plato.points.Points">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Points</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Class that contains all information for the points in a reconstruction.</span>
 <span class="sd">    A `Slabs` object can be initialised in multiple ways:</span>
 
@@ -302,7 +302,7 @@
 <span class="sd">    :type ages:                 float, int, list, numpy.ndarray</span>
 <span class="sd">    :param cases_file:          filepath to excel file with cases (default: None)</span>
 <span class="sd">    :type cases_file:           str</span>
-<span class="sd">    :param cases_sheet:         name of the sheet in the excel file with cases (default: &quot;Sheet1&quot;)</span>
+<span class="sd">    :param cases_sheet:         name of the sheet in the excel file with cases (default: "Sheet1")</span>
 <span class="sd">    :type cases_sheet:          str</span>
 <span class="sd">    :param files_dir:           directory to store files (default: None)</span>
 <span class="sd">    :type files_dir:            str</span>
@@ -312,7 +312,7 @@
 <span class="sd">    :type DEBUG_MODE:           bool</span>
 <span class="sd">    :param CALCULATE_VELOCITIES: flag to calculate velocities (default: True)</span>
 <span class="sd">    :type CALCULATE_VELOCITIES: bool</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">settings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Settings</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -323,7 +323,7 @@
             <span class="n">reconstruction_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">ages</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">cases_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">cases_sheet</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Sheet1&quot;</span><span class="p">,</span>
+            <span class="n">cases_sheet</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Sheet1"</span><span class="p">,</span>
             <span class="n">files_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plate_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">resolved_geometries</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -332,9 +332,9 @@
             <span class="n">CALCULATE_VELOCITIES</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Constructor for the &#39;Points&#39; object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Constructor for the 'Points' object.</span>
+<span class="sd">        """</span>
         <span class="c1"># Store settings object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">utils_init</span><span class="o">.</span><span class="n">get_settings</span><span class="p">(</span>
             <span class="n">settings</span><span class="p">,</span> 
@@ -363,7 +363,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">NEW_DATA</span> <span class="o">=</span> <span class="p">{</span><span class="n">age</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">age</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">}</span>
 
         <span class="c1"># Loop through times</span>
-        <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Loading point data&quot;</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">"Loading point data"</span><span class="p">,</span> <span class="n">disable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="o">==</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
             <span class="c1"># Load available data</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">point_cases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="c1"># Make list to store available cases</span>
@@ -373,7 +373,7 @@
                 <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">DataFrame_from_parquet</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">dir_path</span><span class="p">,</span>
-                        <span class="s2">&quot;Points&quot;</span><span class="p">,</span>
+                        <span class="s2">"Points"</span><span class="p">,</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                         <span class="n">_age</span><span class="p">,</span>
                         <span class="n">entry</span><span class="p">,</span>
@@ -390,13 +390,13 @@
                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">entry</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">available_cases</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No point data found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> and key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No point data found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> and key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
                     <span class="c1"># Initialise missing data</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolved_geometries</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolved_geometries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">_geopandas</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">):</span>
                         <span class="n">resolved_geometries</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">get_resolved_geometries</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">reconstruction</span><span class="p">,</span>
                             <span class="n">_age</span><span class="p">,</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;Anchor plateID&quot;</span><span class="p">]</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"Anchor plateID"</span><span class="p">]</span>
                         <span class="p">)</span>
 
                     <span class="c1"># Initialise missing data</span>
@@ -416,7 +416,7 @@
         <span class="k">if</span> <span class="n">CALCULATE_VELOCITIES</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reconstructed_cases</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;velocity_mag&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"velocity_mag"</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_velocities</span><span class="p">(</span>
                             <span class="n">_age</span><span class="p">,</span>
                             <span class="n">_case</span><span class="p">,</span>
@@ -432,7 +432,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">computed_mantle_drag_torque</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Points is a class that contains data and methods for working with grid points.&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"Points is a class that contains data and methods for working with grid points."</span>
     
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
@@ -448,7 +448,7 @@
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
             <span class="n">PARALLEL_MODE</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to compute velocities at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -457,14 +457,14 @@
 <span class="sd">        :type cases:            str, list</span>
 <span class="sd">        :param stage_rotation:  stage rotation poles (default: None)</span>
 <span class="sd">        :type stage_rotation:   dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
         
         <span class="c1"># Define cases if not provided</span>
-        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;reconstructed&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"reconstructed"</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">"reconstructed"</span><span class="p">]:</span>
             <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reconstructed_cases</span>
-        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;synthetic&quot;</span><span class="p">]:</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"synthetic"</span> <span class="ow">or</span> <span class="n">cases</span> <span class="o">==</span> <span class="p">[</span><span class="s2">"synthetic"</span><span class="p">]:</span>
             <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
@@ -475,7 +475,7 @@
         <span class="c1"># Loop through ages and cases</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating velocities at points&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Calculating velocities at points"</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_cases</span><span class="p">:</span>
@@ -493,7 +493,7 @@
                         <span class="c1"># Get stage rotation from the provided DataFrame in the dictionary</span>
                         <span class="n">_stage_rotation</span> <span class="o">=</span> <span class="n">stage_rotation</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="n">stage_rotation</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">plateID</span> <span class="o">==</span> <span class="n">_plateID</span><span class="p">]</span>
 
-                        <span class="k">if</span> <span class="n">_stage_rotation</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">_stage_rotation</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Minimum plate area&quot;</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">_stage_rotation</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="n">_stage_rotation</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">"Minimum plate area"</span><span class="p">]:</span>
                             <span class="k">continue</span>
 
                         <span class="n">area</span> <span class="o">=</span> <span class="n">_stage_rotation</span><span class="o">.</span><span class="n">area</span>
@@ -503,17 +503,17 @@
                         <span class="n">stage_rotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reconstruction</span><span class="o">.</span><span class="n">rotation_model</span><span class="o">.</span><span class="n">get_rotation</span><span class="p">(</span>
                             <span class="n">to_time</span> <span class="o">=</span><span class="n">_age</span><span class="p">,</span>
                             <span class="n">moving_plate_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">_plateID</span><span class="p">),</span>
-                            <span class="n">from_time</span><span class="o">=</span><span class="n">_age</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Velocity time step&quot;</span><span class="p">],</span>
-                            <span class="n">anchor_plate_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Anchor plateID&quot;</span><span class="p">]</span>
+                            <span class="n">from_time</span><span class="o">=</span><span class="n">_age</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">"Velocity time step"</span><span class="p">],</span>
+                            <span class="n">anchor_plate_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">"Anchor plateID"</span><span class="p">]</span>
                         <span class="p">)</span><span class="o">.</span><span class="n">get_lat_lon_euler_pole_and_angle_degrees</span><span class="p">()</span>
                         <span class="n">area</span> <span class="o">=</span> <span class="kc">None</span>
 
                         <span class="c1"># Organise as DataFrame</span>
                         <span class="n">_stage_rotation</span> <span class="o">=</span> <span class="n">_pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-                                <span class="s2">&quot;plateID&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">_plateID</span><span class="p">],</span>
-                                <span class="s2">&quot;pole_lat&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
-                                <span class="s2">&quot;pole_lon&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-                                <span class="s2">&quot;pole_angle&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                                <span class="s2">"plateID"</span><span class="p">:</span> <span class="p">[</span><span class="n">_plateID</span><span class="p">],</span>
+                                <span class="s2">"pole_lat"</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                                <span class="s2">"pole_lon"</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                                <span class="s2">"pole_angle"</span><span class="p">:</span> <span class="p">[</span><span class="n">stage_rotation</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
                             <span class="p">})</span>
                         
                     <span class="c1"># Make mask for plates</span>
@@ -530,11 +530,11 @@
                     <span class="p">)</span>
 
                     <span class="c1"># Store velocities</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;velocity_lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;velocity_lon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;velocity_mag&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;velocity_azi&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;spin_rate_mag&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"velocity_lat"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"velocity_lon"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"velocity_mag"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"velocity_azi"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"spin_rate_mag"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Points.sample_seafloor_ages">
@@ -545,10 +545,10 @@
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">grids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="nb">vars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;seafloor_age&quot;</span><span class="p">],</span>
+            <span class="nb">vars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"seafloor_age"</span><span class="p">],</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Samples seafloor age at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -559,11 +559,11 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param grids:           seafloor age grids (default: None)</span>
 <span class="sd">        :type grids:            dict</span>
-<span class="sd">        :param vars:            variables to sample (default: [&quot;seafloor_age&quot;])</span>
+<span class="sd">        :param vars:            variables to sample (default: ["seafloor_age"])</span>
 <span class="sd">        :type vars:             str, list</span>
 <span class="sd">        :param PROGRESS_BAR:    flag to enable progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR:     bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Sample grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span>
             <span class="n">ages</span><span class="p">,</span>
@@ -571,7 +571,7 @@
             <span class="n">plateIDs</span><span class="p">,</span>
             <span class="n">grids</span><span class="p">,</span>
             <span class="nb">vars</span><span class="p">,</span>
-            <span class="n">default_cases</span> <span class="o">=</span> <span class="s2">&quot;gpe&quot;</span><span class="p">,</span>
+            <span class="n">default_cases</span> <span class="o">=</span> <span class="s2">"gpe"</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -587,10 +587,10 @@
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">grids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="nb">vars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;LAB_depth&quot;</span><span class="p">],</span>
+            <span class="nb">vars</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"LAB_depth"</span><span class="p">],</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Samples the depth of the lithosphere-asthenosphere boundary (LAB) at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -601,11 +601,11 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param grids:           grids to sample (default: None)</span>
 <span class="sd">        :type grids:            dict</span>
-<span class="sd">        :param vars:            variables to sample (default: [&quot;LAB_depth&quot;])</span>
+<span class="sd">        :param vars:            variables to sample (default: ["LAB_depth"])</span>
 <span class="sd">        :type vars:             str, list</span>
 <span class="sd">        :param PROGRESS_BAR:    flag to enable progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR:     bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Sample grid</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_grid</span><span class="p">(</span>
             <span class="n">ages</span><span class="p">,</span>
@@ -613,7 +613,7 @@
             <span class="n">plateIDs</span><span class="p">,</span>
             <span class="n">grids</span><span class="p">,</span>
             <span class="nb">vars</span><span class="p">,</span>
-            <span class="n">default_cases</span> <span class="o">=</span> <span class="s2">&quot;mantle drag&quot;</span><span class="p">,</span>
+            <span class="n">default_cases</span> <span class="o">=</span> <span class="s2">"mantle drag"</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span> <span class="o">=</span> <span class="n">PROGRESS_BAR</span><span class="p">,</span>
         <span class="p">)</span>
 
@@ -629,13 +629,13 @@
             <span class="n">cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">grids</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">Union</span><span class="p">[</span><span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="nb">vars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;seafloor_age&quot;</span><span class="p">],</span>
-            <span class="n">sampling_coords</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">],</span>
+            <span class="nb">vars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"seafloor_age"</span><span class="p">],</span>
+            <span class="n">sampling_coords</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"lat"</span><span class="p">,</span> <span class="s2">"lon"</span><span class="p">],</span>
             <span class="n">cols</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">default_cases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Samples any grid at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -646,28 +646,28 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param grids:           grids to sample (default: None)</span>
 <span class="sd">        :type grids:            dict</span>
-<span class="sd">        :param vars:            variables to sample (default: [&quot;seafloor_age&quot;])</span>
+<span class="sd">        :param vars:            variables to sample (default: ["seafloor_age"])</span>
 <span class="sd">        :type vars:             str, list</span>
-<span class="sd">        :param sampling_coords: coordinates to sample (default: [&quot;lat&quot;, &quot;lon&quot;])</span>
+<span class="sd">        :param sampling_coords: coordinates to sample (default: ["lat", "lon"])</span>
 <span class="sd">        :type sampling_coords:  list</span>
-<span class="sd">        :param cols:            columns to store sampled data (default: [&quot;seafloor_age&quot;])</span>
+<span class="sd">        :param cols:            columns to store sampled data (default: ["seafloor_age"])</span>
 <span class="sd">        :type cols:             str, list</span>
 <span class="sd">        :param default_cases:   default cases to sample (default: None)</span>
 <span class="sd">        :type default_cases:    str</span>
 <span class="sd">        :param PROGRESS_BAR:    flag to enable progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR:     bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
         <span class="c1"># Define default case if not provided</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">default_cases</span><span class="p">:</span>
             <span class="n">default_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span>
-        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">&quot;mantle drag&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">"mantle drag"</span><span class="p">:</span>
             <span class="n">default_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">mantle_drag_cases</span>
-        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">&quot;gpe&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">"gpe"</span><span class="p">:</span>
             <span class="n">default_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">gpe_cases</span>
-        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">&quot;points&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">default_cases</span> <span class="o">==</span> <span class="s2">"points"</span><span class="p">:</span>
             <span class="n">default_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">points</span>
         
         <span class="c1"># Define cases if not provided</span>
@@ -684,11 +684,11 @@
         <span class="c1"># Loop through valid times</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Sampling points&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Sampling points"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">_iterable</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="s2">&quot;LAB_depth&quot;</span> <span class="ow">in</span> <span class="n">_vars</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;Depth-dependent mantle drag&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s2">"LAB_depth"</span> <span class="ow">in</span> <span class="n">_vars</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"Depth-dependent mantle drag"</span><span class="p">]:</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># Define plateIDs if not provided</span>
@@ -708,10 +708,10 @@
                         <span class="n">_grid</span> <span class="o">=</span> <span class="n">grids</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
                 
                 <span class="k">if</span> <span class="n">_grid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid grid found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> and key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No valid grid found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> and key </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
                     <span class="k">continue</span>  <span class="c1"># Skip this iteration if no valid grid is found</span>
 
-                <span class="c1"># Set _vars to the grid&#39;s data variables if not already defined</span>
+                <span class="c1"># Set _vars to the grid's data variables if not already defined</span>
                 <span class="n">_vars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">_grid</span><span class="o">.</span><span class="n">data_vars</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_vars</span> <span class="k">else</span> <span class="n">_vars</span>
 
                 <span class="c1"># Set columns to _vars if not already defined or if not of the same length</span>
@@ -747,7 +747,7 @@
             <span class="n">grids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to compute the depth of the lithosphere-asthenosphere boundary (LAB) at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -760,7 +760,7 @@
 <span class="sd">        :type grids:            dict</span>
 <span class="sd">        :param PROGRESS_BAR:    flag to enable progress bar (default: True)</span>
 <span class="sd">        :type PROGRESS_BAR:     bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
@@ -779,11 +779,11 @@
         <span class="c1"># Loop through ages and cases</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating LAB depths at points&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Calculating LAB depths at points"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">_iterable</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;Depth-dependent mantle drag&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"Depth-dependent mantle drag"</span><span class="p">]:</span>
                     <span class="c1"># Select points</span>
                     <span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -802,7 +802,7 @@
                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> 
                             <span class="n">key</span><span class="p">,</span> 
                             <span class="n">entries</span><span class="p">,</span>
-                            <span class="p">[</span><span class="s2">&quot;LAB_depth&quot;</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s2">"LAB_depth"</span><span class="p">],</span>
                         <span class="p">)</span></div>
 
     
@@ -816,7 +816,7 @@
             <span class="n">seafloor_grid</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">_xarray</span><span class="o">.</span><span class="n">Dataset</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to compute gravitational potential energy (GPE) force acting at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -827,14 +827,14 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param seafloor_grid:   seafloor age grid (default: None)</span>
 <span class="sd">        :type seafloor_grid:    dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
         
         <span class="c1"># Define cases if not provided</span>
-        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"reconstructed"</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reconstructed_cases</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"synthetic"</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">gpe_cases</span><span class="p">)</span>
@@ -842,12 +842,12 @@
         <span class="c1"># Loop through reconstruction times</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating GPE forces&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Calculating GPE forces"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="c1"># Loop through gpe cases</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">_iterable</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;GPE torque&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"GPE torque"</span><span class="p">]:</span>
                     <span class="c1"># Select points</span>
                     <span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -859,7 +859,7 @@
                         <span class="n">_data</span> <span class="o">=</span> <span class="n">_data</span><span class="p">[</span><span class="n">_data</span><span class="o">.</span><span class="n">plateID</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">_plateIDs</span><span class="p">)]</span>
 
                     <span class="k">if</span> <span class="n">_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid points found for case </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No valid points found for case </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                         <span class="k">continue</span>
                         
                     <span class="c1"># Calculate GPE force</span>
@@ -875,13 +875,13 @@
                     <span class="c1"># Copy to other entries</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
-                            <span class="s2">&quot;lithospheric_mantle_thickness&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;crustal_thickness&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;water_depth&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;U&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;GPE_force_lat&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;GPE_force_lon&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;GPE_force_mag&quot;</span><span class="p">,</span>
+                            <span class="s2">"lithospheric_mantle_thickness"</span><span class="p">,</span>
+                            <span class="s2">"crustal_thickness"</span><span class="p">,</span>
+                            <span class="s2">"water_depth"</span><span class="p">,</span>
+                            <span class="s2">"U"</span><span class="p">,</span>
+                            <span class="s2">"GPE_force_lat"</span><span class="p">,</span>
+                            <span class="s2">"GPE_force_lon"</span><span class="p">,</span>
+                            <span class="s2">"GPE_force_mag"</span><span class="p">,</span>
                         <span class="p">]</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">copy_values</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> 
@@ -901,7 +901,7 @@
             <span class="n">plateIDs</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to compute mantle drag force acting at points.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -910,14 +910,14 @@
 <span class="sd">        :type cases:            str, list</span>
 <span class="sd">        :param plateIDs:        plateIDs of interest (default: None)</span>
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
         
         <span class="c1"># Define cases if not provided</span>
-        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"reconstructed"</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reconstructed_cases</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"synthetic"</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_iterable</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_iterable</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
@@ -925,12 +925,12 @@
         <span class="c1"># Loop through reconstruction times</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating mantle drag forces&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Calculating mantle drag forces"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
             <span class="c1"># Loop through gpe cases</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="n">_iterable</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;Mantle drag torque&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;Reconstructed motions&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"Mantle drag torque"</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">"Reconstructed motions"</span><span class="p">]:</span>
                     <span class="c1"># Select points</span>
                     <span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
                     <span class="n">_plate_data</span> <span class="o">=</span> <span class="n">plate_data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -944,7 +944,7 @@
                         <span class="n">_plate_data</span> <span class="o">=</span> <span class="n">_plate_data</span><span class="p">[</span><span class="n">_plate_data</span><span class="o">.</span><span class="n">plateID</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">_plateIDs</span><span class="p">)]</span>
 
                     <span class="k">if</span> <span class="n">_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid points found for case </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma.&quot;</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No valid points found for case </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> at age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2"> Ma."</span><span class="p">)</span>
                         <span class="k">continue</span>
                         
                     <span class="c1"># Calculate mantle force</span>
@@ -960,9 +960,9 @@
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="c1"># Copy to other entries</span>
                         <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span>
-                            <span class="s2">&quot;mantle_drag_force_lat&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;mantle_drag_force_lon&quot;</span><span class="p">,</span>
-                            <span class="s2">&quot;mantle_drag_force_mag&quot;</span><span class="p">,</span>
+                            <span class="s2">"mantle_drag_force_lat"</span><span class="p">,</span>
+                            <span class="s2">"mantle_drag_force_lon"</span><span class="p">,</span>
+                            <span class="s2">"mantle_drag_force_mag"</span><span class="p">,</span>
                         <span class="p">]</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">]</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">copy_values</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">],</span> 
@@ -982,7 +982,7 @@
             <span class="n">residual_torque</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Function to calculate residual torque along trenches.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -993,14 +993,14 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param residual_torque: residual torque along trenches (default: None)</span>
 <span class="sd">        :type residual_torque:  dict</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
         <span class="c1"># Define cases if not provided</span>
-        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;reconstructed&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"reconstructed"</span><span class="p">:</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">reconstructed_cases</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">&quot;synthetic&quot;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">cases</span> <span class="o">==</span> <span class="s2">"synthetic"</span><span class="p">:</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">_cases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">synthetic_cases</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">_cases</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_cases</span><span class="p">(</span><span class="n">cases</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">cases</span><span class="p">)</span>
@@ -1008,13 +1008,13 @@
         <span class="c1"># Loop through ages and cases</span>
         <span class="k">for</span> <span class="n">_case</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_cases</span><span class="p">,</span>
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Calculating residual forces at points&quot;</span><span class="p">,</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Calculating residual forces at points"</span><span class="p">,</span>
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;Reconstructed motions&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">_case</span><span class="p">][</span><span class="s2">"Reconstructed motions"</span><span class="p">]:</span>
                 <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_ages</span><span class="p">:</span>
                     <span class="c1"># Select plateIDs</span>
-                    <span class="n">_plateIDs</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_plateIDs</span><span class="p">(</span><span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;plateID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+                    <span class="n">_plateIDs</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_plateIDs</span><span class="p">(</span><span class="n">plateIDs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"plateID"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
 
                     <span class="k">for</span> <span class="n">_plateID</span> <span class="ow">in</span> <span class="n">_plateIDs</span><span class="p">:</span>
                         <span class="k">if</span> <span class="p">(</span>
@@ -1027,25 +1027,25 @@
                             <span class="n">_residual_torque</span> <span class="o">=</span> <span class="n">residual_torque</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="n">residual_torque</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">plateID</span> <span class="o">==</span> <span class="n">_plateID</span><span class="p">]</span>
                         
                         <span class="c1"># Make mask for plate</span>
-                        <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">&quot;plateID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">_plateID</span>
+                        <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">][</span><span class="s2">"plateID"</span><span class="p">]</span> <span class="o">==</span> <span class="n">_plateID</span>
 
                         <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No valid points found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2">, case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">, and plateID </span><span class="si">{</span><span class="n">_plateID</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No valid points found for age </span><span class="si">{</span><span class="n">_age</span><span class="si">}</span><span class="s2">, case </span><span class="si">{</span><span class="n">_case</span><span class="si">}</span><span class="s2">, and plateID </span><span class="si">{</span><span class="n">_plateID</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
                             <span class="k">continue</span>
                                                 
                         <span class="c1"># Compute velocities</span>
                         <span class="n">forces</span> <span class="o">=</span> <span class="n">utils_calc</span><span class="o">.</span><span class="n">compute_residual_force</span><span class="p">(</span>
                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span>
                             <span class="n">_residual_torque</span><span class="p">,</span>
-                            <span class="n">plateID_col</span> <span class="o">=</span> <span class="s2">&quot;plateID&quot;</span><span class="p">,</span>
-                            <span class="n">weight_col</span> <span class="o">=</span> <span class="s2">&quot;segment_area&quot;</span><span class="p">,</span>
+                            <span class="n">plateID_col</span> <span class="o">=</span> <span class="s2">"plateID"</span><span class="p">,</span>
+                            <span class="n">weight_col</span> <span class="o">=</span> <span class="s2">"segment_area"</span><span class="p">,</span>
                         <span class="p">)</span>
 
                         <span class="c1"># Store velocities</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;residual_force_lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;residual_force_lon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;residual_force_mag&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">&quot;residual_force_azi&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">"residual_force_lat"</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">"residual_force_lon"</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">"residual_force_mag"</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_age</span><span class="p">][</span><span class="n">_case</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="s2">"residual_force_azi"</span><span class="p">]</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="Points.save">
@@ -1058,8 +1058,8 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to save the &#39;Points&#39; object.</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Function to save the 'Points' object.</span>
 <span class="sd">        Data of the points object is saved to .parquet files.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -1070,7 +1070,7 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param file_dir:        directory to store files (default: None)</span>
 <span class="sd">        :type file_dir:         str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
@@ -1083,7 +1083,7 @@
         <span class="c1"># Loop through ages</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Saving Points&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Saving Points"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>            
             <span class="c1"># Loop through cases</span>
@@ -1097,14 +1097,14 @@
                 <span class="c1"># Save data</span>
                 <span class="n">utils_data</span><span class="o">.</span><span class="n">DataFrame_to_parquet</span><span class="p">(</span>
                     <span class="n">_data</span><span class="p">,</span>
-                    <span class="s2">&quot;Points&quot;</span><span class="p">,</span>
+                    <span class="s2">"Points"</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">_age</span><span class="p">,</span>
                     <span class="n">_case</span><span class="p">,</span>
                     <span class="n">_file_dir</span><span class="p">,</span>
                 <span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points saved to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">dir_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Points saved to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">dir_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Points.export">
@@ -1117,8 +1117,8 @@
             <span class="n">file_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">PROGRESS_BAR</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to export the &#39;Points&#39; object.</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Function to export the 'Points' object.</span>
 <span class="sd">        Data of the points object is saved to .csv files.</span>
 
 <span class="sd">        :param ages:            ages of interest (default: None)</span>
@@ -1129,7 +1129,7 @@
 <span class="sd">        :type plateIDs:         list, numpy.ndarray</span>
 <span class="sd">        :param file_dir:        directory to store files (default: None)</span>
 <span class="sd">        :type file_dir:         str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Define ages if not provided</span>
         <span class="n">_ages</span> <span class="o">=</span> <span class="n">utils_data</span><span class="o">.</span><span class="n">select_ages</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">ages</span><span class="p">)</span>
 
@@ -1142,7 +1142,7 @@
         <span class="c1"># Loop through ages</span>
         <span class="k">for</span> <span class="n">_age</span> <span class="ow">in</span> <span class="n">_tqdm</span><span class="p">(</span>
                 <span class="n">_ages</span><span class="p">,</span> 
-                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Exporting Points&quot;</span><span class="p">,</span> 
+                <span class="n">desc</span><span class="o">=</span><span class="s2">"Exporting Points"</span><span class="p">,</span> 
                 <span class="n">disable</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">level</span> <span class="ow">in</span> <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">PROGRESS_BAR</span><span class="p">)</span>
             <span class="p">):</span>            
             <span class="c1"># Loop through cases</span>
@@ -1156,14 +1156,14 @@
                 <span class="c1"># Export data</span>
                 <span class="n">utils_data</span><span class="o">.</span><span class="n">DataFrame_to_csv</span><span class="p">(</span>
                     <span class="n">_data</span><span class="p">,</span>
-                    <span class="s2">&quot;Points&quot;</span><span class="p">,</span>
+                    <span class="s2">"Points"</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">_age</span><span class="p">,</span>
                     <span class="n">_case</span><span class="p">,</span>
                     <span class="n">_file_dir</span><span class="p">,</span>
                 <span class="p">)</span>
 
-        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Points exported to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">dir_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Points exported to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">dir_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -1198,7 +1198,7 @@
       
     </aside>
   </div>
-</div><script src="../../_static/documentation_options.js?v=c871b553"></script>
+</div><script src="../../_static/documentation_options.js?v=9dc433c9"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
