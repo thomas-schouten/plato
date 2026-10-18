@@ -1,7 +1,7 @@
 # Plato
 ## Thomas Schouten
 
-**Plato** is an object-oriented Python package that provide an efficient and standardised workflow to analyse the motions of tectonic plates using the torque balance expected from their reconstructed geometries.
+**Plato** is an object-oriented Python package that provides an efficient and standardised workflow to analyse the motions of tectonic plates using the torque balance expected from their reconstructed geometries.
 
 This package leverages [`GPlately`](https://gplates.github.io/gplately/v1.3.0/) to interrogate quantitative plate reconstructions built using [`GPlates`](https://www.gplates.org). `GPlates` is open-source application software offering a novel combination of interactive plate-tectonic reconstructions, geographic information system functionality and raster data visualisation.
 
@@ -24,7 +24,7 @@ To install `Plato`, create a Conda environment and run the following:
 ```
 
 This will create a Conda environment with `Plato` and all required dependencies, which should be able to run all notebooks found in
-plato/notebooks.
+`notebooks/`.
 
 # References
 
