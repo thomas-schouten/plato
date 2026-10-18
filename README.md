@@ -34,6 +34,6 @@ Clennett, E. J., Holt, A. F., Tetley, M. G., Becker, T. W., & Faccenna, C. (2023
 
 # License
 
-Copyright (C) 2023-2026 Thomas Schouten
+Copyright (C) 2025 Thomas Schouten
 
 Plato is licensed under the GNU General Public License v2.0. See [LICENSE](LICENSE) for details.
