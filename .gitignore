@@ -33,4 +33,7 @@ docs/build/
 doctrees/
 
 # Log files
-*.logplato/deleted_functions.py
+*.log
+
+# Deleted functions
+plato/deleted_functions.py
